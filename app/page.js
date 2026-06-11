@@ -1,171 +1,311 @@
 import Link from "next/link";
 
 const products = [
-  { id: 1, name: "PHANTOM CASE", price: "$34.99", tag: "NEW", desc: "Ultra-slim. Zero compromises." },
-  { id: 2, name: "NEON GRIP", price: "$19.99", tag: "HOT", desc: "Lock in. Stand out." },
-  { id: 3, name: "VOID CHARGER", price: "$49.99", tag: "LIMITED", desc: "100W. Silent. Ruthless." },
-  { id: 4, name: "STEALTH BAND", price: "$29.99", tag: "NEW", desc: "Wear the night shift." },
-  { id: 5, name: "CIPHER DOCK", price: "$59.99", tag: "HOT", desc: "Your setup. Elevated." },
-  { id: 6, name: "RAW CABLE", price: "$14.99", tag: "STAPLE", desc: "Braided. Built to last." },
+  { id: 1, name: "PHANTOM CASE", price: "$34.99", tag: "NEW", desc: "Ultra-slim. Zero compromises.", sku: "INK-001", rating: "4.9", reviews: "2.3K" },
+  { id: 2, name: "NEON GRIP", price: "$19.99", tag: "HOT", desc: "Lock in. Stand out.", sku: "INK-002", rating: "4.8", reviews: "1.8K" },
+  { id: 3, name: "VOID CHARGER", price: "$49.99", tag: "LIMITED", desc: "100W. Silent. Ruthless.", sku: "INK-003", rating: "5.0", reviews: "987" },
+  { id: 4, name: "STEALTH BAND", price: "$29.99", tag: "NEW", desc: "Wear the night shift.", sku: "INK-004", rating: "4.7", reviews: "1.2K" },
+  { id: 5, name: "CIPHER DOCK", price: "$59.99", tag: "HOT", desc: "Your setup. Elevated.", sku: "INK-005", rating: "4.9", reviews: "756" },
+  { id: 6, name: "RAW CABLE", price: "$14.99", tag: "STAPLE", desc: "Braided. Built to last.", sku: "INK-006", rating: "4.6", reviews: "3.1K" },
 ];
 
 const tagColors = {
-  NEW: "text-blue-400 border-blue-400/40 bg-blue-400/10",
-  HOT: "text-orange-400 border-orange-400/40 bg-orange-400/10",
-  LIMITED: "text-red-400 border-red-400/40 bg-red-400/10",
-  STAPLE: "text-white/50 border-white/20 bg-white/5",
+  NEW: "text-blue-400 border-blue-400/50 bg-blue-400/10",
+  HOT: "text-orange-400 border-orange-400/50 bg-orange-400/10",
+  LIMITED: "text-red-400 border-red-400/50 bg-red-400/10",
+  STAPLE: "text-white/40 border-white/20 bg-white/5",
 };
+
+const stats = [
+  { value: "50K+", label: "UNITS SHIPPED", sub: "WORLDWIDE" },
+  { value: "4.9", label: "AVG RATING", sub: "9,000+ REVIEWS" },
+  { value: "99%", label: "SATISFACTION", sub: "GUARANTEED" },
+  { value: "72H", label: "MAX DELIVERY", sub: "EXPRESS ONLY" },
+];
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white">
+    <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
 
-      {/* ── NAV ── */}
-      <nav className="fixed top-0 w-full z-50 bg-[#080808]/75 backdrop-blur-lg border-b border-white/[0.06] px-6 md:px-12 py-4 flex justify-between items-center">
-        <span className="text-xl font-black tracking-[0.2em] flicker text-orange-500">INK3D</span>
-        <div className="hidden md:flex gap-8 text-xs font-bold tracking-[0.15em] text-white/50">
-          <Link href="#" className="hover:text-white transition-colors">HOME</Link>
-          <Link href="#products" className="hover:text-white transition-colors">SHOP</Link>
-          <Link href="#" className="hover:text-white transition-colors">COLLECTIONS</Link>
-          <Link href="#" className="hover:text-white transition-colors">ABOUT</Link>
+      {/* NAV */}
+      <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
+        <div className="px-6 md:px-12 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <span className="font-mono-custom text-[10px] text-white/20 tracking-widest hidden md:block">SYS://INK3D_v2.6</span>
+            <span className="w-px h-4 bg-white/10 hidden md:block" />
+            <span className="text-xl font-black tracking-[0.15em] flicker text-orange-500">INK3D</span>
+          </div>
+          <div className="hidden md:flex gap-8 text-[11px] font-bold tracking-[0.15em] text-white/40">
+            {["HOME","SHOP","COLLECTIONS","ABOUT"].map(item => (
+              <Link key={item} href={item === "SHOP" ? "#products" : "#"} className="hover-line hover:text-white transition-colors duration-200">{item}</Link>
+            ))}
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="font-mono-custom text-[10px] text-orange-500/60 hidden md:block">
+              <span className="blink">▋</span> ONLINE
+            </span>
+            <button className="border border-orange-500/50 text-orange-500 px-5 py-2 text-[11px] font-black tracking-[0.15em] hover:bg-orange-500 hover:text-black transition-all duration-200 bracket-box">
+              CART (0)
+            </button>
+          </div>
         </div>
-        <button className="border border-orange-500/70 text-orange-500 px-5 py-2 text-xs font-black tracking-[0.15em] hover:bg-orange-500 hover:text-black transition-all duration-200">
-          CART (0)
-        </button>
+        <div className="h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent" />
       </nav>
 
-      {/* ── HERO ── */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 overflow-hidden">
-        {/* Background gradient blobs */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-orange-500/[0.06] blur-[120px] pointer-events-none" />
-        <div className="absolute top-2/3 left-1/4 w-[400px] h-[400px] rounded-full bg-blue-500/[0.05] blur-[100px] pointer-events-none" />
+      {/* HERO */}
+      <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 grid-bg clip-diagonal overflow-hidden">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-orange-500/[0.04] blur-[150px] pointer-events-none" />
+        <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/[0.05] blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-orange-600/[0.06] blur-[80px] pointer-events-none" />
 
-        <p className="text-orange-500 text-[10px] font-black tracking-[0.5em] mb-6 uppercase">
-          New Drop — 2026 Collection
+        <div className="font-mono-custom text-[10px] text-white/20 tracking-[0.3em] mb-8 flex items-center gap-4">
+          <span>INK3D_STUDIO</span>
+          <span className="text-orange-500/40">——</span>
+          <span>COLLECTION_2026</span>
+          <span className="text-orange-500/40">——</span>
+          <span>TECH_ACCESSORIES</span>
+        </div>
+
+        <div className="relative mb-2">
+          <div className="text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none glitch-wrapper flicker" data-text="INK3D">
+            INK3D
+          </div>
+          <div className="absolute inset-0 text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none" style={{WebkitTextStroke: '1px rgba(249,115,22,0.15)', color: 'transparent', transform: 'translate(3px, 3px)'}}>
+            INK3D
+          </div>
+        </div>
+
+        <div className="text-[clamp(1.2rem,4vw,3rem)] font-black tracking-[0.25em] text-white/10 mb-8 select-none">
+          STUDIO
+        </div>
+
+        <p className="text-white/40 text-sm md:text-base max-w-lg tracking-wider leading-relaxed mb-3 font-mono-custom">
+          // engineered for those who refuse to blend in
+        </p>
+        <p className="text-white/20 text-xs tracking-[0.3em] mb-12 font-mono-custom">
+          TECH ACCESSORIES — EST. 2024 — SAN JOSE, CA
         </p>
 
-        <h1 className="text-[clamp(5rem,18vw,14rem)] font-black tracking-[-0.04em] leading-[0.9] flicker select-none">
-          INK3D
-        </h1>
-
-        <p className="mt-8 text-white/40 text-base md:text-lg max-w-md tracking-wide leading-relaxed">
-          Bold tech accessories engineered for those who refuse to blend in.
-        </p>
-
-        <div className="mt-12 flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-4 mb-16">
           <Link href="#products">
-            <button className="glow-btn bg-orange-500 text-black font-black px-10 py-4 text-xs tracking-[0.2em] hover:bg-orange-400 transition-colors duration-200">
-              SHOP NOW
+            <button className="glow-btn bg-orange-500 text-black font-black px-12 py-4 text-xs tracking-[0.25em] hover:bg-orange-400 transition-colors duration-200 relative overflow-hidden group">
+              <span className="relative z-10">SHOP NOW</span>
+              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
             </button>
           </Link>
-          <button className="border border-white/20 text-white/70 px-10 py-4 text-xs font-black tracking-[0.2em] hover:border-white/50 hover:text-white transition-all duration-200">
+          <button className="border border-white/15 text-white/60 px-12 py-4 text-xs font-black tracking-[0.25em] hover:border-orange-500/50 hover:text-white transition-all duration-200 bracket-box">
             VIEW LOOKBOOK
           </button>
         </div>
 
-        {/* Scroll hint */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/20">
-          <span className="text-[10px] tracking-[0.3em]">SCROLL</span>
-          <div className="w-px h-10 bg-gradient-to-b from-white/20 to-transparent" />
+        <div className="flex gap-8 md:gap-16 font-mono-custom text-[10px]">
+          <div className="text-center">
+            <div className="text-orange-500 font-bold">50K+</div>
+            <div className="text-white/20 tracking-widest">SHIPPED</div>
+          </div>
+          <div className="text-white/10">|</div>
+          <div className="text-center">
+            <div className="text-white/60 font-bold">4.9★</div>
+            <div className="text-white/20 tracking-widest">RATING</div>
+          </div>
+          <div className="text-white/10">|</div>
+          <div className="text-center">
+            <div className="text-blue-400 font-bold">FREE</div>
+            <div className="text-white/20 tracking-widest">SHIPPING $50+</div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+          <span className="font-mono-custom text-[9px] text-white/15 tracking-[0.4em]">SCROLL_DOWN</span>
+          <div className="w-px h-12 bg-gradient-to-b from-orange-500/40 to-transparent relative overflow-hidden">
+            <div className="scroll-dot absolute top-0 left-0 w-full h-3 bg-orange-500/60" />
+          </div>
         </div>
       </section>
 
-      {/* ── MARQUEE ── */}
+      {/* MARQUEE 1 */}
       <div className="bg-orange-500 py-3 overflow-hidden border-y border-orange-400">
-        <div className="marquee-track gap-0">
-          {Array(16).fill(null).map((_, i) => (
-            <span key={i} className="text-black font-black text-[11px] tracking-[0.3em] px-6">
-              INK3D STUDIO &nbsp;/&nbsp; TECH ACCESSORIES &nbsp;/&nbsp; FREE SHIPPING OVER $50 &nbsp;/&nbsp; NEW DROP 2026 &nbsp;/&nbsp;
+        <div className="marquee-track">
+          {Array(12).fill(null).map((_, i) => (
+            <span key={i} className="text-black font-black text-[11px] tracking-[0.25em] px-8 font-mono-custom">
+              INK3D STUDIO ◆ TECH ACCESSORIES ◆ FREE SHIPPING $50+ ◆ NEW DROP 2026 ◆ EST. 2024 ◆
             </span>
           ))}
         </div>
       </div>
 
-      {/* ── PRODUCTS ── */}
-      <section id="products" className="px-6 md:px-12 py-28 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
-          <div>
-            <p className="text-orange-500 text-[10px] font-black tracking-[0.4em] mb-3">— FEATURED DROPS</p>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
-              THE LINEUP
-            </h2>
-          </div>
-          <button className="text-xs font-black tracking-[0.2em] text-white/40 hover:text-orange-500 transition-colors border-b border-white/10 hover:border-orange-500 pb-1 self-start md:self-auto">
-            VIEW ALL →
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06]">
-          {products.map((product) => (
-            <div key={product.id} className="product-card bg-[#080808] border border-transparent cursor-pointer group">
-              {/* Thumb */}
-              <div className="card-thumb aspect-square bg-[#111] flex items-center justify-center relative overflow-hidden">
-                <span className="text-[80px] font-black text-white/[0.04] group-hover:text-orange-500/20 transition-colors duration-500 select-none">
-                  3D
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent opacity-60" />
-              </div>
-              {/* Info */}
-              <div className="p-5 border-t border-white/[0.06]">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className={`text-[9px] font-black tracking-[0.2em] border px-2 py-0.5 ${tagColors[product.tag]}`}>
-                      {product.tag}
-                    </span>
-                    <h3 className="font-black tracking-wide mt-2 text-sm">{product.name}</h3>
-                    <p className="text-white/30 text-xs mt-1">{product.desc}</p>
-                  </div>
-                  <span className="font-black text-white/80 text-sm">{product.price}</span>
-                </div>
-                <button className="mt-4 w-full border border-white/10 text-white/50 text-[10px] font-black tracking-[0.2em] py-2.5 hover:border-orange-500 hover:text-orange-500 transition-all duration-200">
-                  ADD TO CART
-                </button>
-              </div>
-            </div>
+      {/* MARQUEE 2 */}
+      <div className="py-2.5 overflow-hidden border-b border-white/[0.04]">
+        <div className="marquee-track-reverse">
+          {Array(12).fill(null).map((_, i) => (
+            <span key={i} className="text-white/10 font-black text-[10px] tracking-[0.3em] px-8 font-mono-custom">
+              PHANTOM CASE · NEON GRIP · VOID CHARGER · STEALTH BAND · CIPHER DOCK · RAW CABLE ·
+            </span>
           ))}
         </div>
+      </div>
+
+      {/* STATS */}
+      <section className="px-6 md:px-12 py-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04]">
+        {stats.map((s) => (
+          <div key={s.value} className="bg-[#050505] p-8 md:p-10 text-center group hover:bg-[#0d0d0d] transition-colors duration-300 bracket-box">
+            <div className="stat-number text-3xl md:text-4xl font-black text-orange-500 mb-1 group-hover:text-orange-400 transition-colors">{s.value}</div>
+            <div className="font-mono-custom text-[10px] text-white/50 tracking-[0.2em] mb-1">{s.label}</div>
+            <div className="font-mono-custom text-[9px] text-white/20 tracking-[0.15em]">{s.sub}</div>
+          </div>
+        ))}
       </section>
 
-      {/* ── PROMO BANNER ── */}
-      <section className="mx-6 md:mx-12 mb-28 bg-gradient-to-r from-orange-500 to-orange-600 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)', backgroundSize: '12px 12px'}} />
-        <div className="relative px-10 py-14 flex flex-col md:flex-row justify-between items-center gap-6">
+      {/* PRODUCTS */}
+      <section id="products" className="px-6 md:px-12 py-24 max-w-screen-2xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <p className="text-black/60 text-[10px] font-black tracking-[0.4em] mb-2">LIMITED TIME</p>
-            <h2 className="text-4xl md:text-6xl font-black text-black tracking-tight leading-none">
-              FREE<br />SHIPPING
+            <div className="font-mono-custom text-[10px] text-orange-500/60 tracking-[0.4em] mb-4 flex items-center gap-3">
+              <span className="blink">◆</span> SYS://PRODUCTS_LOADED
+            </div>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none">
+              THE<br />
+              <span style={{WebkitTextStroke: '1px rgba(255,255,255,0.3)', color: 'transparent'}}>LINEUP</span>
             </h2>
-            <p className="text-black/60 font-bold tracking-widest text-sm mt-3">ON ALL ORDERS OVER $50</p>
           </div>
-          <button className="bg-black text-white font-black px-10 py-5 tracking-[0.2em] text-xs hover:bg-white hover:text-black transition-all duration-200 shrink-0">
-            SHOP ALL DROPS
+          <div className="font-mono-custom text-[10px] text-white/20 tracking-widest text-right">
+            <div className="mb-1">ITEMS: 06</div>
+            <div className="mb-1">STATUS: IN STOCK</div>
+            <div className="text-orange-500/40">UPDATED: 2026.06.11</div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-px bg-white/[0.04]">
+          {products.map((product, i) => {
+            const isWide = i === 0 || i === 5;
+            return (
+              <div key={product.id} className={`product-card bg-[#050505] border border-transparent cursor-pointer group ${isWide ? 'md:col-span-8' : 'md:col-span-4'}`}>
+                <div className={`bg-[#0a0a0a] flex items-center justify-center relative overflow-hidden ${isWide ? 'aspect-[16/7]' : 'aspect-square'}`}>
+                  <div className="absolute inset-0 grid-bg opacity-50" />
+                  <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/15 tracking-widest">{product.sku}</div>
+                  <div className="absolute top-3 right-3 font-mono-custom text-[9px] text-orange-500/30 tracking-widest">{product.tag}</div>
+                  <div className="absolute bottom-3 right-3 font-mono-custom text-[9px] text-white/10">★ {product.rating} ({product.reviews})</div>
+                  <div className="relative z-10 text-center">
+                    <div className="text-[60px] md:text-[80px] font-black leading-none select-none transition-all duration-500 group-hover:scale-110" style={{WebkitTextStroke: '1px rgba(249,115,22,0.2)', color: 'transparent'}}>
+                      3D
+                    </div>
+                    <div className="font-mono-custom text-[9px] text-white/15 tracking-[0.3em] mt-2">IMG_PLACEHOLDER</div>
+                  </div>
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-orange-500/10 via-transparent to-transparent rotate-12 origin-top-right scale-150" />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-70" />
+                </div>
+                <div className="p-5 border-t border-white/[0.05] relative z-10">
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`font-mono-custom text-[9px] font-black tracking-[0.2em] border px-2 py-0.5 ${tagColors[product.tag]}`}>
+                          {product.tag}
+                        </span>
+                        <span className="font-mono-custom text-[9px] text-white/20">#{product.sku}</span>
+                      </div>
+                      <h3 className="font-black tracking-wider text-sm md:text-base mb-1">{product.name}</h3>
+                      <p className="text-white/30 text-xs font-mono-custom">{product.desc}</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="font-black text-white text-lg">{product.price}</div>
+                      <div className="font-mono-custom text-[9px] text-white/20">USD</div>
+                    </div>
+                  </div>
+                  <button className="mt-4 w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 hover:border-orange-500 hover:text-orange-500 hover:bg-orange-500/5 transition-all duration-200">
+                    [ ADD_TO_CART ]
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* PROMO BANNER */}
+      <section className="mx-6 md:mx-12 mb-24 relative overflow-hidden clip-diagonal-reverse">
+        <div className="bg-orange-500 px-10 md:px-16 py-16 md:py-20 relative">
+          <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)', backgroundSize: '10px 10px'}} />
+          <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px'}} />
+          <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+            <div>
+              <div className="font-mono-custom text-black/40 text-[10px] tracking-[0.4em] mb-3">// LIMITED_TIME_OFFER</div>
+              <h2 className="text-5xl md:text-7xl font-black text-black tracking-[-0.03em] leading-none mb-2">FREE<br />SHIPPING</h2>
+              <p className="font-mono-custom text-black/50 text-sm tracking-widest">ON_ALL_ORDERS &gt; $50.00</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <button className="bg-black text-white font-black px-12 py-5 tracking-[0.2em] text-xs hover:bg-white hover:text-black transition-all duration-200 font-mono-custom">
+                SHOP_ALL_DROPS →
+              </button>
+              <div className="font-mono-custom text-[9px] text-black/30 tracking-widest text-center">OFFER_EXPIRES: NEVER</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AFFILIATE */}
+      <section className="px-6 md:px-12 py-24 relative overflow-hidden">
+        <div className="absolute inset-0 grid-bg opacity-30" />
+        <div className="relative max-w-3xl mx-auto text-center">
+          <div className="font-mono-custom text-[10px] text-orange-500/50 tracking-[0.4em] mb-6 flex items-center justify-center gap-3">
+            <span className="w-8 h-px bg-orange-500/30" />
+            SYS://AFFILIATE_PROGRAM
+            <span className="w-8 h-px bg-orange-500/30" />
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-3 leading-none">
+            EARN WITH<br />
+            <span className="text-orange-500 flicker">INK3D</span>
+          </h2>
+          <p className="font-mono-custom text-white/30 text-sm leading-relaxed mb-10 max-w-md mx-auto">
+            // Join our affiliate network. Promote products.<br />
+            // Earn commission on every sale you drive.
+          </p>
+          <div className="grid grid-cols-3 gap-px bg-white/[0.05] mb-10">
+            {[["15%","COMMISSION"],["30D","COOKIE"],["$50","MIN PAYOUT"]].map(([val, label]) => (
+              <div key={label} className="bg-[#050505] py-6 bracket-box">
+                <div className="stat-number text-2xl font-black text-orange-500">{val}</div>
+                <div className="font-mono-custom text-[9px] text-white/30 tracking-widest mt-1">{label}</div>
+              </div>
+            ))}
+          </div>
+          <button className="border border-orange-500/40 text-orange-500 font-black px-12 py-4 text-xs tracking-[0.25em] hover:bg-orange-500 hover:text-black transition-all duration-200 font-mono-custom bracket-box">
+            [ APPLY_NOW ]
           </button>
         </div>
       </section>
 
-      {/* ── AFFILIATE STRIP ── */}
-      <section className="px-6 md:px-12 mb-28 text-center">
-        <p className="text-white/20 text-[10px] tracking-[0.4em] mb-4">— JOIN THE FAMILY</p>
-        <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-4">
-          BECOME AN <span className="text-orange-500">AFFILIATE</span>
-        </h2>
-        <p className="text-white/40 max-w-md mx-auto text-sm leading-relaxed mb-8">
-          Promote INK3D and earn commissions on every sale. Apply to join our affiliate program.
-        </p>
-        <button className="border border-orange-500/50 text-orange-500 font-black px-10 py-4 text-xs tracking-[0.2em] hover:bg-orange-500 hover:text-black transition-all duration-200">
-          APPLY NOW
-        </button>
-      </section>
-
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-white/[0.06] px-6 md:px-12 py-10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-white/25 text-[10px] tracking-[0.2em]">
-          <span className="text-orange-500 font-black text-lg flicker">INK3D</span>
-          <span>© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
-          <div className="flex gap-8">
-            <Link href="https://x.com/ink3dStudio" className="hover:text-orange-500 transition-colors">TWITTER</Link>
-            <Link href="https://www.tiktok.com/@ink3d.studio" className="hover:text-orange-500 transition-colors">TIKTOK</Link>
-            <Link href="https://discordapp.com/invite/rv99duMaW6" className="hover:text-orange-500 transition-colors">DISCORD</Link>
+      {/* FOOTER */}
+      <footer className="border-t border-white/[0.05]">
+        <div className="px-6 md:px-12 py-12">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+            <div>
+              <span className="text-2xl font-black text-orange-500 flicker tracking-widest block mb-2">INK3D</span>
+              <div className="font-mono-custom text-[10px] text-white/20 tracking-widest">STUDIO // TECH ACCESSORIES</div>
+              <div className="font-mono-custom text-[10px] text-white/10 mt-1">SAN JOSE, CA — EST. 2024</div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-[11px]">
+              {[
+                { title: "SHOP", links: ["All Products","New Arrivals","Collections","Sale"] },
+                { title: "INFO", links: ["About","Contact","Affiliates","Press"] },
+                { title: "LEGAL", links: ["Privacy","Terms","Returns","Shipping"] },
+              ].map(col => (
+                <div key={col.title}>
+                  <div className="font-mono-custom text-[9px] text-orange-500/50 tracking-[0.3em] mb-3">{col.title}</div>
+                  {col.links.map(link => (
+                    <Link key={link} href="#" className="block text-white/25 hover:text-white/70 transition-colors mb-2 tracking-wider hover-line">{link}</Link>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="border-t border-white/[0.04] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
+            <div className="flex gap-8">
+              {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
+                <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 hover:text-orange-500 transition-colors tracking-widest hover-line">{name}</Link>
+              ))}
+            </div>
           </div>
         </div>
       </footer>
