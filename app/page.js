@@ -36,7 +36,7 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
         <div className="px-6 md:px-12 py-3 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Image src="/ink3d_v2.png" alt="INK3D Logo" width={80} height={32} className="object-contain" />
+            <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain" />
             <span className="font-mono-custom text-[10px] text-white/20 tracking-widest hidden md:block">SYS://INK3D_v2.6</span>
           </div>
           <div className="hidden md:flex gap-8 text-[11px] font-bold tracking-[0.15em] text-white/40">
@@ -74,7 +74,7 @@ export default function Home() {
 
         {/* Logo in hero */}
         <div className="mb-6">
-          <Image src="/ink3d_v2.png" alt="INK3D Logo" width={220} height={88} className="object-contain mx-auto flicker" />
+          <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={300} height={120} className="object-contain mx-auto flicker" />
         </div>
 
         <div className="relative mb-2">
@@ -296,7 +296,7 @@ export default function Home() {
         <div className="px-6 md:px-12 py-12">
           <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
             <div>
-              <Image src="/ink3d_v2.png" alt="INK3D Logo" width={100} height={40} className="object-contain mb-3" />
+              <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={100} height={40} className="object-contain mb-3" />
               <div className="font-mono-custom text-[10px] text-white/20 tracking-widest">STUDIO // ACCESSORIES</div>
               <div className="font-mono-custom text-[10px] text-white/10 mt-1">MILFORD, NH — EST. 2024</div>
             </div>
