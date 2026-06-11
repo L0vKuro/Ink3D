@@ -39,9 +39,10 @@ export default function Home() {
             <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain" />
           </div>
           <div className="hidden md:flex gap-8 text-[11px] font-bold tracking-[0.15em] text-white/40">
-            {["HOME","SHOP","COLLECTIONS","ABOUT"].map(item => (
-              <Link key={item} href={item === "SHOP" ? "#products" : "#"} className="hover-line hover:text-white transition-colors duration-200">{item}</Link>
-            ))}
+            <Link href="/" className="hover-line hover:text-white transition-colors duration-200">HOME</Link>
+            <Link href="/teams" className="hover-line hover:text-white transition-colors duration-200">SHOP</Link>
+            <Link href="#" className="hover-line hover:text-white transition-colors duration-200">COLLECTIONS</Link>
+            <Link href="#" className="hover-line hover:text-white transition-colors duration-200">ABOUT</Link>
           </div>
           <div className="flex items-center gap-4">
             <span className="font-mono-custom text-[10px] hidden md:block" style={{color: '#ae1fe388'}}>
@@ -71,7 +72,6 @@ export default function Home() {
           <span>MILFORD_NH</span>
         </div>
 
-        {/* Logo in hero */}
         <div className="mb-6">
           <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={300} height={120} className="object-contain mx-auto flicker" />
         </div>
@@ -97,7 +97,7 @@ export default function Home() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
-          <Link href="#products">
+          <Link href="/teams">
             <button className="glow-btn font-black px-12 py-4 text-xs tracking-[0.25em] transition-colors duration-200 relative overflow-hidden group" style={{background: '#ae1fe3', color: '#fff'}}>
               <span className="relative z-10">SHOP NOW</span>
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
@@ -174,8 +174,8 @@ export default function Home() {
               <span className="blink">◆</span> SYS://PRODUCTS_LOADED
             </div>
             <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none">
-              THE<br />
-              <span style={{WebkitTextStroke: '1px rgba(255,255,255,0.3)', color: 'transparent'}}>LINEUP</span>
+              FEATURED<br />
+              <span style={{WebkitTextStroke: '1px rgba(255,255,255,0.3)', color: 'transparent'}}>ITEMS</span>
             </h2>
           </div>
           <div className="font-mono-custom text-[10px] text-white/20 tracking-widest text-right">
