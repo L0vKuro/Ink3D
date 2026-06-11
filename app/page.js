@@ -11,7 +11,7 @@ const products = [
 
 const tagColors = {
   NEW: "text-blue-400 border-blue-400/50 bg-blue-400/10",
-  HOT: "text-orange-400 border-orange-400/50 bg-orange-400/10",
+  HOT: "text-purple-400 border-purple-400/50 bg-purple-400/10",
   LIMITED: "text-red-400 border-red-400/50 bg-red-400/10",
   STAPLE: "text-white/40 border-white/20 bg-white/5",
 };
@@ -33,7 +33,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <span className="font-mono-custom text-[10px] text-white/20 tracking-widest hidden md:block">SYS://INK3D_v2.6</span>
             <span className="w-px h-4 bg-white/10 hidden md:block" />
-            <span className="text-xl font-black tracking-[0.15em] flicker text-orange-500">INK3D</span>
+            <span className="text-xl font-black tracking-[0.15em] flicker" style={{color: '#ae1fe3'}}>INK3D</span>
           </div>
           <div className="hidden md:flex gap-8 text-[11px] font-bold tracking-[0.15em] text-white/40">
             {["HOME","SHOP","COLLECTIONS","ABOUT"].map(item => (
@@ -41,28 +41,30 @@ export default function Home() {
             ))}
           </div>
           <div className="flex items-center gap-4">
-            <span className="font-mono-custom text-[10px] text-orange-500/60 hidden md:block">
+            <span className="font-mono-custom text-[10px] hidden md:block" style={{color: '#ae1fe388'}}>
               <span className="blink">▋</span> ONLINE
             </span>
-            <button className="border border-orange-500/50 text-orange-500 px-5 py-2 text-[11px] font-black tracking-[0.15em] hover:bg-orange-500 hover:text-black transition-all duration-200 bracket-box">
+            <button className="px-5 py-2 text-[11px] font-black tracking-[0.15em] transition-all duration-200 bracket-box" style={{border: '1px solid #ae1fe388', color: '#ae1fe3'}}
+              onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#000'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
               CART (0)
             </button>
           </div>
         </div>
-        <div className="h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent" />
+        <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #ae1fe344, transparent)'}} />
       </nav>
 
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 grid-bg clip-diagonal overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-orange-500/[0.04] blur-[150px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none" style={{background: '#ae1fe308'}} />
         <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/[0.05] blur-[120px] pointer-events-none" />
-        <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-orange-600/[0.06] blur-[80px] pointer-events-none" />
+        <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none" style={{background: '#ae1fe310'}} />
 
         <div className="font-mono-custom text-[10px] text-white/20 tracking-[0.3em] mb-8 flex items-center gap-4">
           <span>INK3D_STUDIO</span>
-          <span className="text-orange-500/40">——</span>
+          <span style={{color: '#ae1fe344'}}>——</span>
           <span>COLLECTION_2026</span>
-          <span className="text-orange-500/40">——</span>
+          <span style={{color: '#ae1fe344'}}>——</span>
           <span>TECH_ACCESSORIES</span>
         </div>
 
@@ -70,7 +72,7 @@ export default function Home() {
           <div className="text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none glitch-wrapper flicker" data-text="INK3D">
             INK3D
           </div>
-          <div className="absolute inset-0 text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none" style={{WebkitTextStroke: '1px rgba(249,115,22,0.15)', color: 'transparent', transform: 'translate(3px, 3px)'}}>
+          <div className="absolute inset-0 text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none" style={{WebkitTextStroke: '1px #ae1fe322', color: 'transparent', transform: 'translate(3px, 3px)'}}>
             INK3D
           </div>
         </div>
@@ -88,19 +90,19 @@ export default function Home() {
 
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
           <Link href="#products">
-            <button className="glow-btn bg-orange-500 text-black font-black px-12 py-4 text-xs tracking-[0.25em] hover:bg-orange-400 transition-colors duration-200 relative overflow-hidden group">
+            <button className="glow-btn font-black px-12 py-4 text-xs tracking-[0.25em] transition-colors duration-200 relative overflow-hidden group" style={{background: '#ae1fe3', color: '#fff'}}>
               <span className="relative z-10">SHOP NOW</span>
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
             </button>
           </Link>
-          <button className="border border-white/15 text-white/60 px-12 py-4 text-xs font-black tracking-[0.25em] hover:border-orange-500/50 hover:text-white transition-all duration-200 bracket-box">
+          <button className="border border-white/15 text-white/60 px-12 py-4 text-xs font-black tracking-[0.25em] hover:text-white transition-all duration-200 bracket-box" style={{}}>
             VIEW LOOKBOOK
           </button>
         </div>
 
         <div className="flex gap-8 md:gap-16 font-mono-custom text-[10px]">
           <div className="text-center">
-            <div className="text-orange-500 font-bold">50K+</div>
+            <div className="font-bold" style={{color: '#ae1fe3'}}>50K+</div>
             <div className="text-white/20 tracking-widest">SHIPPED</div>
           </div>
           <div className="text-white/10">|</div>
@@ -117,17 +119,17 @@ export default function Home() {
 
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
           <span className="font-mono-custom text-[9px] text-white/15 tracking-[0.4em]">SCROLL_DOWN</span>
-          <div className="w-px h-12 bg-gradient-to-b from-orange-500/40 to-transparent relative overflow-hidden">
-            <div className="scroll-dot absolute top-0 left-0 w-full h-3 bg-orange-500/60" />
+          <div className="w-px h-12 relative overflow-hidden" style={{background: 'linear-gradient(to bottom, #ae1fe344, transparent)'}}>
+            <div className="scroll-dot absolute top-0 left-0 w-full h-3" style={{background: '#ae1fe399'}} />
           </div>
         </div>
       </section>
 
       {/* MARQUEE 1 */}
-      <div className="bg-orange-500 py-3 overflow-hidden border-y border-orange-400">
+      <div className="py-3 overflow-hidden border-y" style={{background: '#ae1fe3', borderColor: '#c040ff'}}>
         <div className="marquee-track">
           {Array(12).fill(null).map((_, i) => (
-            <span key={i} className="text-black font-black text-[11px] tracking-[0.25em] px-8 font-mono-custom">
+            <span key={i} className="font-black text-[11px] tracking-[0.25em] px-8 font-mono-custom text-white">
               INK3D STUDIO ◆ TECH ACCESSORIES ◆ FREE SHIPPING $50+ ◆ NEW DROP 2026 ◆ EST. 2024 ◆
             </span>
           ))}
@@ -149,7 +151,7 @@ export default function Home() {
       <section className="px-6 md:px-12 py-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04]">
         {stats.map((s) => (
           <div key={s.value} className="bg-[#050505] p-8 md:p-10 text-center group hover:bg-[#0d0d0d] transition-colors duration-300 bracket-box">
-            <div className="stat-number text-3xl md:text-4xl font-black text-orange-500 mb-1 group-hover:text-orange-400 transition-colors">{s.value}</div>
+            <div className="stat-number text-3xl md:text-4xl font-black mb-1 transition-colors" style={{color: '#ae1fe3'}}>{s.value}</div>
             <div className="font-mono-custom text-[10px] text-white/50 tracking-[0.2em] mb-1">{s.label}</div>
             <div className="font-mono-custom text-[9px] text-white/20 tracking-[0.15em]">{s.sub}</div>
           </div>
@@ -160,7 +162,7 @@ export default function Home() {
       <section id="products" className="px-6 md:px-12 py-24 max-w-screen-2xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="font-mono-custom text-[10px] text-orange-500/60 tracking-[0.4em] mb-4 flex items-center gap-3">
+            <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-4 flex items-center gap-3" style={{color: '#ae1fe366'}}>
               <span className="blink">◆</span> SYS://PRODUCTS_LOADED
             </div>
             <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none">
@@ -171,7 +173,7 @@ export default function Home() {
           <div className="font-mono-custom text-[10px] text-white/20 tracking-widest text-right">
             <div className="mb-1">ITEMS: 06</div>
             <div className="mb-1">STATUS: IN STOCK</div>
-            <div className="text-orange-500/40">UPDATED: 2026.06.11</div>
+            <div style={{color: '#ae1fe344'}}>UPDATED: 2026.06.11</div>
           </div>
         </div>
 
@@ -183,16 +185,16 @@ export default function Home() {
                 <div className={`bg-[#0a0a0a] flex items-center justify-center relative overflow-hidden ${isWide ? 'aspect-[16/7]' : 'aspect-square'}`}>
                   <div className="absolute inset-0 grid-bg opacity-50" />
                   <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/15 tracking-widest">{product.sku}</div>
-                  <div className="absolute top-3 right-3 font-mono-custom text-[9px] text-orange-500/30 tracking-widest">{product.tag}</div>
+                  <div className="absolute top-3 right-3 font-mono-custom text-[9px] tracking-widest" style={{color: '#ae1fe344'}}>{product.tag}</div>
                   <div className="absolute bottom-3 right-3 font-mono-custom text-[9px] text-white/10">★ {product.rating} ({product.reviews})</div>
                   <div className="relative z-10 text-center">
-                    <div className="text-[60px] md:text-[80px] font-black leading-none select-none transition-all duration-500 group-hover:scale-110" style={{WebkitTextStroke: '1px rgba(249,115,22,0.2)', color: 'transparent'}}>
+                    <div className="text-[60px] md:text-[80px] font-black leading-none select-none transition-all duration-500 group-hover:scale-110" style={{WebkitTextStroke: '1px #ae1fe322', color: 'transparent'}}>
                       3D
                     </div>
                     <div className="font-mono-custom text-[9px] text-white/15 tracking-[0.3em] mt-2">IMG_PLACEHOLDER</div>
                   </div>
                   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-orange-500/10 via-transparent to-transparent rotate-12 origin-top-right scale-150" />
+                    <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-white/5 via-transparent to-transparent rotate-12 origin-top-right scale-150" />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-70" />
                 </div>
@@ -213,7 +215,10 @@ export default function Home() {
                       <div className="font-mono-custom text-[9px] text-white/20">USD</div>
                     </div>
                   </div>
-                  <button className="mt-4 w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 hover:border-orange-500 hover:text-orange-500 hover:bg-orange-500/5 transition-all duration-200">
+                  <button className="mt-4 w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
+                    style={{}}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; e.currentTarget.style.background='#ae1fe308'; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
                     [ ADD_TO_CART ]
                   </button>
                 </div>
@@ -225,20 +230,20 @@ export default function Home() {
 
       {/* PROMO BANNER */}
       <section className="mx-6 md:mx-12 mb-24 relative overflow-hidden clip-diagonal-reverse">
-        <div className="bg-orange-500 px-10 md:px-16 py-16 md:py-20 relative">
+        <div className="px-10 md:px-16 py-16 md:py-20 relative" style={{background: '#ae1fe3'}}>
           <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)', backgroundSize: '10px 10px'}} />
           <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px'}} />
           <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div>
-              <div className="font-mono-custom text-black/40 text-[10px] tracking-[0.4em] mb-3">// LIMITED_TIME_OFFER</div>
-              <h2 className="text-5xl md:text-7xl font-black text-black tracking-[-0.03em] leading-none mb-2">FREE<br />SHIPPING</h2>
-              <p className="font-mono-custom text-black/50 text-sm tracking-widest">ON_ALL_ORDERS &gt; $50.00</p>
+              <div className="font-mono-custom text-white/40 text-[10px] tracking-[0.4em] mb-3">// LIMITED_TIME_OFFER</div>
+              <h2 className="text-5xl md:text-7xl font-black text-white tracking-[-0.03em] leading-none mb-2">FREE<br />SHIPPING</h2>
+              <p className="font-mono-custom text-white/50 text-sm tracking-widest">ON_ALL_ORDERS &gt; $50.00</p>
             </div>
             <div className="flex flex-col gap-3">
-              <button className="bg-black text-white font-black px-12 py-5 tracking-[0.2em] text-xs hover:bg-white hover:text-black transition-all duration-200 font-mono-custom">
+              <button className="bg-white font-black px-12 py-5 tracking-[0.2em] text-xs font-mono-custom transition-all duration-200 hover:bg-black hover:text-white" style={{color: '#ae1fe3'}}>
                 SHOP_ALL_DROPS →
               </button>
-              <div className="font-mono-custom text-[9px] text-black/30 tracking-widest text-center">OFFER_EXPIRES: NEVER</div>
+              <div className="font-mono-custom text-[9px] text-white/30 tracking-widest text-center">OFFER_EXPIRES: NEVER</div>
             </div>
           </div>
         </div>
@@ -248,14 +253,14 @@ export default function Home() {
       <section className="px-6 md:px-12 py-24 relative overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-30" />
         <div className="relative max-w-3xl mx-auto text-center">
-          <div className="font-mono-custom text-[10px] text-orange-500/50 tracking-[0.4em] mb-6 flex items-center justify-center gap-3">
-            <span className="w-8 h-px bg-orange-500/30" />
+          <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-6 flex items-center justify-center gap-3" style={{color: '#ae1fe355'}}>
+            <span className="w-8 h-px" style={{background: '#ae1fe333'}} />
             SYS://AFFILIATE_PROGRAM
-            <span className="w-8 h-px bg-orange-500/30" />
+            <span className="w-8 h-px" style={{background: '#ae1fe333'}} />
           </div>
           <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-3 leading-none">
             EARN WITH<br />
-            <span className="text-orange-500 flicker">INK3D</span>
+            <span className="flicker" style={{color: '#ae1fe3'}}>INK3D</span>
           </h2>
           <p className="font-mono-custom text-white/30 text-sm leading-relaxed mb-10 max-w-md mx-auto">
             // Join our affiliate network. Promote products.<br />
@@ -264,12 +269,15 @@ export default function Home() {
           <div className="grid grid-cols-3 gap-px bg-white/[0.05] mb-10">
             {[["15%","COMMISSION"],["30D","COOKIE"],["$50","MIN PAYOUT"]].map(([val, label]) => (
               <div key={label} className="bg-[#050505] py-6 bracket-box">
-                <div className="stat-number text-2xl font-black text-orange-500">{val}</div>
+                <div className="stat-number text-2xl font-black" style={{color: '#ae1fe3'}}>{val}</div>
                 <div className="font-mono-custom text-[9px] text-white/30 tracking-widest mt-1">{label}</div>
               </div>
             ))}
           </div>
-          <button className="border border-orange-500/40 text-orange-500 font-black px-12 py-4 text-xs tracking-[0.25em] hover:bg-orange-500 hover:text-black transition-all duration-200 font-mono-custom bracket-box">
+          <button className="font-black px-12 py-4 text-xs tracking-[0.25em] font-mono-custom bracket-box transition-all duration-200"
+            style={{border: '1px solid #ae1fe344', color: '#ae1fe3', background: 'transparent'}}
+            onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#fff'; }}
+            onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
             [ APPLY_NOW ]
           </button>
         </div>
@@ -280,7 +288,7 @@ export default function Home() {
         <div className="px-6 md:px-12 py-12">
           <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
             <div>
-              <span className="text-2xl font-black text-orange-500 flicker tracking-widest block mb-2">INK3D</span>
+              <span className="text-2xl font-black flicker tracking-widest block mb-2" style={{color: '#ae1fe3'}}>INK3D</span>
               <div className="font-mono-custom text-[10px] text-white/20 tracking-widest">STUDIO // TECH ACCESSORIES</div>
               <div className="font-mono-custom text-[10px] text-white/10 mt-1">SAN JOSE, CA — EST. 2024</div>
             </div>
@@ -291,7 +299,7 @@ export default function Home() {
                 { title: "LEGAL", links: ["Privacy","Terms","Returns","Shipping"] },
               ].map(col => (
                 <div key={col.title}>
-                  <div className="font-mono-custom text-[9px] text-orange-500/50 tracking-[0.3em] mb-3">{col.title}</div>
+                  <div className="font-mono-custom text-[9px] tracking-[0.3em] mb-3" style={{color: '#ae1fe355'}}>{col.title}</div>
                   {col.links.map(link => (
                     <Link key={link} href="#" className="block text-white/25 hover:text-white/70 transition-colors mb-2 tracking-wider hover-line">{link}</Link>
                   ))}
@@ -303,7 +311,7 @@ export default function Home() {
             <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
             <div className="flex gap-8">
               {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
-                <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 hover:text-orange-500 transition-colors tracking-widest hover-line">{name}</Link>
+                <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 transition-colors tracking-widest hover-line hover:text-white/70">{name}</Link>
               ))}
             </div>
           </div>
