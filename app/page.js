@@ -3,19 +3,21 @@
 import Link from "next/link";
 
 const products = [
-  { id: 1, name: "PHANTOM CASE", price: "$34.99", tag: "NEW", desc: "Ultra-slim. Zero compromises.", sku: "INK-001", rating: "4.9", reviews: "2.3K" },
-  { id: 2, name: "NEON GRIP", price: "$19.99", tag: "HOT", desc: "Lock in. Stand out.", sku: "INK-002", rating: "4.8", reviews: "1.8K" },
-  { id: 3, name: "VOID CHARGER", price: "$49.99", tag: "LIMITED", desc: "100W. Silent. Ruthless.", sku: "INK-003", rating: "5.0", reviews: "987" },
-  { id: 4, name: "STEALTH BAND", price: "$29.99", tag: "NEW", desc: "Wear the night shift.", sku: "INK-004", rating: "4.7", reviews: "1.2K" },
-  { id: 5, name: "CIPHER DOCK", price: "$59.99", tag: "HOT", desc: "Your setup. Elevated.", sku: "INK-005", rating: "4.9", reviews: "756" },
-  { id: 6, name: "RAW CABLE", price: "$14.99", tag: "STAPLE", desc: "Braided. Built to last.", sku: "INK-006", rating: "4.6", reviews: "3.1K" },
+  { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K" },
+  { id: 2, name: "CUBAN HYPE CHAIN", price: "$34.99", tag: "CHAIN", desc: "Drip that hits different.", sku: "INK-002", rating: "4.8", reviews: "1.8K" },
+  { id: 3, name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", desc: "Light up your setup.", sku: "INK-003", rating: "5.0", reviews: "987" },
+  { id: 4, name: "COASTER", price: "$9.99", tag: "COASTER", desc: "Protect the desk. Rep the brand.", sku: "INK-004", rating: "4.7", reviews: "1.2K" },
+  { id: 5, name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", desc: "Heavy. Clean. Iconic.", sku: "INK-005", rating: "4.9", reviews: "756" },
+  { id: 6, name: "WALL ART", price: "$39.99", tag: "WALL ART", desc: "Turn your wall into a statement.", sku: "INK-006", rating: "4.6", reviews: "3.1K" },
 ];
 
 const tagColors = {
-  NEW: "text-blue-400 border-blue-400/50 bg-blue-400/10",
-  HOT: "text-purple-400 border-purple-400/50 bg-purple-400/10",
-  LIMITED: "text-red-400 border-red-400/50 bg-red-400/10",
-  STAPLE: "text-white/40 border-white/20 bg-white/5",
+  KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
+  CHAIN:      "text-[#ae1fe3] border-[#ae1fe3]/50 bg-[#ae1fe3]/10",
+  LIGHTBOX:   "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
+  COASTER:    "text-green-400 border-green-400/50 bg-green-400/10",
+  NECKLACE:   "text-pink-400 border-pink-400/50 bg-pink-400/10",
+  "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
 };
 
 const stats = [
@@ -87,7 +89,7 @@ export default function Home() {
           // engineered for those who refuse to blend in
         </p>
         <p className="text-white/20 text-xs tracking-[0.3em] mb-12 font-mono-custom">
-          TECH ACCESSORIES — EST. 2024 — SAN JOSE, CA
+          ACCESSORIES — EST. 2024 — SAN JOSE, CA
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
@@ -97,7 +99,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
             </button>
           </Link>
-          <button className="border border-white/15 text-white/60 px-12 py-4 text-xs font-black tracking-[0.25em] hover:text-white transition-all duration-200 bracket-box" style={{}}>
+          <button className="border border-white/15 text-white/60 px-12 py-4 text-xs font-black tracking-[0.25em] hover:text-white transition-all duration-200 bracket-box">
             VIEW LOOKBOOK
           </button>
         </div>
@@ -132,7 +134,7 @@ export default function Home() {
         <div className="marquee-track">
           {Array(12).fill(null).map((_, i) => (
             <span key={i} className="font-black text-[11px] tracking-[0.25em] px-8 font-mono-custom text-white">
-              INK3D STUDIO ◆ TECH ACCESSORIES ◆ FREE SHIPPING $50+ ◆ NEW DROP 2026 ◆ EST. 2024 ◆
+              INK3D STUDIO ◆ KEYCHAINS ◆ CHAINS ◆ LIGHTBOXES ◆ COASTERS ◆ NECKLACES ◆ WALL ART ◆ FREE SHIPPING $50+ ◆
             </span>
           ))}
         </div>
@@ -143,7 +145,7 @@ export default function Home() {
         <div className="marquee-track-reverse">
           {Array(12).fill(null).map((_, i) => (
             <span key={i} className="text-white/10 font-black text-[10px] tracking-[0.3em] px-8 font-mono-custom">
-              PHANTOM CASE · NEON GRIP · VOID CHARGER · STEALTH BAND · CIPHER DOCK · RAW CABLE ·
+              KEYCHAIN · CUBAN HYPE CHAIN · LIGHTBOX · COASTER · CUBAN NECKLACE · WALL ART ·
             </span>
           ))}
         </div>
@@ -218,7 +220,6 @@ export default function Home() {
                     </div>
                   </div>
                   <button className="mt-4 w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
-                    style={{}}
                     onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; e.currentTarget.style.background='#ae1fe308'; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
                     [ ADD_TO_CART ]
@@ -291,7 +292,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
             <div>
               <span className="text-2xl font-black flicker tracking-widest block mb-2" style={{color: '#ae1fe3'}}>INK3D</span>
-              <div className="font-mono-custom text-[10px] text-white/20 tracking-widest">STUDIO // TECH ACCESSORIES</div>
+              <div className="font-mono-custom text-[10px] text-white/20 tracking-widest">STUDIO // ACCESSORIES</div>
               <div className="font-mono-custom text-[10px] text-white/10 mt-1">SAN JOSE, CA — EST. 2024</div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-[11px]">
