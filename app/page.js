@@ -21,10 +21,10 @@ const tagColors = {
 };
 
 const stats = [
-  { value: "50K+", label: "UNITS SHIPPED", sub: "WORLDWIDE" },
-  { value: "4.9", label: "AVG RATING", sub: "9,000+ REVIEWS" },
-  { value: "99%", label: "SATISFACTION", sub: "GUARANTEED" },
-  { value: "72H", label: "MAX DELIVERY", sub: "EXPRESS ONLY" },
+  { value: "500+", label: "UNITS SHIPPED", sub: "AND COUNTING" },
+  { value: "100%", label: "SATISFACTION", sub: "GUARANTEED" },
+  { value: "3-7D", label: "DELIVERY TIME", sub: "BUSINESS DAYS" },
+  { value: "2024", label: "EST. MILFORD", sub: "MILFORD, NH" },
 ];
 
 export default function Home() {
@@ -69,7 +69,7 @@ export default function Home() {
           <span style={{color: '#ae1fe344'}}>——</span>
           <span>COLLECTION_2026</span>
           <span style={{color: '#ae1fe344'}}>——</span>
-          <span>TECH_ACCESSORIES</span>
+          <span>MILFORD_NH</span>
         </div>
 
         <div className="relative mb-2">
@@ -89,7 +89,7 @@ export default function Home() {
           // engineered for those who refuse to blend in
         </p>
         <p className="text-white/20 text-xs tracking-[0.3em] mb-12 font-mono-custom">
-          ACCESSORIES — EST. 2024 — SAN JOSE, CA
+          ACCESSORIES — EST. 2024 — MILFORD, NH
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
@@ -106,18 +106,18 @@ export default function Home() {
 
         <div className="flex gap-8 md:gap-16 font-mono-custom text-[10px]">
           <div className="text-center">
-            <div className="font-bold" style={{color: '#ae1fe3'}}>50K+</div>
+            <div className="font-bold" style={{color: '#ae1fe3'}}>500+</div>
             <div className="text-white/20 tracking-widest">SHIPPED</div>
           </div>
           <div className="text-white/10">|</div>
           <div className="text-center">
-            <div className="text-white/60 font-bold">4.9★</div>
-            <div className="text-white/20 tracking-widest">RATING</div>
+            <div className="text-white/60 font-bold">100%</div>
+            <div className="text-white/20 tracking-widest">SATISFACTION</div>
           </div>
           <div className="text-white/10">|</div>
           <div className="text-center">
-            <div className="text-blue-400 font-bold">FREE</div>
-            <div className="text-white/20 tracking-widest">SHIPPING $50+</div>
+            <div className="text-blue-400 font-bold">3-7D</div>
+            <div className="text-white/20 tracking-widest">DELIVERY</div>
           </div>
         </div>
 
@@ -134,7 +134,7 @@ export default function Home() {
         <div className="marquee-track">
           {Array(12).fill(null).map((_, i) => (
             <span key={i} className="font-black text-[11px] tracking-[0.25em] px-8 font-mono-custom text-white">
-              INK3D STUDIO ◆ KEYCHAINS ◆ CHAINS ◆ LIGHTBOXES ◆ COASTERS ◆ NECKLACES ◆ WALL ART ◆ FREE SHIPPING $50+ ◆
+              INK3D STUDIO ◆ MILFORD NH ◆ EST. 2024 ◆ 100% SATISFACTION ◆ 3-7 DAY DELIVERY ◆ FREE SHIPPING $50+ ◆
             </span>
           ))}
         </div>
@@ -293,7 +293,7 @@ export default function Home() {
             <div>
               <span className="text-2xl font-black flicker tracking-widest block mb-2" style={{color: '#ae1fe3'}}>INK3D</span>
               <div className="font-mono-custom text-[10px] text-white/20 tracking-widest">STUDIO // ACCESSORIES</div>
-              <div className="font-mono-custom text-[10px] text-white/10 mt-1">SAN JOSE, CA — EST. 2024</div>
+              <div className="font-mono-custom text-[10px] text-white/10 mt-1">MILFORD, NH — EST. 2024</div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-[11px]">
               {[
