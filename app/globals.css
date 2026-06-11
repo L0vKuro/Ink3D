@@ -2,25 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-*, *::before, *::after {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background-color: #080808;
   color: #ffffff;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: system-ui, sans-serif;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* Marquee */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -31,25 +27,18 @@ body {
   white-space: nowrap;
 }
 
-/* Glow pulse on CTA */
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 15px #f97316, 0 0 30px #f97316aa; }
-  50%       { box-shadow: 0 0 35px #f97316, 0 0 70px #f97316aa; }
+  50% { box-shadow: 0 0 35px #f97316, 0 0 70px #f97316aa; }
 }
-.glow-btn {
-  animation: glow-pulse 2.5s ease-in-out infinite;
-}
+.glow-btn { animation: glow-pulse 2.5s ease-in-out infinite; }
 
-/* Subtle logo flicker */
 @keyframes flicker {
   0%, 89%, 91%, 93%, 100% { opacity: 1; }
   90%, 92% { opacity: 0.35; }
 }
-.flicker {
-  animation: flicker 6s infinite;
-}
+.flicker { animation: flicker 6s infinite; }
 
-/* Grid card hover border glow */
 .product-card {
   transition: border-color 0.3s ease, transform 0.3s ease;
 }
@@ -60,6 +49,4 @@ body {
 .product-card:hover .card-thumb {
   background: linear-gradient(135deg, rgba(249,115,22,0.12), rgba(59,130,246,0.08));
 }
-.card-thumb {
-  transition: background 0.4s ease;
-}
+.card-thumb { transition: background 0.4s ease; }
