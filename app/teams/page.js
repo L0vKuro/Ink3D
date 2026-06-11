@@ -8,7 +8,7 @@ const teams = [
   {
     id: "atlantis",
     name: "Atlantis Esports",
-    logo: "/team-atlantis.jpg",
+    logo: "/team-Atlantis.jpg",
     color: "#00b4d8",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
@@ -18,7 +18,7 @@ const teams = [
   {
     id: "buckshot",
     name: "Buckshot Gaming",
-    logo: "/team-buckshot.png",
+    logo: "/team-Buckshot.png",
     color: "#ff4d6d",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
@@ -27,7 +27,7 @@ const teams = [
   {
     id: "eym",
     name: "Earn Your Medal",
-    logo: "/team-eym.jpg",
+    logo: "/team-EYM.jpg",
     color: "#e63946",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
@@ -37,7 +37,7 @@ const teams = [
   {
     id: "godslayers",
     name: "God Slayers",
-    logo: "/team-godslayers.jpg",
+    logo: "/team-GodSlayers.jpg",
     color: "#ffd60a",
     items: [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
@@ -49,7 +49,7 @@ const teams = [
   {
     id: "outkatz",
     name: "Outkatz",
-    logo: "/team-outkatz.png",
+    logo: "/team-Outkastz.png",
     color: "#2d6a4f",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
@@ -58,7 +58,7 @@ const teams = [
   {
     id: "reignabove",
     name: "Reign Above",
-    logo: "/team-reignabove.png",
+    logo: "/team-ReignAbove.png",
     color: "#c9a227",
     items: [
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
@@ -70,7 +70,7 @@ const teams = [
   {
     id: "sgc",
     name: "Shinto Gaming Club",
-    logo: "/team-sgc.jpg",
+    logo: "/team-SGC (shintogamingclub).jpg",
     color: "#e63946",
     items: [
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
@@ -82,7 +82,7 @@ const teams = [
   {
     id: "upnxt",
     name: "Team Up Nxt",
-    logo: "/team-upnxt.png",
+    logo: "/team-UpNxt.png",
     color: "#ff006e",
     items: [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
@@ -91,7 +91,7 @@ const teams = [
   {
     id: "vaultiv",
     name: "Vault IV",
-    logo: "/team-vaultiv.jpg",
+    logo: "/team-Vault ix.jpg",
     color: "#7b2d8b",
     items: [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
@@ -103,7 +103,7 @@ const teams = [
   {
     id: "veriphy",
     name: "Veriphy Gaming",
-    logo: "/team-veriphy.jpg",
+    logo: "/team-Veriphy.jpg",
     color: "#ffd60a",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
@@ -113,7 +113,7 @@ const teams = [
   {
     id: "wlg",
     name: "White Leopard Gaming",
-    logo: "/team-wlg.png",
+    logo: "/team-White Leopard.png",
     color: "#e63946",
     items: [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
@@ -122,7 +122,7 @@ const teams = [
   {
     id: "ninefly",
     name: "Ninefly",
-    logo: "/team-ninefly.jpg",
+    logo: "/team-Ninefly.jpg",
     color: "#ffffff",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
@@ -229,7 +229,6 @@ export default function Teams() {
         {/* INDIVIDUAL TEAM STORE */}
         {activeTeam && selected && (
           <div>
-            {/* Back button */}
             <button
               onClick={() => setActiveTeam(null)}
               className="font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors mb-10 flex items-center gap-2"
@@ -237,7 +236,6 @@ export default function Teams() {
               ← BACK_TO_ALL_TEAMS
             </button>
 
-            {/* Team header */}
             <div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-16 pb-8 border-b border-white/[0.05]">
               <div className="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden flex-shrink-0"
                 style={{background: `radial-gradient(circle, ${selected.color}15, transparent)`, border: `1px solid ${selected.color}30`}}>
@@ -256,12 +254,9 @@ export default function Teams() {
               </div>
             </div>
 
-            {/* Items grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04]">
               {selected.items.map((item, i) => (
-                <div key={i} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer"
-                  style={{'--team-color': selected.color}}>
-                  {/* Thumb */}
+                <div key={i} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer">
                   <div className="aspect-square flex items-center justify-center relative overflow-hidden"
                     style={{background: `radial-gradient(circle at center, ${selected.color}08, #0a0a0a)`}}>
                     <div className="absolute inset-0 grid-bg opacity-40" />
@@ -275,7 +270,6 @@ export default function Teams() {
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60" />
                   </div>
-                  {/* Info */}
                   <div className="p-5 border-t border-white/[0.05]">
                     <div className="flex justify-between items-start gap-4 mb-4">
                       <div>
