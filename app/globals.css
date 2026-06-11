@@ -46,8 +46,8 @@ body::after {
 .marquee-track-reverse { animation: marquee 28s linear infinite reverse; display: inline-flex; white-space: nowrap; }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px #f97316, 0 0 40px #f9731688, 0 0 80px #f9731633; }
-  50% { box-shadow: 0 0 40px #f97316, 0 0 80px #f97316aa, 0 0 120px #f9731655; }
+  0%, 100% { box-shadow: 0 0 20px #ae1fe3, 0 0 40px #ae1fe388, 0 0 80px #ae1fe333; }
+  50% { box-shadow: 0 0 40px #ae1fe3, 0 0 80px #ae1fe3aa, 0 0 120px #ae1fe355; }
 }
 .glow-btn { animation: glow-pulse 2.5s ease-in-out infinite; }
 
@@ -64,9 +64,9 @@ body::after {
   75% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
 }
 @keyframes glitch-2 {
-  0%, 100% { clip-path: inset(50% 0 30% 0); transform: translate(4px, 0); color: #f97316; }
+  0%, 100% { clip-path: inset(50% 0 30% 0); transform: translate(4px, 0); color: #ae1fe3; }
   33% { clip-path: inset(10% 0 80% 0); transform: translate(-4px, 0); color: #3b82f6; }
-  66% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 0); color: #f97316; }
+  66% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 0); color: #ae1fe3; }
 }
 .glitch-wrapper { position: relative; display: inline-block; }
 .glitch-wrapper::before,
@@ -84,8 +84,8 @@ body::after {
 
 .grid-bg {
   background-image: 
-    linear-gradient(rgba(249,115,22,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(249,115,22,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(174,31,227,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(174,31,227,0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -97,13 +97,13 @@ body::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(249,115,22,0.08), transparent);
+  background: linear-gradient(135deg, rgba(174,31,227,0.08), transparent);
   opacity: 0;
   transition: opacity 0.4s ease;
   z-index: 1;
   pointer-events: none;
 }
-.product-card:hover { transform: translateY(-6px); border-color: rgba(249,115,22,0.6) !important; }
+.product-card:hover { transform: translateY(-6px); border-color: rgba(174,31,227,0.6) !important; }
 .product-card:hover::before { opacity: 1; }
 
 .bracket-box { position: relative; }
@@ -112,7 +112,7 @@ body::after {
   position: absolute;
   width: 12px;
   height: 12px;
-  border-color: #f97316;
+  border-color: #ae1fe3;
   border-style: solid;
 }
 .bracket-box::before { top: 0; left: 0; border-width: 1px 0 0 1px; }
@@ -139,7 +139,7 @@ body::after {
   left: 0;
   width: 0;
   height: 1px;
-  background: #f97316;
+  background: #ae1fe3;
   transition: width 0.3s ease;
 }
 .hover-line:hover::after { width: 100%; }
