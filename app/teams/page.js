@@ -260,7 +260,7 @@ export default function Teams() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04]">
               {selected.items.map((item, i) => (
                 <div key={i} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer"
-                  style={{'--team-color': selected.color} as React.CSSProperties}>
+                  style={{'--team-color': selected.color}}>
                   {/* Thumb */}
                   <div className="aspect-square flex items-center justify-center relative overflow-hidden"
                     style={{background: `radial-gradient(circle at center, ${selected.color}08, #0a0a0a)`}}>
