@@ -4,12 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 
 const products = [
-  { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K", image: "/reignabove-keychain.jpg" },
-  { id: 2, name: "CUBAN HYPE CHAIN", price: "$34.99", tag: "CHAIN", desc: "Drip that hits different.", sku: "INK-002", rating: "4.8", reviews: "1.8K", image: "/ninefly-cubanhypechain.jpg" },
-  { id: 3, name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", desc: "Light up your setup.", sku: "INK-003", rating: "5.0", reviews: "987", image: "/EYM-lightbox.jpg" },
-  { id: 4, name: "COASTER", price: "$9.99", tag: "COASTER", desc: "Protect the desk. Rep the brand.", sku: "INK-004", rating: "4.7", reviews: "1.2K", image: "/vaultix-coaster.jpg" },
-  { id: 5, name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", desc: "Heavy. Clean. Iconic.", sku: "INK-005", rating: "4.9", reviews: "756", image: "/outkastz-cuban_necklace.jpg" },
-  { id: 6, name: "WALL ART", price: "$39.99", tag: "WALL ART", desc: "Turn your wall into a statement.", sku: "INK-006", rating: "4.6", reviews: "3.1K", image: "/vaultix-wall_art.jpg" },
+  { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K", image: "/reignabove-keychain.jpg", contain: true },
+  { id: 2, name: "CUBAN HYPE CHAIN", price: "$34.99", tag: "CHAIN", desc: "Drip that hits different.", sku: "INK-002", rating: "4.8", reviews: "1.8K", image: "/ninefly-cubanhypechain.jpg", contain: false },
+  { id: 3, name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", desc: "Light up your setup.", sku: "INK-003", rating: "5.0", reviews: "987", image: "/EYM-lightbox.jpg", contain: false, overlay: true },
+  { id: 4, name: "COASTER", price: "$9.99", tag: "COASTER", desc: "Protect the desk. Rep the brand.", sku: "INK-004", rating: "4.7", reviews: "1.2K", image: "/vaultix-coaster.jpg", contain: false },
+  { id: 5, name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", desc: "Heavy. Clean. Iconic.", sku: "INK-005", rating: "4.9", reviews: "756", image: "/outkastz-cuban_necklace.jpg", contain: false },
+  { id: 6, name: "WALL ART", price: "$39.99", tag: "WALL ART", desc: "Turn your wall into a statement.", sku: "INK-006", rating: "4.6", reviews: "3.1K", image: "/vaultix-wall_art.jpg", contain: true },
 ];
 
 const tagColors = {
@@ -191,17 +191,20 @@ export default function Home() {
             return (
               <div key={product.id} className={`product-card bg-[#050505] border border-transparent cursor-pointer group ${isWide ? 'md:col-span-8' : 'md:col-span-4'}`}>
                 <div className={`bg-[#0a0a0a] flex items-center justify-center relative overflow-hidden ${isWide ? 'aspect-[16/7]' : 'aspect-square'}`}>
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/30 tracking-widest z-20">{product.sku}</div>
+                  <div className="absolute inset-0 grid-bg opacity-20 z-10" />
+                  <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/50 tracking-widest z-20">{product.sku}</div>
                   <div className="absolute top-3 right-3 font-mono-custom text-[9px] tracking-widest z-20" style={{color: '#ae1fe3'}}>{product.tag}</div>
-                  <div className="absolute bottom-3 right-3 font-mono-custom text-[9px] text-white/30 z-20">★ {product.rating} ({product.reviews})</div>
+                  <div className="absolute bottom-3 right-3 font-mono-custom text-[9px] text-white/50 z-20">★ {product.rating} ({product.reviews})</div>
                   <Image
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`transition-transform duration-700 group-hover:scale-105 ${product.contain ? 'object-contain p-6' : 'object-cover'}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/30 to-transparent opacity-80 z-10" />
+                  {/* Only EYM lightbox gets the gray overlay */}
+                  {product.overlay && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/30 to-transparent opacity-80 z-10" />
+                  )}
                 </div>
                 <div className="p-5 border-t border-white/[0.05] relative z-10">
                   <div className="flex justify-between items-start gap-4">
