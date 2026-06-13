@@ -274,7 +274,7 @@ export default function Home() {
             // Earn commission on every sale you drive.
           </p>
           <div className="grid grid-cols-3 gap-px bg-white/[0.05] mb-10">
-            {[["15%","COMMISSION"],["30D","COOKIE"],["$50","MIN PAYOUT"]].map(([val, label]) => (
+            {[["10%","COMMISSION"],["30D","COOKIE"],["$50","MIN PAYOUT"]].map(([val, label]) => (
               <div key={label} className="bg-[#050505] py-6 bracket-box">
                 <div className="stat-number text-2xl font-black" style={{color: '#ae1fe3'}}>{val}</div>
                 <div className="font-mono-custom text-[9px] text-white/30 tracking-widest mt-1">{label}</div>
