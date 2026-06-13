@@ -142,6 +142,7 @@ const tagColors = {
 
 export default function Teams() {
   const [activeTeam, setActiveTeam] = useState(null);
+  const [hoveredTeam, setHoveredTeam] = useState(null);
 
   const selected = teams.find(t => t.id === activeTeam);
 
@@ -195,28 +196,39 @@ export default function Teams() {
 
         {/* TEAM GRID */}
         {!activeTeam && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-white/[0.04]">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {teams.map((team) => (
               <div
                 key={team.id}
                 onClick={() => setActiveTeam(team.id)}
-                className="bg-[#050505] cursor-pointer group hover:bg-[#0d0d0d] transition-all duration-300 border border-transparent hover:border-white/10"
+                onMouseEnter={() => setHoveredTeam(team.id)}
+                onMouseLeave={() => setHoveredTeam(null)}
+                className="bg-[#0a0a0a] cursor-pointer transition-all duration-300 border border-transparent"
+                style={{
+                  borderColor: hoveredTeam === team.id ? team.color + '60' : 'transparent',
+                  boxShadow: hoveredTeam === team.id ? `0 0 20px ${team.color}33, 0 0 40px ${team.color}15, inset 0 0 20px ${team.color}08` : 'none',
+                }}
               >
-                <div className="aspect-square relative overflow-hidden flex items-center justify-center p-6"
-                  style={{background: `radial-gradient(circle at center, ${team.color}08, transparent 70%)`}}>
-                  <div className="absolute inset-0 grid-bg opacity-30" />
-                  <Image
-                    src={team.logo}
-                    alt={team.name}
-                    width={120}
-                    height={120}
-                    className="object-contain relative z-10 group-hover:scale-110 transition-transform duration-500"
-                  />
+                {/* Logo area — fixed height so all logos are same size */}
+                <div className="h-48 relative overflow-hidden flex items-center justify-center p-6"
+                  style={{background: hoveredTeam === team.id ? `radial-gradient(circle at center, ${team.color}12, transparent 70%)` : `radial-gradient(circle at center, ${team.color}05, transparent 70%)`}}>
+                  <div className="absolute inset-0 grid-bg opacity-20" />
+                  <div className="relative z-10 w-24 h-24 flex items-center justify-center">
+                    <Image
+                      src={team.logo}
+                      alt={team.name}
+                      fill
+                      className="object-contain transition-transform duration-500"
+                      style={{transform: hoveredTeam === team.id ? 'scale(1.1)' : 'scale(1)'}}
+                    />
+                  </div>
                 </div>
-                <div className="p-4 border-t border-white/[0.05]">
+
+                {/* Info */}
+                <div className="p-4 border-t" style={{borderColor: hoveredTeam === team.id ? team.color + '30' : 'rgba(255,255,255,0.05)'}}>
                   <div className="font-mono-custom text-[9px] tracking-widest mb-1" style={{color: team.color + '99'}}>{team.items.length} ITEMS</div>
-                  <h3 className="font-black text-sm tracking-wide text-white/80 group-hover:text-white transition-colors">{team.name}</h3>
-                  <div className="mt-3 text-[10px] font-mono-custom tracking-widest border-t border-white/[0.05] pt-2 flex justify-between items-center">
+                  <h3 className="font-black text-sm tracking-wide transition-colors" style={{color: hoveredTeam === team.id ? team.color : 'rgba(255,255,255,0.8)'}}>{team.name}</h3>
+                  <div className="mt-3 text-[10px] font-mono-custom tracking-widest border-t pt-2 flex justify-between items-center" style={{borderColor: 'rgba(255,255,255,0.05)'}}>
                     <span className="text-white/20">VIEW STORE</span>
                     <span style={{color: team.color + '80'}}>→</span>
                   </div>
@@ -237,15 +249,15 @@ export default function Teams() {
             </button>
 
             <div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-16 pb-8 border-b border-white/[0.05]">
-              <div className="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden flex-shrink-0"
-                style={{background: `radial-gradient(circle, ${selected.color}15, transparent)`, border: `1px solid ${selected.color}30`}}>
-                <Image src={selected.logo} alt={selected.name} width={80} height={80} className="object-contain" />
+              <div className="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden flex-shrink-0 relative"
+                style={{background: `radial-gradient(circle, ${selected.color}15, transparent)`, border: `1px solid ${selected.color}30`, boxShadow: `0 0 20px ${selected.color}33`}}>
+                <Image src={selected.logo} alt={selected.name} fill className="object-contain p-2" />
               </div>
               <div>
                 <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-2" style={{color: selected.color + '66'}}>
                   SYS://STORE_LOADED
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none mb-2">
+                <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none mb-2" style={{color: selected.color}}>
                   {selected.name.toUpperCase()}
                 </h2>
                 <p className="font-mono-custom text-white/30 text-xs tracking-widest">
