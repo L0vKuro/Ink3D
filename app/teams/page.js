@@ -11,8 +11,8 @@ const teams = [
     logo: "/team-Atlantis.jpg",
     color: "#00b4d8",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/eym-lightbox.png" },
     ],
   },
   {
@@ -21,7 +21,7 @@ const teams = [
     logo: "/team-Buckshot.png",
     color: "#ff4d6d",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/buckshot-keychain.png" },
     ],
   },
   {
@@ -30,8 +30,8 @@ const teams = [
     logo: "/team-EYM.jpg",
     color: "#e63946",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/eym-keychain.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/eym-lightbox.png" },
     ],
   },
   {
@@ -40,10 +40,10 @@ const teams = [
     logo: "/team-GodSlayers.jpg",
     color: "#ffd60a",
     items: [
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
+      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/godlayers-wall_art.png" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/godlayers-key_chain.png" },
     ],
   },
   {
@@ -52,7 +52,7 @@ const teams = [
     logo: "/team-Outkastz.png",
     color: "#2d6a4f",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/outkastz-key_chain.png" },
     ],
   },
   {
@@ -61,10 +61,10 @@ const teams = [
     logo: "/team-ReignAbove.png",
     color: "#c9a227",
     items: [
-      { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/reignabove-cuban.png" },
+      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/reignabove-coasters.png" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/reignabove-lightbox.png" },
     ],
   },
   {
@@ -73,10 +73,10 @@ const teams = [
     logo: "/team-SGC (shintogamingclub).jpg",
     color: "#e63946",
     items: [
-      { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
-      { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
+      { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
+      { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/Shinto_Gaming_Club-lightbox.png" },
+      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/Shinto_Gaming_Club-_coaster_set.png" },
     ],
   },
   {
@@ -85,7 +85,7 @@ const teams = [
     logo: "/team-UpNxt.png",
     color: "#ff006e",
     items: [
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/eym-lightbox.png" },
     ],
   },
   {
@@ -94,10 +94,10 @@ const teams = [
     logo: "/team-Vault ix.jpg",
     color: "#7b2d8b",
     items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart_pmg.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
+      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/vaultix-coaster.png" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
     ],
   },
   {
@@ -106,8 +106,8 @@ const teams = [
     logo: "/team-Veriphy.jpg",
     color: "#ffd60a",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/veriphy-keychain.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/veriphy-lightbox.png" },
     ],
   },
   {
@@ -116,7 +116,7 @@ const teams = [
     logo: "/team-White Leopard.png",
     color: "#e63946",
     items: [
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/whiteleopard-lightbox.png" },
     ],
   },
   {
@@ -125,8 +125,8 @@ const teams = [
     logo: "/team-Ninefly.jpg",
     color: "#ffffff",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" },
     ],
   },
 ];
@@ -209,7 +209,6 @@ export default function Teams() {
                   boxShadow: hoveredTeam === team.id ? `0 0 20px ${team.color}33, 0 0 40px ${team.color}15, inset 0 0 20px ${team.color}08` : 'none',
                 }}
               >
-                {/* Logo area — fixed height so all logos are same size */}
                 <div className="h-48 relative overflow-hidden flex items-center justify-center p-6"
                   style={{background: hoveredTeam === team.id ? `radial-gradient(circle at center, ${team.color}12, transparent 70%)` : `radial-gradient(circle at center, ${team.color}05, transparent 70%)`}}>
                   <div className="absolute inset-0 grid-bg opacity-20" />
@@ -223,8 +222,6 @@ export default function Teams() {
                     />
                   </div>
                 </div>
-
-                {/* Info */}
                 <div className="p-4 border-t" style={{borderColor: hoveredTeam === team.id ? team.color + '30' : 'rgba(255,255,255,0.05)'}}>
                   <div className="font-mono-custom text-[9px] tracking-widest mb-1" style={{color: team.color + '99'}}>{team.items.length} ITEMS</div>
                   <h3 className="font-black text-sm tracking-wide transition-colors" style={{color: hoveredTeam === team.id ? team.color : 'rgba(255,255,255,0.8)'}}>{team.name}</h3>
@@ -271,16 +268,24 @@ export default function Teams() {
                 <div key={i} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer">
                   <div className="aspect-square flex items-center justify-center relative overflow-hidden"
                     style={{background: `radial-gradient(circle at center, ${selected.color}08, #0a0a0a)`}}>
-                    <div className="absolute inset-0 grid-bg opacity-40" />
-                    <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/15 tracking-widest">INK-{String(i+1).padStart(3,'0')}</div>
-                    <div className="relative z-10 text-center">
-                      <div className="text-[70px] font-black leading-none select-none transition-all duration-500 group-hover:scale-110"
-                        style={{WebkitTextStroke: `1px ${selected.color}33`, color: 'transparent'}}>
-                        3D
+                    <div className="absolute inset-0 grid-bg opacity-20" />
+                    <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/30 tracking-widest z-20">INK-{String(i+1).padStart(3,'0')}</div>
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10"
+                      />
+                    ) : (
+                      <div className="relative z-10 text-center">
+                        <div className="text-[70px] font-black leading-none select-none transition-all duration-500 group-hover:scale-110"
+                          style={{WebkitTextStroke: `1px ${selected.color}33`, color: 'transparent'}}>
+                          3D
+                        </div>
+                        <div className="font-mono-custom text-[9px] text-white/15 tracking-[0.3em] mt-2">IMG_PLACEHOLDER</div>
                       </div>
-                      <div className="font-mono-custom text-[9px] text-white/15 tracking-[0.3em] mt-2">IMG_PLACEHOLDER</div>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60" />
+                    )}
                   </div>
                   <div className="p-5 border-t border-white/[0.05]">
                     <div className="flex justify-between items-start gap-4 mb-4">
