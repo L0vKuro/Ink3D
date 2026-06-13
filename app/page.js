@@ -39,10 +39,10 @@ export default function Home() {
             <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain" />
           </div>
           <div className="hidden md:flex gap-8 text-[11px] font-bold tracking-[0.15em] text-white/40">
-            <Link href="/" className="hover:text-white transition-colors duration-200">HOME</Link>
-            <Link href="/teams" className="transition-colors duration-200" style={{color: '#ae1fe3'}}>SHOP</Link>
-            <Link href="#" className="hover:text-white transition-colors duration-200">COLLECTIONS</Link>
-            <Link href="#" className="hover:text-white transition-colors duration-200">ABOUT</Link>
+            <Link href="/" className="hover-line hover:text-white transition-colors duration-200">HOME</Link>
+            <Link href="/teams" className="hover-line hover:text-white transition-colors duration-200">TEAMS</Link>
+            <Link href="#" className="hover-line hover:text-white transition-colors duration-200">PROGRAM</Link>
+            <Link href="#" className="hover-line hover:text-white transition-colors duration-200">ABOUT</Link>
           </div>
           <div className="flex items-center gap-4">
             <span className="font-mono-custom text-[10px] hidden md:block" style={{color: '#ae1fe388'}}>
@@ -201,7 +201,6 @@ export default function Home() {
                     fill
                     className={`transition-transform duration-700 group-hover:scale-105 ${product.contain ? 'object-contain p-6' : 'object-cover'}`}
                   />
-                  {/* Only EYM lightbox gets the gray overlay */}
                   {product.overlay && (
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/30 to-transparent opacity-80 z-10" />
                   )}
