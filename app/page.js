@@ -8,8 +8,8 @@ const products = [
   { id: 2, name: "CUBAN HYPE CHAIN", price: "$34.99", tag: "CHAIN", desc: "Drip that hits different.", sku: "INK-002", rating: "4.8", reviews: "1.8K", image: "/ninefly-cubanhypechain.png", contain: true },
   { id: 3, name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", desc: "Light up your setup.", sku: "INK-003", rating: "5.0", reviews: "987", image: "/eym-lightbox.png", contain: true },
   { id: 4, name: "COASTER", price: "$9.99", tag: "COASTER", desc: "Protect the desk. Rep the brand.", sku: "INK-004", rating: "4.7", reviews: "1.2K", image: "/vaultix-coaster.png", contain: true },
-  { id: 5, name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", desc: "Heavy. Clean. Iconic.", sku: "INK-005", rating: "4.9", reviews: "756", image: "/outkastz-cuban_necklace.png", contain: true },
-  { id: 6, name: "WALL ART", price: "$39.99", tag: "WALL ART", desc: "Turn your wall into a statement.", sku: "INK-006", rating: "4.6", reviews: "3.1K", image: "/vaultix-wallart_pmg.png", contain: true },
+  { id: 5, name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", desc: "Heavy. Clean. Iconic.", sku: "INK-005", rating: "4.9", reviews: "756", image: "/vaultix-wallart_pmg.png"", contain: true },
+  { id: 6, name: "WALL ART", price: "$39.99", tag: "WALL ART", desc: "Turn your wall into a statement.", sku: "INK-006", rating: "4.6", reviews: "3.1K", image: "/vaultix-wallart.pmg.png", contain: true },
 ];
 
 const tagColors = {
