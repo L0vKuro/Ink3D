@@ -57,7 +57,7 @@ export default function Program() {
         <div className="mb-20 relative" style={{paddingTop: '56.25%'}}>
           <div className="absolute inset-0 border border-white/[0.06] overflow-hidden">
             <iframe
-              src="https://player.vimeo.com/video/1201086547?badge=0&autopause=0&player_id=0&app_id=58479"
+              src="https://player.vimeo.com/video/1201098282?badge=0&autopause=0&player_id=0&app_id=58479"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
