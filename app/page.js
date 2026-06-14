@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import Nav from "./components/Nav";
 
 const products = [
   { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K", image: "/reignabove-keychain.png", contain: true },
@@ -32,34 +33,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
 
-      {/* NAV */}
-      <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
-        <div className="px-6 md:px-12 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain" />
-          </div>
-          <div className="hidden md:flex gap-8 text-[11px] font-bold tracking-[0.15em] text-white/40">
-            <Link href="/" className="hover:text-white transition-colors duration-200">HOME</Link>
-            <Link href="/teams" className="hover:text-white transition-colors duration-200">TEAMS</Link>
-            <Link href="/creators" className="hover:text-white transition-colors duration-200">CREATORS</Link>
-            <Link href="/program" className="hover:text-white transition-colors duration-200">PROGRAM</Link>
-            <Link href="/merch" className="hover:text-white transition-colors duration-200">MERCH</Link>
-            <Link href="#" className="hover:text-white transition-colors duration-200">ABOUT</Link>
-            <Link href="/photos" className="hover:text-white transition-colors duration-200">PHOTOS</Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="font-mono-custom text-[10px] hidden md:block" style={{color: '#ae1fe388'}}>
-              <span className="blink">▋</span> ONLINE
-            </span>
-            <button className="px-5 py-2 text-[11px] font-black tracking-[0.15em] transition-all duration-200 bracket-box" style={{border: '1px solid #ae1fe388', color: '#ae1fe3'}}
-              onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#000'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
-              CART (0)
-            </button>
-          </div>
-        </div>
-        <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #ae1fe344, transparent)'}} />
-      </nav>
+      <Nav active="HOME" />
 
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 grid-bg clip-diagonal overflow-hidden">
@@ -251,9 +225,11 @@ export default function Home() {
               <p className="font-mono-custom text-white/50 text-sm tracking-widest">ON_ALL_ORDERS &gt; $50.00</p>
             </div>
             <div className="flex flex-col gap-3">
-              <button className="bg-white font-black px-12 py-5 tracking-[0.2em] text-xs font-mono-custom transition-all duration-200 hover:bg-black hover:text-white" style={{color: '#ae1fe3'}}>
-                SHOP_ALL_DROPS →
-              </button>
+              <Link href="/teams">
+                <button className="bg-white font-black px-12 py-5 tracking-[0.2em] text-xs font-mono-custom transition-all duration-200 hover:bg-black hover:text-white" style={{color: '#ae1fe3'}}>
+                  SHOP_ALL_DROPS →
+                </button>
+              </Link>
               <div className="font-mono-custom text-[9px] text-white/30 tracking-widest text-center">OFFER_EXPIRES: NEVER</div>
             </div>
           </div>
