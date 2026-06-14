@@ -106,9 +106,11 @@ export default function Home() {
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
             </button>
           </Link>
-          <button className="border border-white/15 text-white/60 px-12 py-4 text-xs font-black tracking-[0.25em] hover:text-white transition-all duration-200 bracket-box">
-            VIEW LOOKBOOK
-          </button>
+          <Link href="/photos">
+            <button className="border border-white/15 text-white/60 px-12 py-4 text-xs font-black tracking-[0.25em] hover:text-white transition-all duration-200 bracket-box">
+              VIEW LOOKBOOK
+            </button>
+          </Link>
         </div>
 
         <div className="flex gap-8 md:gap-16 font-mono-custom text-[10px]">
@@ -283,12 +285,14 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <button className="font-black px-12 py-4 text-xs tracking-[0.25em] font-mono-custom bracket-box transition-all duration-200"
-            style={{border: '1px solid #ae1fe344', color: '#ae1fe3', background: 'transparent'}}
-            onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#fff'; }}
-            onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
-            [ APPLY_NOW ]
-          </button>
+          <Link href="/program">
+            <button className="font-black px-12 py-4 text-xs tracking-[0.25em] font-mono-custom bracket-box transition-all duration-200"
+              style={{border: '1px solid #ae1fe344', color: '#ae1fe3', background: 'transparent'}}
+              onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#fff'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
+              [ APPLY_NOW ]
+            </button>
+          </Link>
         </div>
       </section>
 
