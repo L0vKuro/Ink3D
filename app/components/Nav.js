@@ -3,17 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Nav({ active }) {
-  const links = [
-    { label: "HOME", href: "/" },
-    { label: "TEAMS", href: "/teams" },
-    { label: "CREATORS", href: "/creators" },
-    { label: "PROGRAM", href: "/program" },
-    { label: "MERCH", href: "/merch" },
-    { label: "ABOUT", href: "/about" },
-    { label: "PHOTOS", href: "/photos" },
-  ];
+const links = [
+  { label: "HOME", href: "/" },
+  { label: "TEAMS", href: "/teams" },
+  { label: "CREATORS", href: "/creators" },
+  { label: "PROGRAM", href: "/program" },
+  { label: "MERCH", href: "/merch" },
+  { label: "ABOUT", href: "/about" },
+  { label: "PHOTOS", href: "/photos" },
+];
 
+export default function Nav({ active }) {
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
       <div className="px-6 md:px-12 py-3 flex justify-between items-center">
@@ -29,7 +29,7 @@ export default function Nav({ active }) {
               key={link.label}
               href={link.href}
               className="hover:text-white transition-colors duration-200"
-              style={{ color: active === link.label ? '#ae1fe3' : undefined }}
+              style={{color: active === link.label ? '#ae1fe3' : undefined}}
             >
               {link.label}
             </Link>
