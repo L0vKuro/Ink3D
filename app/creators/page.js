@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import Nav from "../components/Nav";
 
 const creators = [
   {
@@ -39,36 +40,9 @@ export default function Creators() {
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
 
-      {/* NAV */}
-      <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
-        <div className="px-6 md:px-12 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
-            <span className="font-mono-custom text-[10px] text-white/20 tracking-widest hidden md:block">SYS://CREATORS_v2.6</span>
-          </div>
-          <div className="hidden md:flex gap-6 text-[11px] font-bold tracking-[0.15em] text-white/40">
-            <Link href="/" className="hover:text-white transition-colors duration-200">HOME</Link>
-            <Link href="/teams" className="hover:text-white transition-colors duration-200">TEAMS</Link>
-            <Link href="/creators" className="transition-colors duration-200" style={{color: '#ae1fe3'}}>CREATORS</Link>
-            <Link href="/program" className="hover:text-white transition-colors duration-200">PROGRAM</Link>
-            <Link href="/merch" className="hover:text-white transition-colors duration-200">MERCH</Link>
-            <Link href="#" className="hover:text-white transition-colors duration-200">ABOUT</Link>
-            <Link href="/photos" className="hover:text-white transition-colors duration-200">PHOTOS</Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="font-mono-custom text-[10px] hidden md:block" style={{color: '#ae1fe388'}}><span className="blink">▋</span> ONLINE</span>
-            <button className="px-5 py-2 text-[11px] font-black tracking-[0.15em] transition-all duration-200 bracket-box" style={{border: '1px solid #ae1fe388', color: '#ae1fe3'}}
-              onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#000'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
-              CART (0)
-            </button>
-          </div>
-        </div>
-        <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #ae1fe344, transparent)'}} />
-      </nav>
+      <Nav active="CREATORS" />
 
       <div className="pt-24 px-6 md:px-12 pb-24">
-
         {/* HEADER */}
         <div className="mb-16">
           <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-4 flex items-center gap-3" style={{color: '#ae1fe366'}}>
