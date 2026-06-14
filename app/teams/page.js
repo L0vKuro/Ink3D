@@ -90,7 +90,7 @@ const teams = [
   },
   {
     id: "vaultiv",
-    name: "Vault IV",
+    name: "Vault IX",
     logo: "/team-Vault ix.jpg",
     color: "#7b2d8b",
     items: [
