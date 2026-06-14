@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import Nav from "../components/Nav";
 
 const teams = [
   {
@@ -94,7 +95,7 @@ const teams = [
     logo: "/team-Vault ix.jpg",
     color: "#7b2d8b",
     items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart.png"},
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/vaultix-coaster.png" },
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/vaultix-keychain.png" },
@@ -143,47 +144,14 @@ const tagColors = {
 export default function Teams() {
   const [activeTeam, setActiveTeam] = useState(null);
   const [hoveredTeam, setHoveredTeam] = useState(null);
-
   const selected = teams.find(t => t.id === activeTeam);
 
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
 
-      {/* NAV */}
-      <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
-        <div className="px-6 md:px-12 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Link href="/">
-              <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" />
-            </Link>
-            <span className="font-mono-custom text-[10px] text-white/20 tracking-widest hidden md:block">SYS://TEAMS_v2.6</span>
-          </div>
-          <div className="hidden md:flex gap-8 text-[11px] font-bold tracking-[0.15em] text-white/40">
-            <Link href="/" className="hover:text-white transition-colors duration-200">HOME</Link>
-            <Link href="/teams" className="hover:text-white transition-colors duration-200">TEAMS</Link>
-            <Link href="/creators" className="hover:text-white transition-colors duration-200">CREATORS</Link>
-            <Link href="/program" className="hover:text-white transition-colors duration-200">PROGRAM</Link>
-            <Link href="/merch" className="hover:text-white transition-colors duration-200">MERCH</Link>
-            <Link href="#" className="hover:text-white transition-colors duration-200">ABOUT</Link>
-            <Link href="/photos" className="hover:text-white transition-colors duration-200">PHOTOS</Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="font-mono-custom text-[10px] hidden md:block" style={{color: '#ae1fe388'}}>
-              <span className="blink">▋</span> ONLINE
-            </span>
-            <button className="px-5 py-2 text-[11px] font-black tracking-[0.15em] transition-all duration-200 bracket-box" style={{border: '1px solid #ae1fe388', color: '#ae1fe3'}}
-              onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#000'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
-              CART (0)
-            </button>
-          </div>
-        </div>
-        <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #ae1fe344, transparent)'}} />
-      </nav>
+      <Nav active="TEAMS" />
 
       <div className="pt-24 px-6 md:px-12 pb-24">
-
-        {/* HEADER */}
         <div className="mb-16">
           <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-4 flex items-center gap-3" style={{color: '#ae1fe366'}}>
             <span>◆</span> SYS://TEAMS_LOADED — {teams.length} ORGS
@@ -197,7 +165,6 @@ export default function Teams() {
           </p>
         </div>
 
-        {/* TEAM GRID */}
         {!activeTeam && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {teams.map((team) => (
@@ -216,13 +183,9 @@ export default function Teams() {
                   style={{background: hoveredTeam === team.id ? `radial-gradient(circle at center, ${team.color}12, transparent 70%)` : `radial-gradient(circle at center, ${team.color}05, transparent 70%)`}}>
                   <div className="absolute inset-0 grid-bg opacity-20" />
                   <div className="relative z-10 w-24 h-24 flex items-center justify-center">
-                    <Image
-                      src={team.logo}
-                      alt={team.name}
-                      fill
+                    <Image src={team.logo} alt={team.name} fill
                       className="object-contain transition-transform duration-500"
-                      style={{transform: hoveredTeam === team.id ? 'scale(1.1)' : 'scale(1)'}}
-                    />
+                      style={{transform: hoveredTeam === team.id ? 'scale(1.1)' : 'scale(1)'}} />
                   </div>
                 </div>
                 <div className="p-4 border-t" style={{borderColor: hoveredTeam === team.id ? team.color + '30' : 'rgba(255,255,255,0.05)'}}>
@@ -238,34 +201,25 @@ export default function Teams() {
           </div>
         )}
 
-        {/* INDIVIDUAL TEAM STORE */}
         {activeTeam && selected && (
           <div>
-            <button
-              onClick={() => setActiveTeam(null)}
-              className="font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors mb-10 flex items-center gap-2"
-            >
+            <button onClick={() => setActiveTeam(null)}
+              className="font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors mb-10 flex items-center gap-2">
               ← BACK_TO_ALL_TEAMS
             </button>
-
             <div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-16 pb-8 border-b border-white/[0.05]">
               <div className="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden flex-shrink-0 relative"
                 style={{background: `radial-gradient(circle, ${selected.color}15, transparent)`, border: `1px solid ${selected.color}30`, boxShadow: `0 0 20px ${selected.color}33`}}>
                 <Image src={selected.logo} alt={selected.name} fill className="object-contain p-2" />
               </div>
               <div>
-                <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-2" style={{color: selected.color + '66'}}>
-                  SYS://STORE_LOADED
-                </div>
+                <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-2" style={{color: selected.color + '66'}}>SYS://STORE_LOADED</div>
                 <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none mb-2" style={{color: selected.color}}>
                   {selected.name.toUpperCase()}
                 </h2>
-                <p className="font-mono-custom text-white/30 text-xs tracking-widest">
-                  {selected.items.length} EXCLUSIVE ITEMS — POWERED BY INK3D
-                </p>
+                <p className="font-mono-custom text-white/30 text-xs tracking-widest">{selected.items.length} EXCLUSIVE ITEMS — POWERED BY INK3D</p>
               </div>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04]">
               {selected.items.map((item, i) => (
                 <div key={i} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer">
@@ -274,18 +228,11 @@ export default function Teams() {
                     <div className="absolute inset-0 grid-bg opacity-20" />
                     <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/30 tracking-widest z-20">INK-{String(i+1).padStart(3,'0')}</div>
                     {item.image ? (
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10"
-                      />
+                      <Image src={item.image} alt={item.name} fill className="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10" />
                     ) : (
                       <div className="relative z-10 text-center">
                         <div className="text-[70px] font-black leading-none select-none transition-all duration-500 group-hover:scale-110"
-                          style={{WebkitTextStroke: `1px ${selected.color}33`, color: 'transparent'}}>
-                          3D
-                        </div>
+                          style={{WebkitTextStroke: `1px ${selected.color}33`, color: 'transparent'}}>3D</div>
                         <div className="font-mono-custom text-[9px] text-white/15 tracking-[0.3em] mt-2">IMG_PLACEHOLDER</div>
                       </div>
                     )}
@@ -293,9 +240,7 @@ export default function Teams() {
                   <div className="p-5 border-t border-white/[0.05]">
                     <div className="flex justify-between items-start gap-4 mb-4">
                       <div>
-                        <span className={`font-mono-custom text-[9px] font-black tracking-[0.2em] border px-2 py-0.5 ${tagColors[item.tag] || 'text-white/40 border-white/20 bg-white/5'}`}>
-                          {item.tag}
-                        </span>
+                        <span className={`font-mono-custom text-[9px] font-black tracking-[0.2em] border px-2 py-0.5 ${tagColors[item.tag] || 'text-white/40 border-white/20 bg-white/5'}`}>{item.tag}</span>
                         <h3 className="font-black tracking-wider text-sm mt-2">{item.name}</h3>
                         <p className="font-mono-custom text-[10px] text-white/20 mt-1">{selected.name} Edition</p>
                       </div>
@@ -317,12 +262,9 @@ export default function Teams() {
         )}
       </div>
 
-      {/* FOOTER */}
       <footer className="border-t border-white/[0.05]">
         <div className="px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <Link href="/">
-            <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" />
-          </Link>
+          <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
           <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
           <div className="flex gap-8">
             {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
