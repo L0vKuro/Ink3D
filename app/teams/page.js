@@ -160,9 +160,12 @@ export default function Teams() {
           </div>
           <div className="hidden md:flex gap-8 text-[11px] font-bold tracking-[0.15em] text-white/40">
             <Link href="/" className="hover:text-white transition-colors duration-200">HOME</Link>
-            <Link href="/teams" className="transition-colors duration-200" style={{color: '#ae1fe3'}}>TEAMS</Link>
-           <Link href="/program" className="hover:text-white transition-colors duration-200">PROGRAM</Link>
+            <Link href="/teams" className="hover:text-white transition-colors duration-200">TEAMS</Link>
+            <Link href="/creators" className="hover:text-white transition-colors duration-200">CREATORS</Link>
+            <Link href="/program" className="hover:text-white transition-colors duration-200">PROGRAM</Link>
+            <Link href="/merch" className="hover:text-white transition-colors duration-200">MERCH</Link>
             <Link href="#" className="hover:text-white transition-colors duration-200">ABOUT</Link>
+            <Link href="/photos" className="hover:text-white transition-colors duration-200">PHOTOS</Link>
           </div>
           <div className="flex items-center gap-4">
             <span className="font-mono-custom text-[10px] hidden md:block" style={{color: '#ae1fe388'}}>
