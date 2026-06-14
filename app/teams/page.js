@@ -62,7 +62,7 @@ const teams = [
     color: "#c9a227",
     items: [
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/reignabove-cuban.png" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/reignabove-coasters.png" },
+      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/reignabove_coasters.png" },
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/reignabove-lightbox.png" },
     ],
@@ -85,7 +85,7 @@ const teams = [
     logo: "/team-UpNxt.png",
     color: "#ff006e",
     items: [
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/eym-lightbox.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/upnext-lightbox.png" },
     ],
   },
   {
@@ -94,7 +94,7 @@ const teams = [
     logo: "/team-Vault ix.jpg",
     color: "#7b2d8b",
     items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart_pmg.png" },
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart.png"},
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/vaultix-coaster.png" },
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
