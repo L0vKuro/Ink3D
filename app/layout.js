@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "INK3D — Bold Tech Accessories",
-  description: "Bold tech accessories for those who don't blend in.",
+  title: "INK3D — Esport Accesories",
+  description: "3D Printing The Game.",
 };
 
 export default function RootLayout({ children }) {
