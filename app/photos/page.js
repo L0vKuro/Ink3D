@@ -2,37 +2,28 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import Nav from "../components/Nav";
+
+const photos = [
+  { file: "/ROKKR_Keychain_Front_.jpg", label: "ROKKR KEYCHAIN — FRONT" },
+  { file: "/Shinto_Gaming_Keychain.jpg", label: "SHINTO GAMING KEYCHAIN" },
+  { file: "/tpc_hype_chain_v2.jpg", label: "TPC HYPE CHAIN V2" },
+  { file: "/tpc_hype_chain_v3.jpg", label: "TPC HYPE CHAIN V3" },
+  { file: "/Vancover_Surge_Keychain.jpg", label: "VANCOUVER SURGE KEYCHAIN" },
+  { file: "/100T_coaster_set.jpg", label: "100T COASTER SET" },
+  { file: "/Cloud_9_keychain_.jpg", label: "CLOUD9 KEYCHAIN" },
+  { file: "/Envoy_lightbox_in_his_setup_.jpg", label: "ENVOY LIGHTBOX IN SETUP" },
+  { file: "/Freshen_up_Keychain_.jpg", label: "FRESHEN UP KEYCHAIN" },
+  { file: "/Optic_coaster_set.jpg", label: "OPTIC COASTER SET" },
+  { file: "/Optic_texas_keychain___Lightbox_.jpg", label: "OPTIC TEXAS KEYCHAIN + LIGHTBOX" },
+  { file: "/ROKKR_Keychain_Back.jpg", label: "ROKKR KEYCHAIN — BACK" },
+];
 
 export default function Photos() {
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
 
-      {/* NAV */}
-      <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
-        <div className="px-6 md:px-12 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={50} height={50} className="object-contain cursor-pointer" /></Link>
-          </div>
-          <div className="hidden md:flex gap-6 text-[11px] font-bold tracking-[0.15em] text-white/40">
-            <Link href="/" className="hover:text-white transition-colors duration-200">HOME</Link>
-            <Link href="/teams" className="hover:text-white transition-colors duration-200">TEAMS</Link>
-            <Link href="/creators" className="hover:text-white transition-colors duration-200">CREATORS</Link>
-            <Link href="/program" className="hover:text-white transition-colors duration-200">PROGRAM</Link>
-            <Link href="/merch" className="hover:text-white transition-colors duration-200">MERCH</Link>
-            <Link href="#" className="hover:text-white transition-colors duration-200">ABOUT</Link>
-            <Link href="/photos" className="transition-colors duration-200" style={{color: '#ae1fe3'}}>PHOTOS</Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="font-mono-custom text-[10px] hidden md:block" style={{color: '#ae1fe388'}}><span className="blink">▋</span> ONLINE</span>
-            <button className="px-5 py-2 text-[11px] font-black tracking-[0.15em] transition-all duration-200 bracket-box" style={{border: '1px solid #ae1fe388', color: '#ae1fe3'}}
-              onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#000'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
-              CART (0)
-            </button>
-          </div>
-        </div>
-        <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #ae1fe344, transparent)'}} />
-      </nav>
+      <Nav active="PHOTOS" />
 
       <div className="pt-24 px-6 md:px-12 pb-24 max-w-screen-2xl mx-auto">
 
@@ -50,18 +41,24 @@ export default function Photos() {
           </p>
         </div>
 
-        {/* PHOTO GRID — PLACEHOLDERS */}
+        {/* PHOTO GRID */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-white/[0.04] mb-20">
-          {Array(12).fill(null).map((_, i) => (
+          {photos.map((photo, i) => (
             <div key={i} className="bg-[#0a0a0a] aspect-square flex items-center justify-center relative overflow-hidden group cursor-pointer border border-transparent hover:border-white/10 transition-all duration-300">
-              <div className="absolute inset-0 grid-bg opacity-20" />
-              <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-                <div className="w-12 h-12 border border-white/10 flex items-center justify-center mb-3" style={{borderColor: '#ae1fe320'}}>
-                  <span style={{color: '#ae1fe340'}} className="text-xl">+</span>
-                </div>
-                <span className="font-mono-custom text-[9px] text-white/15 tracking-widest">PHOTO_{String(i+1).padStart(2,'0')}</span>
+              <div className="absolute inset-0 grid-bg opacity-20 z-10" />
+              <Image
+                src={photo.file}
+                alt={photo.label}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 z-20" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-30">
+                <span className="font-mono-custom text-[9px] text-white/80 tracking-widest">{photo.label}</span>
               </div>
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{background: '#ae1fe308'}} />
+              <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/30 tracking-widest z-30">
+                PHOTO_{String(i+1).padStart(2,'0')}
+              </div>
             </div>
           ))}
         </div>
