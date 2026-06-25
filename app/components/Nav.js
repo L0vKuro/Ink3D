@@ -1,8 +1,6 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
-
 const links = [
   { label: "HOME", href: "/" },
   { label: "TEAMS", href: "/teams" },
@@ -12,7 +10,6 @@ const links = [
   { label: "ABOUT", href: "/about" },
   { label: "PHOTOS", href: "/photos" },
 ];
-
 export default function Nav({ active }) {
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
@@ -21,7 +18,6 @@ export default function Nav({ active }) {
           <Link href="/">
             <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" />
           </Link>
-          <span className="font-mono-custom text-[10px] text-white/20 tracking-widest hidden md:block">SYS://INK3D_v2.6</span>
         </div>
         <div className="hidden md:flex gap-6 text-[11px] font-bold tracking-[0.15em] text-white/40">
           {links.map((link) => (
