@@ -90,13 +90,15 @@ export default function Program() {
             <p className="font-mono-custom text-white/30 text-sm mb-10 max-w-md mx-auto">
               // Applications are reviewed within 48 hours. We'll reach out via email once approved.
             </p>
-            <button
-              className="font-black px-16 py-5 text-xs tracking-[0.25em] font-mono-custom bracket-box transition-all duration-200 glow-btn"
-              style={{background: '#ae1fe3', color: '#fff'}}
-              onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}>
-              [ APPLY_NOW ]
-            </button>
+            <a href="https://jczaxqshor.goaffpro.com/create-account" target="_blank" rel="noopener noreferrer">
+              <button
+                className="font-black px-16 py-5 text-xs tracking-[0.25em] font-mono-custom bracket-box transition-all duration-200 glow-btn"
+                style={{background: '#ae1fe3', color: '#fff'}}
+                onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; }}
+                onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}>
+                [ APPLY_NOW ]
+              </button>
+            </a>
           </div>
         </div>
 
