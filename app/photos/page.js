@@ -7,8 +7,8 @@ import Nav from "../components/Nav";
 
 const photos = [
   { file: "/ROKKR Keychain Front_.jpg", label: "ROKKR KEYCHAIN — FRONT" },
+  { file: "/Shinto Gaming Keychain.jpg", label: "SHINTO GAMING KEYCHAIN" },
   { file: "/IMG_5708.jpeg", label: "WLG Lightbox" },
-  { file: "/IMG_4609.jpeg", label: "TPC HYPE CHAIN V2" },
   { file: "/Vancover Surge Keychain.jpg", label: "VANCOUVER SURGE KEYCHAIN" },
   { file: "/tpc hype chain v3.jpg", label: "TPC HYPE CHAIN V3" },
   { file: "/100T coaster set.jpg", label: "100T COASTER SET" },
