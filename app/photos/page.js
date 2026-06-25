@@ -11,7 +11,7 @@ export default function Photos() {
       <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
         <div className="px-6 md:px-12 py-3 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
+            <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={90} height={30} className="object-contain cursor-pointer" /></Link>
           </div>
           <div className="hidden md:flex gap-6 text-[11px] font-bold tracking-[0.15em] text-white/40">
             <Link href="/" className="hover:text-white transition-colors duration-200">HOME</Link>
