@@ -108,7 +108,7 @@ const teams = [
     color: "#ffd60a",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/veriphy-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/veriphy-lightbox.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/veriphy-lightbox1.avif" },
     ],
   },
   {
