@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import Nav from "../components/Nav";
 
 const photos = [
@@ -20,10 +21,42 @@ const photos = [
 ];
 
 export default function Photos() {
+  const [selected, setSelected] = useState(null);
+
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
 
       <Nav active="PHOTOS" />
+
+      {/* LIGHTBOX */}
+      {selected !== null && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center"
+          style={{background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)'}}
+          onClick={() => setSelected(null)}
+        >
+          <div
+            className="relative w-[90vw] max-w-3xl aspect-square"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="absolute -top-8 left-0 font-mono-custom text-[9px] tracking-widest" style={{color: '#ae1fe388'}}>
+              PHOTO_{String(selected + 1).padStart(2,'0')} — {photos[selected].label}
+            </div>
+            <Image
+              src={photos[selected].file}
+              alt={photos[selected].label}
+              fill
+              className="object-contain"
+            />
+            <button
+              onClick={() => setSelected(null)}
+              className="absolute -top-8 right-0 font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors"
+            >
+              [ CLOSE ]
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="pt-24 px-6 md:px-12 pb-24 max-w-screen-2xl mx-auto">
 
@@ -44,7 +77,11 @@ export default function Photos() {
         {/* PHOTO GRID */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-white/[0.04] mb-20">
           {photos.map((photo, i) => (
-            <div key={i} className="bg-[#0a0a0a] aspect-square flex items-center justify-center relative overflow-hidden group cursor-pointer border border-transparent hover:border-white/10 transition-all duration-300">
+            <div
+              key={i}
+              onClick={() => setSelected(i)}
+              className="bg-[#0a0a0a] aspect-square flex items-center justify-center relative overflow-hidden group cursor-pointer border border-transparent hover:border-white/10 transition-all duration-300"
+            >
               <div className="absolute inset-0 grid-bg opacity-20 z-10" />
               <Image
                 src={photo.file}
