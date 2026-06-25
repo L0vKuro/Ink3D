@@ -5,18 +5,18 @@ import Image from "next/image";
 import Nav from "../components/Nav";
 
 const photos = [
-  { file: "/ROKKR_Keychain_Front_.jpg", label: "ROKKR KEYCHAIN — FRONT" },
-  { file: "/Shinto_Gaming_Keychain.jpg", label: "SHINTO GAMING KEYCHAIN" },
-  { file: "/tpc_hype_chain_v2.jpg", label: "TPC HYPE CHAIN V2" },
+  { file: "/ROKKR Keychain Front_.jpg", label: "ROKKR KEYCHAIN — FRONT" },
+  { file: "/Shinto Gaming Keychain.jpg", label: "SHINTO GAMING KEYCHAIN" },
+  { file: "/IMG_4609.jpeg", label: "TPC HYPE CHAIN V2" },
   { file: "/tpc_hype_chain_v3.jpg", label: "TPC HYPE CHAIN V3" },
   { file: "/Vancover_Surge_Keychain.jpg", label: "VANCOUVER SURGE KEYCHAIN" },
-  { file: "/100T_coaster_set.jpg", label: "100T COASTER SET" },
-  { file: "/Cloud_9_keychain_.jpg", label: "CLOUD9 KEYCHAIN" },
-  { file: "/Envoy_lightbox_in_his_setup_.jpg", label: "ENVOY LIGHTBOX IN SETUP" },
-  { file: "/Freshen_up_Keychain_.jpg", label: "FRESHEN UP KEYCHAIN" },
-  { file: "/Optic_coaster_set.jpg", label: "OPTIC COASTER SET" },
-  { file: "/Optic_texas_keychain___Lightbox_.jpg", label: "OPTIC TEXAS KEYCHAIN + LIGHTBOX" },
-  { file: "/ROKKR_Keychain_Back.jpg", label: "ROKKR KEYCHAIN — BACK" },
+  { file: "/100T coaster set.jpg", label: "100T COASTER SET" },
+  { file: "/Cloud 9 keychain_.jpg", label: "CLOUD9 KEYCHAIN" },
+  { file: "/Envoy lightbox in his setup_.jpg", label: "ENVOY LIGHTBOX IN SETUP" },
+  { file: "/Freshen up Keychain_.jpg", label: "FRESHEN UP KEYCHAIN" },
+  { file: "/Optic coaster set.jpg", label: "OPTIC COASTER SET" },
+  { file: "/Optic texas keychain _ Lightbox_.jpg", label: "OPTIC TEXAS KEYCHAIN + LIGHTBOX" },
+  { file: "/ROKKR Keychain Back.jpg", label: "ROKKR KEYCHAIN — BACK" },
 ];
 
 export default function Photos() {
