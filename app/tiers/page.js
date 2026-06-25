@@ -123,7 +123,7 @@ export default function Tiers() {
           <div className="relative">
             <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-4" style={{color: '#ae1fe355'}}>// READY TO CLIMB</div>
             <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
-              START AT <span style={{color: '#cd7f32'}}>BRONZE</span>
+              START <span style={{color: '#ae1fe3'}}>TODAY</span>
             </h2>
             <p className="font-mono-custom text-white/30 text-sm mb-10 max-w-md mx-auto">
               // Sign up today and start earning. Every sale moves you closer to the top.
