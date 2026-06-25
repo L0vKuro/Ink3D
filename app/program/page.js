@@ -98,7 +98,7 @@ export default function Program() {
                 onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}>
                 [ APPLY_NOW ]
               </button>
-            </a>
+            </Link>
           </div>
         </div>
 
