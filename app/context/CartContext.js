@@ -1,12 +1,9 @@
 "use client";
 import { createContext, useContext, useState } from "react";
-
 const CartContext = createContext(null);
-
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
-
   function addItem(product) {
     setItems(prev => {
       const existing = prev.find(i => i.id === product.id);
@@ -17,28 +14,26 @@ export function CartProvider({ children }) {
     });
     setOpen(true);
   }
-
   function removeItem(id) {
     setItems(prev => prev.filter(i => i.id !== id));
   }
-
   function updateQty(id, qty) {
     if (qty < 1) return removeItem(id);
     setItems(prev => prev.map(i => i.id === id ? { ...i, qty } : i));
   }
-
+  function clearCart() {
+    setItems([]);
+  }
   const total = items.reduce((sum, i) => sum + parseFloat(i.price.replace('$','')) * i.qty, 0);
   const count = items.reduce((sum, i) => sum + i.qty, 0);
-
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateQty, total, count, open, setOpen }}>
+    <CartContext.Provider value={{ items, addItem, removeItem, updateQty, total, count, open, setOpen, clearCart }}>
       {children}
     </CartContext.Provider>
   );
 }
-
 export function useCart() {
   const ctx = useContext(CartContext);
-  if (!ctx) return { items: [], addItem: () => {}, removeItem: () => {}, updateQty: () => {}, total: 0, count: 0, open: false, setOpen: () => {} };
+  if (!ctx) return { items: [], addItem: () => {}, removeItem: () => {}, updateQty: () => {}, total: 0, count: 0, open: false, setOpen: () => {}, clearCart: () => {} };
   return ctx;
 }
