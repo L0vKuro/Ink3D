@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import Nav from "../components/Nav";
+import { useCart } from "../context/CartContext";
 
 const teams = [
   {
@@ -144,6 +145,7 @@ const tagColors = {
 export default function Teams() {
   const [activeTeam, setActiveTeam] = useState(null);
   const [hoveredTeam, setHoveredTeam] = useState(null);
+  const { addItem } = useCart();
   const selected = teams.find(t => t.id === activeTeam);
 
   return (
@@ -249,7 +251,15 @@ export default function Teams() {
                         <div className="font-mono-custom text-[9px] text-white/20">USD</div>
                       </div>
                     </div>
-                    <button className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
+                    <button
+                      onClick={() => addItem({
+                        id: `${selected.id}-${item.name}`,
+                        name: item.name,
+                        price: item.price,
+                        image: item.image,
+                        teamName: selected.name,
+                      })}
+                      className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
                       onMouseEnter={e => { e.currentTarget.style.borderColor=selected.color; e.currentTarget.style.color=selected.color; e.currentTarget.style.background=selected.color+'10'; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
                       [ ADD_TO_CART ]
