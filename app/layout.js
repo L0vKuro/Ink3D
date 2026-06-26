@@ -1,4 +1,5 @@
 import "./globals.css";
+import { CartProvider } from "./context/CartContext";
 
 export const metadata = {
   title: "INK3D — Esport Accessories",
@@ -11,7 +12,11 @@ export default function RootLayout({ children }) {
       <head>
         <script src="https://api.goaffpro.com/loader.js?shop=jczaxqshor" async></script>
       </head>
-      <body>{children}</body>
+      <body>
+        <CartProvider>
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }
