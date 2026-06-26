@@ -8,6 +8,16 @@ import { useCart } from "../context/CartContext";
 
 const merch = [
   {
+    id: "merch-test",
+    name: "TEST ITEM — DELETE AFTER",
+    price: "$1.00",
+    tag: "TEE",
+    desc: "Test item to verify checkout. Remove after testing.",
+    images: [
+      { label: "FRONT", src: "/ink3d_v4_transparent_1.png" },
+    ],
+  },
+  {
     id: "merch-1",
     name: "INK3D HOODIE",
     price: "$53.00",
@@ -117,7 +127,7 @@ export default function Merch() {
             // Official INK3D Studio apparel. Wear the brand.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04]">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-white/[0.04]">
           {merch.map((item, i) => (
             <MerchCard key={item.id} item={item} index={i} />
           ))}
