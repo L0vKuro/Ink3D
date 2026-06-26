@@ -1,9 +1,15 @@
 "use client";
 import Image from "next/image";
 import { useCart } from "../context/CartContext";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export default function CartSidebar() {
   const { items, removeItem, updateQty, total, count, open, setOpen } = useCart();
+
+  const paypalOptions = {
+    clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+    currency: "USD",
+  };
 
   return (
     <>
@@ -81,14 +87,41 @@ export default function CartSidebar() {
               <span className="font-mono-custom text-[10px] text-white/40 tracking-widest">SUBTOTAL</span>
               <span className="font-black text-xl">${total.toFixed(2)}</span>
             </div>
-            <button
-              className="w-full py-4 font-black text-xs tracking-[0.25em] font-mono-custom transition-all duration-200 glow-btn mb-3"
-              style={{ background: '#ae1fe3', color: '#fff' }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#c040ff'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = '#ae1fe3'; }}
-            >
-              [ CHECKOUT ]
-            </button>
+            <div className="mb-3">
+              <PayPalScriptProvider options={paypalOptions}>
+                <PayPalButtons
+                  style={{ layout: "vertical", color: "black", label: "pay", height: 45 }}
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [{
+                        amount: {
+                          value: total.toFixed(2),
+                          breakdown: {
+                            item_total: { currency_code: "USD", value: total.toFixed(2) }
+                          },
+                          currency_code: "USD",
+                        },
+                        items: items.map(item => ({
+                          name: item.teamName ? `${item.name} — ${item.teamName} Edition` : item.name,
+                          unit_amount: { currency_code: "USD", value: parseFloat(item.price.replace('$','')).toFixed(2) },
+                          quantity: String(item.qty),
+                        })),
+                      }],
+                    });
+                  }}
+                  onApprove={(data, actions) => {
+                    return actions.order.capture().then((details) => {
+                      setOpen(false);
+                      alert(`ORDER CONFIRMED — Thank you, ${details.payer.name.given_name}! Your INK3D order is being processed.`);
+                    });
+                  }}
+                  onError={(err) => {
+                    console.error("PayPal error:", err);
+                    alert("Payment failed. Please try again.");
+                  }}
+                />
+              </PayPalScriptProvider>
+            </div>
             <div className="font-mono-custom text-[9px] text-white/20 tracking-widest text-center">FREE SHIPPING ON ORDERS OVER $50</div>
           </div>
         )}
