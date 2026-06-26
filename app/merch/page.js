@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import Nav from "../components/Nav";
+import { useCart } from "../context/CartContext";
 
 const merch = [
   {
-    id: 1,
+    id: "merch-1",
     name: "INK3D HOODIE",
     price: "$53.00",
     tag: "HOODIE",
@@ -20,7 +21,7 @@ const merch = [
     ],
   },
   {
-    id: 2,
+    id: "merch-2",
     name: "INK3D TEE — FRONT LOGO",
     price: "$35.00",
     tag: "TEE",
@@ -31,7 +32,7 @@ const merch = [
     ],
   },
   {
-    id: 3,
+    id: "merch-3",
     name: "INK3D TEE — BACK LOGO",
     price: "$35.00",
     tag: "TEE",
@@ -50,6 +51,8 @@ const tagColors = {
 
 function MerchCard({ item, index }) {
   const [activeImg, setActiveImg] = useState(0);
+  const { addItem } = useCart();
+
   return (
     <div className="product-card bg-[#050505] border border-transparent group">
       <div className="aspect-square flex items-center justify-center relative overflow-hidden bg-[#0a0a0a]">
@@ -83,7 +86,9 @@ function MerchCard({ item, index }) {
             <div className="font-mono-custom text-[9px] text-white/20">USD</div>
           </div>
         </div>
-        <button className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
+        <button
+          onClick={() => addItem({ id: item.id, name: item.name, price: item.price, image: item.images[0].src })}
+          className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
           onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; e.currentTarget.style.background='#ae1fe308'; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
           [ ADD_TO_CART ]
