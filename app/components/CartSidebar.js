@@ -4,12 +4,30 @@ import { useCart } from "../context/CartContext";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export default function CartSidebar() {
-  const { items, removeItem, updateQty, total, count, open, setOpen } = useCart();
+  const { items, removeItem, updateQty, total, count, open, setOpen, clearCart } = useCart();
 
   const paypalOptions = {
     clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
     currency: "USD",
   };
+
+  async function sendOrderEmail(details) {
+    try {
+      await fetch("/api/send-order-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
+          customerEmail: details.payer.email_address,
+          items,
+          total: total.toFixed(2),
+          orderId: details.id,
+        }),
+      });
+    } catch (err) {
+      console.error("Email error:", err);
+    }
+  }
 
   return (
     <>
@@ -110,7 +128,8 @@ export default function CartSidebar() {
                     });
                   }}
                   onApprove={(data, actions) => {
-                    return actions.order.capture().then((details) => {
+                    return actions.order.capture().then(async (details) => {
+                      await sendOrderEmail(details);
                       setOpen(false);
                       alert(`ORDER CONFIRMED — Thank you, ${details.payer.name.given_name}! Your INK3D order is being processed.`);
                     });
