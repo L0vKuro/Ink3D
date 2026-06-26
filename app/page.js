@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Nav from "./components/Nav";
+import { useCart } from "./context/CartContext";
 
 const products = [
   { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K", image: "/reignabove-keychain.png", contain: true },
@@ -30,6 +31,8 @@ const stats = [
 ];
 
 export default function Home() {
+  const { addItem } = useCart();
+
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
 
@@ -201,7 +204,9 @@ export default function Home() {
                       <div className="font-mono-custom text-[9px] text-white/20">USD</div>
                     </div>
                   </div>
-                  <button className="mt-4 w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
+                  <button
+                    onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
+                    className="mt-4 w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
                     onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; e.currentTarget.style.background='#ae1fe308'; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
                     [ ADD_TO_CART ]
