@@ -1,6 +1,15 @@
 import { Resend } from "resend";
+import { ratelimit } from "../../lib/ratelimit";
+
 const resend = new Resend(process.env.RESEND_API_KEY);
+
 export async function POST(req) {
+  const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
+  const { success } = await ratelimit.limit(ip);
+  if (!success) {
+    return Response.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const { customerName, customerEmail, items, total, orderId } = await req.json();
   const itemRows = items.map(item => `
     <tr>
@@ -9,6 +18,7 @@ export async function POST(req) {
       <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #ae1fe3; font-family: monospace; text-align: right;">${item.price}</td>
     </tr>
   `).join('');
+
   await resend.emails.send({
     from: "INK3D Studio <orders@ink3d.lol>",
     to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
