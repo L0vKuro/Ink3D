@@ -13,6 +13,7 @@ export default function Apply() {
     fullName: "", email: "", teamName: "", reason: "",
     twitter: "", tiktok: "", instagram: "", youtube: "", twitch: "", discord: "",
   });
+  const [honeypot, setHoneypot] = useState("");
   const [logo, setLogo] = useState(null);
   const [logoName, setLogoName] = useState("");
   const [status, setStatus] = useState(null);
@@ -34,6 +35,7 @@ export default function Apply() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (honeypot) return; // bot detected — silently reject
     if (!form.twitter) return alert("Twitter/X is required.");
     setLoading(true);
     try {
@@ -95,6 +97,18 @@ export default function Apply() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-10">
+
+          {/* HONEYPOT — hidden from real users, bots fill this in */}
+          <div style={{position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none'}} aria-hidden="true">
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={e => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
 
           {/* PERSONAL INFO */}
           <div className="border border-white/[0.06] p-8 relative">
