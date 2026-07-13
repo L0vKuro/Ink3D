@@ -1,6 +1,15 @@
 import { Resend } from "resend";
+import { ratelimit } from "../../lib/ratelimit";
+
 const resend = new Resend(process.env.RESEND_API_KEY);
+
 export async function POST(req) {
+  const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
+  const { success } = await ratelimit.limit(ip);
+  if (!success) {
+    return Response.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const { fullName, email, teamName, reason, twitter, tiktok, instagram, youtube, twitch, discord, logo, logoName } = await req.json();
   const socials = [
     twitter && `<div style="margin-bottom:6px;"><strong>Twitter/X:</strong> <a href="${twitter}" style="color:#ae1fe3;">${twitter}</a></div>`,
@@ -15,11 +24,7 @@ export async function POST(req) {
   if (logo && logoName) {
     const base64Data = logo.split(',')[1];
     const mimeType = logo.split(';')[0].split(':')[1];
-    attachments.push({
-      filename: logoName,
-      content: base64Data,
-      type: mimeType,
-    });
+    attachments.push({ filename: logoName, content: base64Data, type: mimeType });
   }
 
   await resend.emails.send({
