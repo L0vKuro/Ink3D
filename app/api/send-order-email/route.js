@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { ratelimit } from "../../lib/ratelimit";
+import { sanitize } from "../../lib/sanitize";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,13 +11,22 @@ export async function POST(req) {
     return Response.json({ error: "Too many requests" }, { status: 429 });
   }
 
-  const { customerName, customerEmail, shippingAddress, shippingName, items, total, orderId } = await req.json();
+  const raw = await req.json();
+  const customerName = sanitize(raw.customerName);
+  const customerEmail = sanitize(raw.customerEmail);
+  const shippingAddress = sanitize(raw.shippingAddress);
+  const shippingName = sanitize(raw.shippingName);
+  const discountCode = sanitize(raw.discountCode);
+  const discountAmount = sanitize(raw.discountAmount);
+  const total = sanitize(raw.total);
+  const orderId = sanitize(raw.orderId);
+  const items = raw.items;
 
   const itemRows = items.map(item => `
     <tr>
-      <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #fff; font-family: monospace;">${item.name}${item.teamName ? ` — ${item.teamName} Edition` : ''}</td>
+      <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #fff; font-family: monospace;">${sanitize(item.name)}${item.teamName ? ` — ${sanitize(item.teamName)} Edition` : ''}${item.size ? ` (${sanitize(item.size)})` : ''}</td>
       <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #fff; font-family: monospace; text-align: center;">${item.qty}</td>
-      <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #ae1fe3; font-family: monospace; text-align: right;">${item.price}</td>
+      <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #ae1fe3; font-family: monospace; text-align: right;">${sanitize(item.price)}</td>
       <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #fff; font-family: monospace; text-align: right;">$${(parseFloat(item.price.replace('$','')) * item.qty).toFixed(2)}</td>
     </tr>
   `).join('');
@@ -57,6 +67,14 @@ export async function POST(req) {
             <tbody>${itemRows}</tbody>
           </table>
         </div>
+
+        ${discountCode ? `
+        <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; margin-bottom: 24px;">
+          <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// DISCOUNT</div>
+          <div style="color: #22c55e; margin-bottom: 4px;"><strong>Code:</strong> ${discountCode}</div>
+          <div style="color: #22c55e;"><strong>Amount:</strong> -$${discountAmount}</div>
+        </div>
+        ` : ''}
 
         <div style="background: #ae1fe3; padding: 20px 24px; display: flex; justify-content: space-between;">
           <span style="font-size: 12px; letter-spacing: 3px; color: #fff;">TOTAL</span>
