@@ -10,10 +10,7 @@ export async function GET() {
 }
 
 export async function POST(req) {
-  const { password, code, percent } = await req.json();
-  if (password !== process.env.ADMIN_PASSWORD) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { code, percent } = await req.json();
   const existing = await redis.get("ink3d_discounts") ?? [];
   if (existing.find(d => d.code === code)) {
     return Response.json({ error: "Code already exists" }, { status: 400 });
@@ -24,10 +21,7 @@ export async function POST(req) {
 }
 
 export async function DELETE(req) {
-  const { password, code } = await req.json();
-  if (password !== process.env.ADMIN_PASSWORD) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { code } = await req.json();
   const existing = await redis.get("ink3d_discounts") ?? [];
   const updated = existing.filter(d => d.code !== code);
   await redis.set("ink3d_discounts", updated);
