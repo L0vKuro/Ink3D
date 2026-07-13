@@ -10,7 +10,7 @@ const merch = [
   {
     id: "merch-test",
     name: "TEST ITEM — DELETE AFTER",
-    price: "$1.00",
+    price: "$0.01",
     tag: "TEE",
     desc: "Test item to verify checkout. Remove after testing.",
     images: [
