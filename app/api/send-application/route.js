@@ -11,18 +11,22 @@ export async function POST(req) {
     discord && `<div style="margin-bottom:6px;"><strong>Discord:</strong> <a href="${discord}" style="color:#ae1fe3;">${discord}</a></div>`,
   ].filter(Boolean).join('');
 
-  const logoHtml = logo ? `
-    <div style="background:#0a0a0a;border:1px solid #1a1a1a;padding:24px;margin-bottom:24px;">
-      <div style="font-size:9px;color:#ae1fe366;letter-spacing:4px;margin-bottom:16px;">// LOGO</div>
-      <img src="${logo}" alt="Logo" style="max-width:200px;max-height:200px;object-fit:contain;" />
-      <div style="font-size:9px;color:#ffffff40;margin-top:8px;">${logoName}</div>
-    </div>
-  ` : '';
+  const attachments = [];
+  if (logo && logoName) {
+    const base64Data = logo.split(',')[1];
+    const mimeType = logo.split(';')[0].split(':')[1];
+    attachments.push({
+      filename: logoName,
+      content: base64Data,
+      type: mimeType,
+    });
+  }
 
   await resend.emails.send({
     from: "INK3D Studio <apply@ink3d.lol>",
     to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
     subject: `NEW APPLICATION — ${fullName} — ${teamName}`,
+    attachments,
     html: `
       <div style="background:#050505;padding:40px;font-family:monospace;color:#fff;max-width:600px;">
         <div style="color:#ae1fe3;font-size:11px;letter-spacing:4px;margin-bottom:8px;">SYS://APPLICATION_RECEIVED</div>
@@ -32,8 +36,8 @@ export async function POST(req) {
           <div style="margin-bottom:6px;"><strong>Name:</strong> ${fullName}</div>
           <div style="margin-bottom:6px;"><strong>Email:</strong> ${email}</div>
           <div style="margin-bottom:6px;"><strong>Team/Org:</strong> ${teamName}</div>
+          ${logoName ? `<div style="margin-bottom:6px;"><strong>Logo:</strong> ${logoName} (see attachment)</div>` : ''}
         </div>
-        ${logoHtml}
         <div style="background:#0a0a0a;border:1px solid #1a1a1a;padding:24px;margin-bottom:24px;">
           <div style="font-size:9px;color:#ae1fe366;letter-spacing:4px;margin-bottom:16px;">// WHY INK3D</div>
           <div style="color:#fff;line-height:1.8;white-space:pre-wrap;">${reason}</div>
