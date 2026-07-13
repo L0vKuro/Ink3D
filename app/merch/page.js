@@ -10,17 +10,6 @@ const sizes = ["XS", "S", "M", "L", "XL", "2XL"];
 
 const merch = [
   {
-    id: "merch-test",
-    name: "TEST ITEM — DELETE AFTER",
-    price: "$0.01",
-    tag: "TEE",
-    desc: "Test item to verify checkout. Remove after testing.",
-    hasSize: false,
-    images: [
-      { label: "FRONT", src: "/ink3d_v4_transparent_1.png" },
-    ],
-  },
-  {
     id: "merch-1",
     name: "INK3D HOODIE",
     price: "$53.00",
