@@ -10,11 +10,6 @@ import { useCart } from "../context/CartContext";
 const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
 const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
 
-const VALID_CODES = {
-  "INK3D10": 10,
-  "INK3D20": 20,
-};
-
 export default function Checkout() {
   const router = useRouter();
   const { items, total } = useCart();
@@ -25,6 +20,7 @@ export default function Checkout() {
   const [discountCode, setDiscountCode] = useState("");
   const [discountApplied, setDiscountApplied] = useState(null);
   const [discountError, setDiscountError] = useState("");
+  const [discountLoading, setDiscountLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   const discountAmount = discountApplied ? (total * discountApplied / 100) : 0;
@@ -35,15 +31,26 @@ export default function Checkout() {
     setErrors(prev => ({ ...prev, [e.target.name]: "" }));
   }
 
-  function applyDiscount() {
+  async function applyDiscount() {
     const code = discountCode.trim().toUpperCase();
-    if (VALID_CODES[code]) {
-      setDiscountApplied(VALID_CODES[code]);
-      setDiscountError("");
-    } else {
-      setDiscountApplied(null);
-      setDiscountError("Invalid discount code.");
+    if (!code) return;
+    setDiscountLoading(true);
+    setDiscountError("");
+    try {
+      const res = await fetch("/api/admin/discounts");
+      const data = await res.json();
+      const found = data.codes?.find(d => d.code === code);
+      if (found) {
+        setDiscountApplied(found.percent);
+        setDiscountError("");
+      } else {
+        setDiscountApplied(null);
+        setDiscountError("Invalid discount code.");
+      }
+    } catch {
+      setDiscountError("Error validating code. Try again.");
     }
+    setDiscountLoading(false);
   }
 
   function validate() {
@@ -78,9 +85,7 @@ export default function Checkout() {
           <div className="font-mono-custom text-[9px] text-white/20 tracking-widest mb-4">// CART_EMPTY</div>
           <h1 className="text-4xl font-black mb-6">YOUR CART IS EMPTY</h1>
           <Link href="/teams">
-            <button className="font-black px-10 py-4 text-xs tracking-[0.25em] font-mono-custom glow-btn" style={{background: '#ae1fe3', color: '#fff'}}>
-              SHOP NOW
-            </button>
+            <button className="font-black px-10 py-4 text-xs tracking-[0.25em] font-mono-custom glow-btn" style={{background: '#ae1fe3', color: '#fff'}}>SHOP NOW</button>
           </Link>
         </div>
       </main>
@@ -97,10 +102,8 @@ export default function Checkout() {
 
         <div className="grid md:grid-cols-[1fr_380px] gap-8">
 
-          {/* LEFT — FORM */}
           <div className="space-y-8">
 
-            {/* CONTACT */}
             <div className="border border-white/[0.06] p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// CONTACT INFORMATION</span>
@@ -119,7 +122,6 @@ export default function Checkout() {
               </div>
             </div>
 
-            {/* SHIPPING */}
             <div className="border border-white/[0.06] p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// SHIPPING ADDRESS</span>
@@ -161,7 +163,6 @@ export default function Checkout() {
               </div>
             </div>
 
-            {/* DISCOUNT */}
             <div className="border border-white/[0.06] p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// DISCOUNT CODE</span>
@@ -176,20 +177,17 @@ export default function Checkout() {
                 />
                 <button
                   onClick={applyDiscount}
+                  disabled={discountLoading}
                   className="font-black px-6 font-mono-custom text-[10px] tracking-widest transition-all duration-200"
-                  style={{background: '#ae1fe3', color: '#fff'}}
+                  style={{background: '#ae1fe3', color: '#fff', opacity: discountLoading ? 0.5 : 1}}
                   onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; }}
                   onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}
                 >
-                  APPLY
+                  {discountLoading ? '...' : 'APPLY'}
                 </button>
               </div>
-              {discountApplied && (
-                <div className="font-mono-custom text-[9px] text-green-400 mt-2 tracking-widest">✓ {discountApplied}% DISCOUNT APPLIED</div>
-              )}
-              {discountError && (
-                <div className="font-mono-custom text-[9px] text-red-400 mt-2 tracking-widest">{discountError}</div>
-              )}
+              {discountApplied && <div className="font-mono-custom text-[9px] text-green-400 mt-2 tracking-widest">✓ {discountApplied}% DISCOUNT APPLIED</div>}
+              {discountError && <div className="font-mono-custom text-[9px] text-red-400 mt-2 tracking-widest">{discountError}</div>}
             </div>
 
             <button
@@ -203,7 +201,6 @@ export default function Checkout() {
             </button>
           </div>
 
-          {/* RIGHT — ORDER SUMMARY */}
           <div className="border border-white/[0.06] p-6 h-fit sticky top-28">
             <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// ORDER SUMMARY</div>
             <div className="space-y-4 mb-6">
