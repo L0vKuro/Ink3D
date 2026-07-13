@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Admin() {
-  const [password, setPassword] = useState("");
-  const [authed, setAuthed] = useState(false);
-  const [authError, setAuthError] = useState("");
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("tracking");
 
   // Tracking state
@@ -23,26 +22,21 @@ export default function Admin() {
   const [discountMsg, setDiscountMsg] = useState("");
 
   useEffect(() => {
-    if (authed && activeTab === "discounts") loadDiscounts();
-  }, [authed, activeTab]);
+    if (activeTab === "discounts") loadDiscounts();
+  }, [activeTab]);
 
   async function loadDiscounts() {
     setDiscountsLoading(true);
     const res = await fetch("/api/admin/discounts");
+    if (res.status === 401) { router.push("/admin/login"); return; }
     const data = await res.json();
     setDiscounts(data.codes ?? []);
     setDiscountsLoading(false);
   }
 
-  async function handleLogin(e) {
-    e.preventDefault();
-    const res = await fetch("/api/admin/verify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
-    if (res.ok) { setAuthed(true); setAuthError(""); }
-    else setAuthError("// INVALID PASSWORD");
+  async function handleLogout() {
+    await fetch("/api/admin/logout", { method: "POST" });
+    router.push("/admin/login");
   }
 
   async function handleSendTracking(e) {
@@ -54,6 +48,7 @@ export default function Admin() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(tracking),
     });
+    if (res.status === 401) { router.push("/admin/login"); return; }
     setTrackingStatus(res.ok ? "success" : "error");
     if (res.ok) setTracking({ customerEmail: "", customerName: "", trackingLink: "", orderId: "" });
     setTrackingLoading(false);
@@ -67,8 +62,9 @@ export default function Admin() {
     const res = await fetch("/api/admin/discounts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password, code, percent }),
+      body: JSON.stringify({ code, percent }),
     });
+    if (res.status === 401) { router.push("/admin/login"); return; }
     const data = await res.json();
     if (res.ok) {
       setDiscounts(data.codes);
@@ -84,8 +80,9 @@ export default function Admin() {
     const res = await fetch("/api/admin/discounts", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password, code }),
+      body: JSON.stringify({ code }),
     });
+    if (res.status === 401) { router.push("/admin/login"); return; }
     const data = await res.json();
     if (res.ok) {
       setDiscounts(data.codes);
@@ -96,32 +93,6 @@ export default function Admin() {
   const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
   const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
 
-  if (!authed) {
-    return (
-      <main className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center px-6">
-        <div className="w-full max-w-sm">
-          <div className="text-center mb-10">
-            <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D" width={80} height={32} className="object-contain mx-auto mb-6" /></Link>
-            <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-2" style={{color: '#ae1fe366'}}>SYS://ADMIN_ACCESS</div>
-            <h1 className="text-3xl font-black tracking-tight">ADMIN PANEL</h1>
-          </div>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className={labelClass}>PASSWORD</label>
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter admin password" className={inputClass} autoComplete="current-password" />
-            </div>
-            {authError && <div className="font-mono-custom text-[9px] text-red-400 tracking-widest">{authError}</div>}
-            <button type="submit" className="w-full py-4 font-black text-xs tracking-[0.25em] font-mono-custom transition-all duration-200 glow-btn" style={{background: '#ae1fe3', color: '#fff'}}
-              onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}>
-              [ ACCESS ]
-            </button>
-          </form>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <div className="border-b border-white/[0.06] px-6 md:px-12 py-4 flex justify-between items-center">
@@ -129,7 +100,7 @@ export default function Admin() {
           <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D" width={60} height={24} className="object-contain" /></Link>
           <div className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe366'}}>SYS://ADMIN_PANEL</div>
         </div>
-        <button onClick={() => setAuthed(false)} className="font-mono-custom text-[9px] text-white/20 hover:text-white transition-colors tracking-widest">[ LOGOUT ]</button>
+        <button onClick={handleLogout} className="font-mono-custom text-[9px] text-white/20 hover:text-white transition-colors tracking-widest">[ LOGOUT ]</button>
       </div>
 
       <div className="px-6 md:px-12 py-12 max-w-4xl mx-auto">
