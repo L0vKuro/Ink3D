@@ -23,6 +23,8 @@ export default function Payment() {
 
   if (!checkoutData) return null;
 
+  const itemTotal = total.toFixed(2);
+  const discountAmount = checkoutData.discountAmount ? parseFloat(checkoutData.discountAmount).toFixed(2) : "0.00";
   const finalTotal = checkoutData.finalTotal;
 
   async function sendOrderEmail(details) {
@@ -122,13 +124,17 @@ export default function Payment() {
               <PayPalButtons
                 style={{ layout: "vertical", color: "black", label: "pay", height: 50 }}
                 createOrder={(data, actions) => {
+                  const breakdown = {
+                    item_total: { currency_code: "USD", value: itemTotal },
+                  };
+                  if (parseFloat(discountAmount) > 0) {
+                    breakdown.discount = { currency_code: "USD", value: discountAmount };
+                  }
                   return actions.order.create({
                     purchase_units: [{
                       amount: {
                         value: finalTotal,
-                        breakdown: {
-                          item_total: { currency_code: "USD", value: finalTotal }
-                        },
+                        breakdown,
                         currency_code: "USD",
                       },
                       items: items.map(item => ({
