@@ -16,10 +16,12 @@ export default function Admin() {
 
   // Discount state
   const [discounts, setDiscounts] = useState([]);
+  const [archive, setArchive] = useState([]);
   const [discountsLoading, setDiscountsLoading] = useState(false);
   const [newCode, setNewCode] = useState("");
   const [newPercent, setNewPercent] = useState("");
   const [discountMsg, setDiscountMsg] = useState("");
+  const [showArchive, setShowArchive] = useState(false);
 
   useEffect(() => {
     if (activeTab === "discounts") loadDiscounts();
@@ -31,6 +33,7 @@ export default function Admin() {
     if (res.status === 401) { router.push("/admin/login"); return; }
     const data = await res.json();
     setDiscounts(data.codes ?? []);
+    setArchive(data.archive ?? []);
     setDiscountsLoading(false);
   }
 
@@ -86,7 +89,8 @@ export default function Admin() {
     const data = await res.json();
     if (res.ok) {
       setDiscounts(data.codes);
-      setDiscountMsg(`// ${code} REMOVED`);
+      await loadDiscounts();
+      setDiscountMsg(`// ${code} ARCHIVED`);
     }
   }
 
@@ -154,11 +158,48 @@ export default function Admin() {
 
         {activeTab === "discounts" && (
           <div>
-            <div className="mb-8">
-              <h2 className="text-3xl font-black tracking-tight mb-2">DISCOUNT CODES</h2>
-              <p className="font-mono-custom text-white/30 text-sm">// Manage active discount codes. Stored permanently in Redis.</p>
+            <div className="flex justify-between items-start mb-8">
+              <div>
+                <h2 className="text-3xl font-black tracking-tight mb-2">DISCOUNT CODES</h2>
+                <p className="font-mono-custom text-white/30 text-sm">// Manage active discount codes. Stored permanently in Redis.</p>
+              </div>
+              <button
+                onClick={() => setShowArchive(!showArchive)}
+                className="font-mono-custom text-[9px] tracking-widest px-4 py-2 border transition-all duration-200 shrink-0"
+                style={{
+                  borderColor: showArchive ? '#ae1fe3' : 'rgba(255,255,255,0.08)',
+                  color: showArchive ? '#ae1fe3' : 'rgba(255,255,255,0.30)',
+                }}
+              >
+                {showArchive ? '[ HIDE ARCHIVE ]' : '[ CODE ARCHIVES ]'} {archive.length > 0 && `(${archive.length})`}
+              </button>
             </div>
 
+            {/* ARCHIVE */}
+            {showArchive && (
+              <div className="border border-white/[0.06] p-8 mb-6" style={{borderColor: '#ae1fe320', background: '#0a0a0a'}}>
+                <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// CODE ARCHIVES</div>
+                {archive.length === 0 ? (
+                  <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// NO ARCHIVED CODES</div>
+                ) : (
+                  <div className="space-y-3">
+                    {archive.map(d => (
+                      <div key={d.code} className="flex justify-between items-center border border-white/[0.04] px-4 py-3 bg-[#050505]">
+                        <div className="flex items-center gap-6">
+                          <span className="font-black tracking-wider text-white/30 line-through">{d.code}</span>
+                          <span className="font-mono-custom text-[9px] text-white/20">{d.percent}% OFF</span>
+                        </div>
+                        <div className="font-mono-custom text-[9px] text-white/15 tracking-widest">
+                          {d.deletedAt ? new Date(d.deletedAt).toLocaleDateString() : 'ARCHIVED'}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ACTIVE CODES */}
             <div className="border border-white/[0.06] p-8 mb-6">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ACTIVE CODES</div>
               {discountsLoading ? (
@@ -180,6 +221,7 @@ export default function Admin() {
               )}
             </div>
 
+            {/* ADD CODE */}
             <div className="border border-white/[0.06] p-8">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ADD NEW CODE</div>
               <div className="flex gap-4">
