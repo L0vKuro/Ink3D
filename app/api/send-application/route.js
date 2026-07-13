@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { ratelimit } from "../../lib/ratelimit";
+import { sanitize } from "../../lib/sanitize";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,7 +11,20 @@ export async function POST(req) {
     return Response.json({ error: "Too many requests" }, { status: 429 });
   }
 
-  const { fullName, email, teamName, reason, twitter, tiktok, instagram, youtube, twitch, discord, logo, logoName } = await req.json();
+  const raw = await req.json();
+  const fullName = sanitize(raw.fullName);
+  const email = sanitize(raw.email);
+  const teamName = sanitize(raw.teamName);
+  const reason = sanitize(raw.reason);
+  const twitter = sanitize(raw.twitter);
+  const tiktok = sanitize(raw.tiktok);
+  const instagram = sanitize(raw.instagram);
+  const youtube = sanitize(raw.youtube);
+  const twitch = sanitize(raw.twitch);
+  const discord = sanitize(raw.discord);
+  const logo = raw.logo;
+  const logoName = sanitize(raw.logoName);
+
   const socials = [
     twitter && `<div style="margin-bottom:6px;"><strong>Twitter/X:</strong> <a href="${twitter}" style="color:#ae1fe3;">${twitter}</a></div>`,
     tiktok && `<div style="margin-bottom:6px;"><strong>TikTok:</strong> <a href="${tiktok}" style="color:#ae1fe3;">${tiktok}</a></div>`,
