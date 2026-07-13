@@ -16,12 +16,19 @@ export default function CartSidebar() {
 
   async function sendOrderEmail(details) {
     try {
+      const shipping = details.purchase_units?.[0]?.shipping;
+      const shippingAddress = shipping?.address
+        ? `${shipping.address.address_line_1}${shipping.address.address_line_2 ? ', ' + shipping.address.address_line_2 : ''}, ${shipping.address.admin_area_2}, ${shipping.address.admin_area_1} ${shipping.address.postal_code}, ${shipping.address.country_code}`
+        : 'Not provided';
+
       await fetch("/api/send-order-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           customerName: `${details.payer.name.given_name} ${details.payer.name.surname}`,
           customerEmail: details.payer.email_address,
+          shippingAddress,
+          shippingName: shipping?.name?.full_name ?? `${details.payer.name.given_name} ${details.payer.name.surname}`,
           items,
           total: total.toFixed(2),
           orderId: details.id,
@@ -55,7 +62,6 @@ export default function CartSidebar() {
         style={{ transform: open ? 'translateX(0)' : 'translateX(100%)' }}
       >
         {orderConfirmed ? (
-          /* ORDER CONFIRMED SCREEN */
           <div className="flex flex-col items-center justify-center h-full px-8 text-center relative overflow-hidden">
             <div className="absolute inset-0 grid-bg opacity-20" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32" style={{background: 'linear-gradient(to bottom, #ae1fe3, transparent)'}} />
