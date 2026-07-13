@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req) {
-  const { fullName, email, teamName, reason, twitter, tiktok, instagram, youtube, twitch, discord, logoName } = await req.json();
+  const { fullName, email, teamName, reason, twitter, tiktok, instagram, youtube, twitch, discord, logo, logoName } = await req.json();
   const socials = [
     twitter && `<div style="margin-bottom:6px;"><strong>Twitter/X:</strong> <a href="${twitter}" style="color:#ae1fe3;">${twitter}</a></div>`,
     tiktok && `<div style="margin-bottom:6px;"><strong>TikTok:</strong> <a href="${tiktok}" style="color:#ae1fe3;">${tiktok}</a></div>`,
@@ -10,6 +10,15 @@ export async function POST(req) {
     twitch && `<div style="margin-bottom:6px;"><strong>Twitch:</strong> <a href="${twitch}" style="color:#ae1fe3;">${twitch}</a></div>`,
     discord && `<div style="margin-bottom:6px;"><strong>Discord:</strong> <a href="${discord}" style="color:#ae1fe3;">${discord}</a></div>`,
   ].filter(Boolean).join('');
+
+  const logoHtml = logo ? `
+    <div style="background:#0a0a0a;border:1px solid #1a1a1a;padding:24px;margin-bottom:24px;">
+      <div style="font-size:9px;color:#ae1fe366;letter-spacing:4px;margin-bottom:16px;">// LOGO</div>
+      <img src="${logo}" alt="Logo" style="max-width:200px;max-height:200px;object-fit:contain;" />
+      <div style="font-size:9px;color:#ffffff40;margin-top:8px;">${logoName}</div>
+    </div>
+  ` : '';
+
   await resend.emails.send({
     from: "INK3D Studio <apply@ink3d.lol>",
     to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
@@ -23,8 +32,8 @@ export async function POST(req) {
           <div style="margin-bottom:6px;"><strong>Name:</strong> ${fullName}</div>
           <div style="margin-bottom:6px;"><strong>Email:</strong> ${email}</div>
           <div style="margin-bottom:6px;"><strong>Team/Org:</strong> ${teamName}</div>
-          ${logoName ? `<div style="margin-bottom:6px;"><strong>Logo:</strong> ${logoName} (attached)</div>` : ''}
         </div>
+        ${logoHtml}
         <div style="background:#0a0a0a;border:1px solid #1a1a1a;padding:24px;margin-bottom:24px;">
           <div style="font-size:9px;color:#ae1fe366;letter-spacing:4px;margin-bottom:16px;">// WHY INK3D</div>
           <div style="color:#fff;line-height:1.8;white-space:pre-wrap;">${reason}</div>
