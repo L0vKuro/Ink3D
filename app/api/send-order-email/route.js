@@ -10,7 +10,7 @@ export async function POST(req) {
     </tr>
   `).join('');
   await resend.emails.send({
-    from: "INK3D Studio <onboarding@resend.dev>",
+    from: "INK3D Studio <orders@ink3d.lol>",
     to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
     subject: `NEW ORDER — ${orderId} — $${total}`,
     html: `
