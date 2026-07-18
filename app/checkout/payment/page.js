@@ -29,9 +29,8 @@ export default function Payment() {
 
   async function sendOrderEmail(details) {
     try {
-      const ref = sessionStorage.getItem("ink3d_ref");
+      const ref = localStorage.getItem("ink3d_ref");
 
-      // If no ref link but discount code was used, check if it belongs to an affiliate
       let referralCode = ref ?? null;
       if (!referralCode && checkoutData.discountCode) {
         referralCode = `DISCOUNT:${checkoutData.discountCode}`;
@@ -53,7 +52,7 @@ export default function Payment() {
           referralCode,
         }),
       });
-      if (ref) sessionStorage.removeItem("ink3d_ref");
+      if (ref) localStorage.removeItem("ink3d_ref");
     } catch (err) {
       console.error("Email error:", err);
     }
@@ -176,54 +175,4 @@ export default function Payment() {
             <div className="space-y-4 mb-6">
               {items.map(item => (
                 <div key={item.id} className="flex gap-3">
-                  <div className="w-16 h-16 relative shrink-0 bg-[#0a0a0a] border border-white/[0.05]">
-                    <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
-                    <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center font-mono-custom text-[9px] font-black" style={{background: '#ae1fe3'}}>
-                      {item.qty}
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-black text-xs tracking-wider truncate">{item.name}</div>
-                    {item.teamName && <div className="font-mono-custom text-[9px] text-white/30">{item.teamName} Edition</div>}
-                    {item.size && <div className="font-mono-custom text-[9px] text-white/30">Size: {item.size}</div>}
-                    <div className="font-black text-sm mt-1" style={{color: '#ae1fe3'}}>{item.price}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="border-t border-white/[0.06] pt-4 space-y-2">
-              <div className="flex justify-between font-mono-custom text-[10px] text-white/40">
-                <span>SUBTOTAL</span>
-                <span>${total.toFixed(2)}</span>
-              </div>
-              {checkoutData.discountCode && (
-                <div className="flex justify-between font-mono-custom text-[10px] text-green-400">
-                  <span>DISCOUNT ({checkoutData.discountPercent}%)</span>
-                  <span>-${checkoutData.discountAmount}</span>
-                </div>
-              )}
-              <div className="flex justify-between font-black text-lg pt-2 border-t border-white/[0.06]">
-                <span>TOTAL</span>
-                <span style={{color: '#ae1fe3'}}>${finalTotal}</span>
-              </div>
-              <div className="font-mono-custom text-[9px] text-white/20 tracking-widest text-center pt-2">🔒 SECURED BY PAYPAL</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <footer className="border-t border-white/[0.05]">
-        <div className="px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
-          <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
-          <div className="flex gap-8">
-            {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
-              <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 transition-colors tracking-widest hover:text-white/70">{name}</Link>
-            ))}
-          </div>
-        </div>
-      </footer>
-    </main>
-  );
-}
+                  <div
