@@ -21,7 +21,7 @@ export default function Nav({ active }) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const ref = params.get("ref");
-    if (ref) sessionStorage.setItem("ink3d_ref", ref.toUpperCase());
+    if (ref) localStorage.setItem("ink3d_ref", ref.toUpperCase());
   }, []);
 
   return (
