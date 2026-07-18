@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -23,8 +23,44 @@ export default function Checkout() {
   const [discountLoading, setDiscountLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const discountAmount = discountApplied ? (total * discountApplied / 100) : 0;
+  const discountAmount = discountApplied ? (total * discountApplied.percent / 100) : 0;
   const finalTotal = (total - discountAmount).toFixed(2);
+
+  // Auto-apply discount from ref link
+  useEffect(() => {
+    const ref = localStorage.getItem("ink3d_ref");
+    if (ref) {
+      autoApplyRefDiscount(ref);
+    }
+  }, []);
+
+  async function autoApplyRefDiscount(ref) {
+    try {
+      const res = await fetch("/api/admin/discounts");
+      const data = await res.json();
+      const affiliateCode = data.codes?.find(d => d.affiliateId && d.code === ref);
+      if (!affiliateCode) {
+        // Try matching by referral code — find affiliate whose referralCode matches ref
+        const allCodes = data.codes ?? [];
+        // Look for affiliate discount code linked to this ref
+        const res2 = await fetch("/api/admin/affiliates");
+        const affData = await res2.json();
+        const affiliate = affData.affiliates?.find(a => a.referralCode === ref);
+        if (affiliate) {
+          const matchedCode = allCodes.find(d => d.code === affiliate.discountCode);
+          if (matchedCode) {
+            setDiscountCode(matchedCode.code);
+            setDiscountApplied({ percent: matchedCode.percent, code: matchedCode.code });
+          }
+        }
+      } else {
+        setDiscountCode(affiliateCode.code);
+        setDiscountApplied({ percent: affiliateCode.percent, code: affiliateCode.code });
+      }
+    } catch (err) {
+      console.error("Auto-apply ref discount error:", err);
+    }
+  }
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -41,7 +77,7 @@ export default function Checkout() {
       const data = await res.json();
       const found = data.codes?.find(d => d.code === code);
       if (found) {
-        setDiscountApplied(found.percent);
+        setDiscountApplied({ percent: found.percent, code: found.code });
         setDiscountError("");
       } else {
         setDiscountApplied(null);
@@ -69,8 +105,8 @@ export default function Checkout() {
     if (!validate()) return;
     sessionStorage.setItem("ink3d_checkout", JSON.stringify({
       ...form,
-      discountCode: discountApplied ? discountCode.trim().toUpperCase() : null,
-      discountPercent: discountApplied,
+      discountCode: discountApplied ? discountApplied.code : null,
+      discountPercent: discountApplied ? discountApplied.percent : null,
       discountAmount: discountAmount.toFixed(2),
       finalTotal,
     }));
@@ -186,7 +222,11 @@ export default function Checkout() {
                   {discountLoading ? '...' : 'APPLY'}
                 </button>
               </div>
-              {discountApplied && <div className="font-mono-custom text-[9px] text-green-400 mt-2 tracking-widest">✓ {discountApplied}% DISCOUNT APPLIED</div>}
+              {discountApplied && (
+                <div className="font-mono-custom text-[9px] text-green-400 mt-2 tracking-widest">
+                  ✓ {discountApplied.percent}% DISCOUNT APPLIED {discountApplied.code ? `(${discountApplied.code})` : ''}
+                </div>
+              )}
               {discountError && <div className="font-mono-custom text-[9px] text-red-400 mt-2 tracking-widest">{discountError}</div>}
             </div>
 
@@ -228,7 +268,7 @@ export default function Checkout() {
               </div>
               {discountApplied && (
                 <div className="flex justify-between font-mono-custom text-[10px] text-green-400">
-                  <span>DISCOUNT ({discountApplied}%)</span>
+                  <span>DISCOUNT ({discountApplied.percent}%)</span>
                   <span>-${discountAmount.toFixed(2)}</span>
                 </div>
               )}
