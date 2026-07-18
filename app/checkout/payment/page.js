@@ -29,6 +29,14 @@ export default function Payment() {
 
   async function sendOrderEmail(details) {
     try {
+      const ref = sessionStorage.getItem("ink3d_ref");
+
+      // If no ref link but discount code was used, check if it belongs to an affiliate
+      let referralCode = ref ?? null;
+      if (!referralCode && checkoutData.discountCode) {
+        referralCode = `DISCOUNT:${checkoutData.discountCode}`;
+      }
+
       await fetch("/api/send-order-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,8 +50,10 @@ export default function Payment() {
           items,
           total: finalTotal,
           orderId: details.id,
+          referralCode,
         }),
       });
+      if (ref) sessionStorage.removeItem("ink3d_ref");
     } catch (err) {
       console.error("Email error:", err);
     }
@@ -100,7 +110,6 @@ export default function Payment() {
 
         <div className="grid md:grid-cols-[1fr_380px] gap-8">
 
-          {/* LEFT — PAYMENT */}
           <div className="border border-white/[0.06] p-8 relative h-fit">
             <div className="absolute -top-3 left-6 bg-[#050505] px-3">
               <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// SECURE PAYMENT</span>
@@ -162,7 +171,6 @@ export default function Payment() {
             </PayPalScriptProvider>
           </div>
 
-          {/* RIGHT — ORDER SUMMARY */}
           <div className="border border-white/[0.06] p-6 h-fit sticky top-28">
             <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// ORDER SUMMARY</div>
             <div className="space-y-4 mb-6">
