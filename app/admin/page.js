@@ -12,12 +12,10 @@ export default function Admin() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("tracking");
 
-  // Tracking state
   const [tracking, setTracking] = useState({ customerEmail: "", customerName: "", trackingLink: "", orderId: "" });
   const [trackingStatus, setTrackingStatus] = useState(null);
   const [trackingLoading, setTrackingLoading] = useState(false);
 
-  // Discount state
   const [discounts, setDiscounts] = useState([]);
   const [archive, setArchive] = useState([]);
   const [discountsLoading, setDiscountsLoading] = useState(false);
@@ -26,7 +24,6 @@ export default function Admin() {
   const [discountMsg, setDiscountMsg] = useState("");
   const [showArchive, setShowArchive] = useState(false);
 
-  // Affiliate state
   const [affiliates, setAffiliates] = useState([]);
   const [affiliatesLoading, setAffiliatesLoading] = useState(false);
   const [affiliateMsg, setAffiliateMsg] = useState("");
@@ -168,8 +165,10 @@ export default function Admin() {
 
   const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
   const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
-
   const tierColors = { BRONZE: '#cd7f32', SILVER: '#c0c0c0', GOLD: '#ffd60a', DIAMOND: '#00b4d8', ELITE: '#ae1fe3' };
+
+  const regularCodes = discounts.filter(d => !d.affiliateId);
+  const affiliateCodes = discounts.filter(d => d.affiliateId);
 
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
@@ -269,15 +268,16 @@ export default function Admin() {
               </div>
             )}
 
+            {/* ACTIVE CODES */}
             <div className="border border-white/[0.06] p-8 mb-6">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ACTIVE CODES</div>
               {discountsLoading ? (
                 <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// LOADING...</div>
-              ) : discounts.length === 0 ? (
+              ) : regularCodes.length === 0 && affiliateCodes.length === 0 ? (
                 <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// NO ACTIVE CODES</div>
               ) : (
                 <div className="space-y-3">
-                  {discounts.map(d => (
+                  {regularCodes.map(d => (
                     <div key={d.code} className="flex justify-between items-center border border-white/[0.05] px-4 py-3 bg-[#0a0a0a]">
                       <div className="flex items-center gap-6">
                         <span className="font-black tracking-wider" style={{color: '#ae1fe3'}}>{d.code}</span>
@@ -286,10 +286,26 @@ export default function Admin() {
                       <button onClick={() => removeDiscount(d.code)} className="font-mono-custom text-[9px] text-white/20 hover:text-red-400 transition-colors tracking-widest">[ REMOVE ]</button>
                     </div>
                   ))}
+                  {affiliateCodes.length > 0 && (
+                    <div className="mt-4 pt-4 border-t border-white/[0.04]">
+                      <div className="font-mono-custom text-[9px] tracking-[0.3em] mb-3 text-white/20">// AFFILIATE CODES — MANAGE IN AFFILIATES TAB</div>
+                      {affiliateCodes.map(d => (
+                        <div key={d.code} className="flex justify-between items-center border border-white/[0.03] px-4 py-3 bg-[#0a0a0a] mb-2 opacity-40">
+                          <div className="flex items-center gap-6">
+                            <span className="font-black tracking-wider text-white/50">{d.code}</span>
+                            <span className="font-mono-custom text-[9px] text-white/30">{d.percent}% OFF</span>
+                            <span className="font-mono-custom text-[9px] text-white/20">— {d.affiliateName}</span>
+                          </div>
+                          <span className="font-mono-custom text-[9px] text-white/20 tracking-widest">AFFILIATE</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
+            {/* ADD CODE */}
             <div className="border border-white/[0.06] p-8">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ADD NEW CODE</div>
               <div className="flex gap-4">
@@ -334,7 +350,6 @@ export default function Admin() {
 
             {affiliateMsg && <div className="font-mono-custom text-[9px] text-green-400 tracking-widest mb-6">{affiliateMsg}</div>}
 
-            {/* CREATE AFFILIATE FORM */}
             {showCreateAffiliate && (
               <div className="border border-white/[0.06] p-8 mb-8" style={{borderColor: '#ae1fe330'}}>
                 <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// NEW AFFILIATE</div>
@@ -383,7 +398,6 @@ export default function Admin() {
               </div>
             )}
 
-            {/* AFFILIATE LIST */}
             <div className="space-y-4">
               {affiliatesLoading ? (
                 <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// LOADING...</div>
