@@ -45,10 +45,20 @@ export default function Nav({ active }) {
               </Link>
             ))}
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <span className="font-mono-custom text-[10px] hidden md:block" style={{ color: '#ae1fe388' }}>
               <span className="blink">▋</span> ONLINE
             </span>
+            <Link href="/dashboard">
+              <button
+                className="px-4 py-2 text-[10px] font-black tracking-[0.15em] transition-all duration-200 hidden md:block font-mono-custom"
+                style={{ border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.3)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = '#ae1fe388'; e.currentTarget.style.color = '#ae1fe3'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = 'rgba(255,255,255,0.3)'; }}
+              >
+                AFFILIATE LOGIN
+              </button>
+            </Link>
             <button
               onClick={() => setOpen(true)}
               className="px-5 py-2 text-[11px] font-black tracking-[0.15em] transition-all duration-200 bracket-box"
