@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { ratelimit } from "../../lib/ratelimit";
 import { sanitize } from "../../lib/sanitize";
+import { redis } from "../../lib/ratelimit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -20,7 +21,54 @@ export async function POST(req) {
   const discountAmount = sanitize(raw.discountAmount);
   const total = sanitize(raw.total);
   const orderId = sanitize(raw.orderId);
+  const referralCode = sanitize(raw.referralCode);
   const items = raw.items;
+
+  // AFFILIATE ATTRIBUTION
+  if (referralCode) {
+    try {
+      const affiliates = await redis.get("ink3d_affiliates") ?? [];
+      const affIndex = affiliates.findIndex(a => a.referralCode === referralCode);
+      if (affIndex !== -1) {
+        const aff = affiliates[affIndex];
+        const saleAmount = parseFloat(total);
+        const earnings = parseFloat((saleAmount * aff.commission / 100).toFixed(2));
+        const now = new Date();
+        const thisMonth = `${now.getFullYear()}-${now.getMonth()}`;
+
+        const orderEntry = {
+          orderId,
+          date: now.toISOString(),
+          product: items.map(i => i.name).join(", "),
+          saleAmount,
+          earnings,
+          customerName,
+        };
+
+        const currentMonth = aff.stats?.currentMonth;
+        const isNewMonth = currentMonth !== thisMonth;
+
+        affiliates[affIndex] = {
+          ...aff,
+          stats: {
+            ...aff.stats,
+            currentMonth: thisMonth,
+            lifetimeOrders: (aff.stats?.lifetimeOrders ?? 0) + 1,
+            lifetimeSales: parseFloat(((aff.stats?.lifetimeSales ?? 0) + saleAmount).toFixed(2)),
+            lifetimeEarnings: parseFloat(((aff.stats?.lifetimeEarnings ?? 0) + earnings).toFixed(2)),
+            monthlyOrders: isNewMonth ? 1 : (aff.stats?.monthlyOrders ?? 0) + 1,
+            monthlySales: isNewMonth ? saleAmount : parseFloat(((aff.stats?.monthlySales ?? 0) + saleAmount).toFixed(2)),
+            monthlyEarnings: isNewMonth ? earnings : parseFloat(((aff.stats?.monthlyEarnings ?? 0) + earnings).toFixed(2)),
+            orders: [...(aff.stats?.orders ?? []), orderEntry],
+          },
+        };
+
+        await redis.set("ink3d_affiliates", affiliates);
+      }
+    } catch (err) {
+      console.error("Affiliate attribution error:", err);
+    }
+  }
 
   const itemRows = items.map(item => `
     <tr>
@@ -73,6 +121,13 @@ export async function POST(req) {
           <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// DISCOUNT</div>
           <div style="color: #22c55e; margin-bottom: 4px;"><strong>Code:</strong> ${discountCode}</div>
           <div style="color: #22c55e;"><strong>Amount:</strong> -$${discountAmount}</div>
+        </div>
+        ` : ''}
+
+        ${referralCode ? `
+        <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; margin-bottom: 24px;">
+          <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// REFERRAL</div>
+          <div style="color: #ae1fe3;"><strong>Referred by:</strong> ${referralCode}</div>
         </div>
         ` : ''}
 
