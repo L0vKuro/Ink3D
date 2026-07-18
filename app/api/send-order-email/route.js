@@ -1,7 +1,6 @@
 import { Resend } from "resend";
-import { ratelimit } from "../../lib/ratelimit";
+import { ratelimit, redis } from "../../lib/ratelimit";
 import { sanitize } from "../../lib/sanitize";
-import { redis } from "../../lib/ratelimit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -28,13 +27,22 @@ export async function POST(req) {
   if (referralCode) {
     try {
       const affiliates = await redis.get("ink3d_affiliates") ?? [];
-      const affIndex = affiliates.findIndex(a => a.referralCode === referralCode);
+      const isDiscountAttribution = referralCode.startsWith("DISCOUNT:");
+      const lookupCode = isDiscountAttribution ? referralCode.replace("DISCOUNT:", "") : referralCode;
+
+      const affIndex = affiliates.findIndex(a =>
+        isDiscountAttribution
+          ? a.discountCode === lookupCode
+          : a.referralCode === lookupCode
+      );
+
       if (affIndex !== -1) {
         const aff = affiliates[affIndex];
         const saleAmount = parseFloat(total);
         const earnings = parseFloat((saleAmount * aff.commission / 100).toFixed(2));
         const now = new Date();
         const thisMonth = `${now.getFullYear()}-${now.getMonth()}`;
+        const isNewMonth = aff.stats?.currentMonth !== thisMonth;
 
         const orderEntry = {
           orderId,
@@ -43,10 +51,8 @@ export async function POST(req) {
           saleAmount,
           earnings,
           customerName,
+          via: isDiscountAttribution ? `discount:${lookupCode}` : `ref:${lookupCode}`,
         };
-
-        const currentMonth = aff.stats?.currentMonth;
-        const isNewMonth = currentMonth !== thisMonth;
 
         affiliates[affIndex] = {
           ...aff,
@@ -124,7 +130,7 @@ export async function POST(req) {
         </div>
         ` : ''}
 
-        ${referralCode ? `
+        ${referralCode && !referralCode.startsWith("DISCOUNT:") ? `
         <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; margin-bottom: 24px;">
           <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// REFERRAL</div>
           <div style="color: #ae1fe3;"><strong>Referred by:</strong> ${referralCode}</div>
