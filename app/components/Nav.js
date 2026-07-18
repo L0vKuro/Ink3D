@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import CartSidebar from "./CartSidebar";
 
@@ -16,6 +17,12 @@ const links = [
 
 export default function Nav({ active }) {
   const { count, setOpen } = useCart();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) sessionStorage.setItem("ink3d_ref", ref.toUpperCase());
+  }, []);
 
   return (
     <>
