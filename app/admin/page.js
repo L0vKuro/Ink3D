@@ -163,10 +163,15 @@ export default function Admin() {
     }
   }
 
+  function generatePassword() {
+    const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$';
+    const pw = Array.from({length: 12}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    setNewAffiliate(p => ({...p, password: pw}));
+  }
+
   const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
   const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
   const tierColors = { BRONZE: '#cd7f32', SILVER: '#c0c0c0', GOLD: '#ffd60a', DIAMOND: '#00b4d8', ELITE: '#ae1fe3' };
-
   const regularCodes = discounts.filter(d => !d.affiliateId);
   const affiliateCodes = discounts.filter(d => d.affiliateId);
 
@@ -268,7 +273,6 @@ export default function Admin() {
               </div>
             )}
 
-            {/* ACTIVE CODES */}
             <div className="border border-white/[0.06] p-8 mb-6">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ACTIVE CODES</div>
               {discountsLoading ? (
@@ -305,7 +309,6 @@ export default function Admin() {
               )}
             </div>
 
-            {/* ADD CODE */}
             <div className="border border-white/[0.06] p-8">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ADD NEW CODE</div>
               <div className="flex gap-4">
@@ -364,7 +367,25 @@ export default function Admin() {
                   </div>
                   <div>
                     <label className={labelClass}>PASSWORD</label>
-                    <input type="text" value={newAffiliate.password} onChange={e => setNewAffiliate(p => ({...p, password: e.target.value}))} placeholder="Set their password" className={inputClass} />
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={newAffiliate.password}
+                        onChange={e => setNewAffiliate(p => ({...p, password: e.target.value}))}
+                        placeholder="Set their password"
+                        className={`${inputClass} flex-1`}
+                      />
+                      <button
+                        type="button"
+                        onClick={generatePassword}
+                        className="px-3 font-mono-custom text-[9px] tracking-widest transition-all duration-200 shrink-0"
+                        style={{border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.3)'}}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.3)'; }}
+                      >
+                        GEN
+                      </button>
+                    </div>
                   </div>
                   <div>
                     <label className={labelClass}>TIER</label>
