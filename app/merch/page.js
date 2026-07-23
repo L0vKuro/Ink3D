@@ -48,7 +48,10 @@ const merch = [
     ],
   },
 ];
-
+const tagColors = {
+  HOODIE: "text-[#ae1fe3] border-[#ae1fe3]/50 bg-[#ae1fe3]/10",
+  TEE:    "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
+};
 function MerchCard({ item, index }) {
   const [activeImg, setActiveImg] = useState(0);
   const [selectedSize, setSelectedSize] = useState("");
