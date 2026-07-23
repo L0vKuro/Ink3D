@@ -9,17 +9,21 @@ import { useCart } from "../context/CartContext";
 const sizes = ["XS", "S", "M", "L", "XL", "2XL"];
 
 const merch = [
+ const merch = [
   {
-  id: "merch-test",
-  name: "TEST ITEM — DELETE AFTER",
-  price: "$0.01",
-  tag: "TEE",
-  desc: "Test item to verify checkout. Remove after testing.",
-  hasSize: false,
-  images: [
-    { label: "FRONT", src: "/ink3d_v4_transparent_1.png" },
-  ],
-},
+    id: "merch-1",
+    name: "INK3D HOODIE",
+    price: "$53.00",
+    tag: "HOODIE",
+    desc: "Premium heavyweight hoodie. Wear the brand.",
+    hasSize: true,
+    images: [
+      { label: "FRONT", src: "/Ink3DHoodie-Front.png" },
+      { label: "BACK", src: "/Ink3DHoodie-Back.png" },
+      { label: "LEFT", src: "/Ink3DHoodie-Left.png" },
+      { label: "RIGHT", src: "/Ink3DHoodie-Right.png" },
+    ],
+  },
   {
     id: "merch-2",
     name: "INK3D TEE — FRONT LOGO",
@@ -45,11 +49,6 @@ const merch = [
     ],
   },
 ];
-
-const tagColors = {
-  HOODIE: "text-[#ae1fe3] border-[#ae1fe3]/50 bg-[#ae1fe3]/10",
-  TEE:    "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
-};
 
 function MerchCard({ item, index }) {
   const [activeImg, setActiveImg] = useState(0);
