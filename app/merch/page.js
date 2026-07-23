@@ -10,20 +10,6 @@ const sizes = ["XS", "S", "M", "L", "XL", "2XL"];
 
 const merch = [
   {
-    id: "merch-1",
-    name: "INK3D HOODIE",
-    price: "$53.00",
-    tag: "HOODIE",
-    desc: "Premium heavyweight hoodie. Wear the brand.",
-    hasSize: true,
-    images: [
-      { label: "FRONT", src: "/Ink3DHoodie-Front.png" },
-      { label: "BACK", src: "/Ink3DHoodie-Back.png" },
-      { label: "LEFT", src: "/Ink3DHoodie-Left.png" },
-      { label: "RIGHT", src: "/Ink3DHoodie-Right.png" },
-    ],
-  },
-  {
   id: "merch-test",
   name: "TEST ITEM — DELETE AFTER",
   price: "$0.01",
