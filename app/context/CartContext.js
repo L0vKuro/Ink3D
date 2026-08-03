@@ -9,29 +9,31 @@ export function CartProvider({ children }) {
   const [open, setOpen] = useState(false);
   const hydrated = useRef(false);
 
-  // Load cart from localStorage once, on mount, so it survives a page refresh.
+  // Load cart from sessionStorage once, on mount. sessionStorage survives
+  // refreshes and navigation within the tab, but clears when the tab closes
+  // (unlike localStorage, which would persist forever).
   useEffect(() => {
     try {
-      const saved = window.localStorage.getItem(STORAGE_KEY);
+      const saved = window.sessionStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) setItems(parsed);
       }
     } catch (err) {
-      console.error("Failed to load cart from localStorage:", err);
+      console.error("Failed to load cart from sessionStorage:", err);
     } finally {
       hydrated.current = true;
     }
   }, []);
 
-  // Persist cart to localStorage on every change (after initial hydration,
+  // Persist cart to sessionStorage on every change (after initial hydration,
   // so we don't overwrite saved data with the initial empty array).
   useEffect(() => {
     if (!hydrated.current) return;
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     } catch (err) {
-      console.error("Failed to save cart to localStorage:", err);
+      console.error("Failed to save cart to sessionStorage:", err);
     }
   }, [items]);
 
