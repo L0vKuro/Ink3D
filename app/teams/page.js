@@ -11,7 +11,7 @@ const teams = [
   {
     id: "overtakesector",
     name: "OvertakeSector",
-    logo: "/team-OvertakeSector.jpg",
+    logo: "/cb LOGO.jpg",
     color: "#D41D30",
     featured: true,
     social: { label: "X", href: "https://x.com/OvertakeSector" },
