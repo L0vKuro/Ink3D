@@ -10,7 +10,7 @@ import { useCart } from "../context/CartContext";
 const teams = [
   {
     id: "overtakesector",
-    name: "OvertakeSector",
+    name: "Overtake Sector",
     logo: "/cb LOGO.jpg",
     color: "#D41D30",
     featured: true,
