@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const photos = [
   { file: "/ROKKR Keychain Front_.jpg", label: "ROKKR KEYCHAIN — FRONT" },
@@ -23,6 +24,44 @@ const photos = [
 export default function Photos() {
   const [selected, setSelected] = useState(null);
 
+  // Open the lightbox and push a history entry so the browser Back button
+  // closes the lightbox instead of leaving the /photos page.
+  const openPhoto = useCallback((i) => {
+    if (typeof window !== "undefined") {
+      window.history.pushState({ lightbox: true }, "");
+    }
+    setSelected(i);
+  }, []);
+
+  // Close the lightbox. If we pushed a history entry for it, consume that
+  // entry via history.back() so the URL bar / back button stay in sync.
+  const closePhoto = useCallback(() => {
+    if (typeof window !== "undefined" && window.history.state?.lightbox) {
+      window.history.back();
+    } else {
+      setSelected(null);
+    }
+  }, []);
+
+  // Escape key closes the lightbox.
+  useEffect(() => {
+    if (selected === null) return;
+    function onKeyDown(e) {
+      if (e.key === "Escape") closePhoto();
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [selected, closePhoto]);
+
+  // Browser Back button closes the lightbox (consumes the pushed state).
+  useEffect(() => {
+    function onPopState() {
+      setSelected(null);
+    }
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
 
@@ -33,7 +72,7 @@ export default function Photos() {
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center"
           style={{background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)'}}
-          onClick={() => setSelected(null)}
+          onClick={closePhoto}
         >
           <div
             className="relative w-[90vw] max-w-3xl aspect-square"
@@ -49,7 +88,7 @@ export default function Photos() {
               className="object-contain"
             />
             <button
-              onClick={() => setSelected(null)}
+              onClick={closePhoto}
               className="absolute -top-8 right-0 font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors"
             >
               [ CLOSE ]
@@ -79,7 +118,7 @@ export default function Photos() {
           {photos.map((photo, i) => (
             <div
               key={i}
-              onClick={() => setSelected(i)}
+              onClick={() => openPhoto(i)}
               className="bg-[#0a0a0a] aspect-square flex items-center justify-center relative overflow-hidden group cursor-pointer border border-transparent hover:border-white/10 transition-all duration-300"
             >
               <div className="absolute inset-0 grid-bg opacity-20 z-10" />
@@ -126,19 +165,7 @@ export default function Photos() {
         </div>
 
       </div>
-
-      {/* FOOTER */}
-      <footer className="border-t border-white/[0.05]">
-        <div className="px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
-          <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
-          <div className="flex gap-8">
-            {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
-              <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 transition-colors tracking-widest hover:text-white/70">{name}</Link>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
     </main>
   );
