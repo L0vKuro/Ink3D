@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Nav from "../../components/Nav";
+import Footer from "../../components/Footer";
 import { useCart } from "../../context/CartContext";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
@@ -212,17 +213,7 @@ export default function Payment() {
         </div>
       </div>
 
-      <footer className="border-t border-white/[0.05]">
-        <div className="px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
-          <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
-          <div className="flex gap-8">
-            {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
-              <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 transition-colors tracking-widest hover:text-white/70">{name}</Link>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
