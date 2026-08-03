@@ -1,22 +1,19 @@
 import { Resend } from "resend";
 import { ratelimit } from "../../../lib/ratelimit";
 import { sanitize } from "../../../lib/sanitize";
-
 const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req) {
   const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
   const { success } = await ratelimit.limit(ip);
   if (!success) return Response.json({ error: "Too many requests" }, { status: 429 });
-
   const raw = await req.json();
   const customerEmail = sanitize(raw.customerEmail);
   const customerName = sanitize(raw.customerName);
   const trackingLink = sanitize(raw.trackingLink);
   const orderId = sanitize(raw.orderId);
-
   await resend.emails.send({
     from: "INK3D Studio <orders@ink3d.lol>",
+    replyTo: "service.ink3dstudio@gmail.com",
     to: customerEmail,
     subject: `YOUR ORDER IS ON THE WAY — ${orderId}`,
     html: `
@@ -39,6 +36,5 @@ export async function POST(req) {
       </div>
     `,
   });
-
   return Response.json({ success: true });
 }
