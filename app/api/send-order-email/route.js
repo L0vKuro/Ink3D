@@ -70,6 +70,38 @@ export async function POST(req) {
         };
 
         await redis.set("ink3d_affiliates", affiliates);
+
+        // Notify the affiliate that their referral/discount code was used.
+        if (aff.email) {
+          try {
+            await resend.emails.send({
+              from: "INK3D Studio <orders@ink3d.lol>",
+              replyTo: "service.ink3dstudio@gmail.com",
+              to: aff.email,
+              subject: `YOUR CODE WAS USED — +$${earnings.toFixed(2)} EARNED`,
+              html: `
+                <div style="background:#050505;padding:40px;font-family:monospace;color:#fff;max-width:600px;">
+                  <div style="color:#ae1fe3;font-size:11px;letter-spacing:4px;margin-bottom:8px;">SYS://CODE_USED</div>
+                  <h1 style="color:#fff;font-size:32px;margin:0 0 32px 0;letter-spacing:-1px;">NICE ONE, ${sanitize(aff.name ?? "").toUpperCase() || "AFFILIATE"}</h1>
+                  <div style="background:#0a0a0a;border:1px solid #1a1a1a;padding:24px;margin-bottom:24px;">
+                    <div style="font-size:9px;color:#ae1fe366;letter-spacing:4px;margin-bottom:16px;">// ORDER DETAILS</div>
+                    <div style="margin-bottom:8px;"><strong>Used via:</strong> ${isDiscountAttribution ? `Discount code ${lookupCode}` : `Referral link ${lookupCode}`}</div>
+                    <div style="margin-bottom:8px;"><strong>Sale amount:</strong> $${saleAmount.toFixed(2)}</div>
+                    <div style="margin-bottom:8px;color:#22c55e;"><strong>Your commission (${aff.commission}%):</strong> +$${earnings.toFixed(2)}</div>
+                  </div>
+                  <a href="https://ink3d.lol/dashboard" style="display:block;background:#ae1fe3;color:#fff;text-align:center;padding:16px;font-weight:900;font-size:12px;letter-spacing:3px;text-decoration:none;margin-bottom:24px;">
+                    VIEW YOUR DASHBOARD →
+                  </a>
+                  <div style="font-size:9px;color:#ffffff20;letter-spacing:3px;text-align:center;">
+                    INK3D STUDIO — MILFORD, NH — EST. 2024
+                  </div>
+                </div>
+              `,
+            });
+          } catch (emailErr) {
+            console.error("Affiliate notification email error:", emailErr);
+          }
+        }
       }
     } catch (err) {
       console.error("Affiliate attribution error:", err);
@@ -87,6 +119,7 @@ export async function POST(req) {
 
   await resend.emails.send({
     from: "INK3D Studio <orders@ink3d.lol>",
+    replyTo: "service.ink3dstudio@gmail.com",
     to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
     subject: `NEW ORDER — ${orderId} — $${total}`,
     html: `
