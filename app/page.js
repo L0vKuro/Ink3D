@@ -294,16 +294,18 @@ export default function Home() {
               <div className="font-mono-custom text-[10px] text-white/10 mt-1">MILFORD, NH — EST. 2024</div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-[11px]">
-              {[
-                { title: "SHOP", links: ["All Products","New Arrivals","Collections","Sale"] },
-                { title: "INFO", links: ["About","Contact","Affiliates","Press"] },
-                { title: "LEGAL", links: ["Privacy","Terms","Returns","Shipping"] },
+             {[
+                { title: "SHOP", links: [["All Products","#"],["New Arrivals","#"],["Collections","#"],["Sale","#"]] },
+                { title: "INFO", links: [["About","/about"],["Contact","#"],["Affiliates","/program"],["Press","#"]] },
+                { title: "LEGAL", links: [["Cookie Policy","/cookie-policy"],["Terms","/terms"],["Returns","/returns"],["Shipping","/shipping"]] },
               ].map(col => (
                 <div key={col.title}>
                   <div className="font-mono-custom text-[9px] tracking-[0.3em] mb-3" style={{color: '#ae1fe355'}}>{col.title}</div>
-                  {col.links.map(link => (
-                    <Link key={link} href="#" className="block text-white/25 hover:text-white/70 transition-colors mb-2 tracking-wider hover-line">{link}</Link>
+                  {col.links.map(([label, href]) => (
+                    <Link key={label} href={href} className="block text-white/25 hover:text-white/70 transition-colors mb-2 tracking-wider hover-line">{label}</Link>
                   ))}
+                </div>
+              ))}
                 </div>
               ))}
             </div>
