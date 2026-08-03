@@ -1,9 +1,40 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 const CartContext = createContext(null);
+
+const STORAGE_KEY = "ink3d_cart";
+
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
+  const hydrated = useRef(false);
+
+  // Load cart from localStorage once, on mount, so it survives a page refresh.
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setItems(parsed);
+      }
+    } catch (err) {
+      console.error("Failed to load cart from localStorage:", err);
+    } finally {
+      hydrated.current = true;
+    }
+  }, []);
+
+  // Persist cart to localStorage on every change (after initial hydration,
+  // so we don't overwrite saved data with the initial empty array).
+  useEffect(() => {
+    if (!hydrated.current) return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    } catch (err) {
+      console.error("Failed to save cart to localStorage:", err);
+    }
+  }, [items]);
+
   function addItem(product) {
     setItems(prev => {
       const existing = prev.find(i => i.id === product.id);
