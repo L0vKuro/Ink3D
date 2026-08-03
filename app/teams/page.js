@@ -160,7 +160,8 @@ const tagColors = {
   FIDGET:     "text-orange-400 border-orange-400/50 bg-orange-400/10",
 };
 
-const sortedTeams = [...teams].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+const featuredTeams = teams.filter(t => t.featured);
+const regularTeams = teams.filter(t => !t.featured);
 
 export default function Teams() {
   const [activeTeam, setActiveTeam] = useState(null);
@@ -187,9 +188,72 @@ export default function Teams() {
           </p>
         </div>
 
+        {!activeTeam && featuredTeams.length > 0 && (
+          <div className="mb-16">
+            <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-6 flex items-center gap-3" style={{color: '#ae1fe366'}}>
+              <span>◆</span> SYS://EXCLUSIVE_PARTNER
+            </div>
+            <div className="space-y-4">
+              {featuredTeams.map((team) => (
+                <div
+                  key={team.id}
+                  onClick={() => setActiveTeam(team.id)}
+                  className="relative overflow-hidden cursor-pointer group border transition-all duration-300"
+                  style={{ borderColor: team.color + '40', background: `linear-gradient(120deg, ${team.color}14, #0a0a0a 65%)` }}
+                >
+                  <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
+                  <div className="relative flex flex-col md:flex-row items-center gap-8 p-8 md:p-12">
+                    <div className="w-28 h-28 md:w-36 md:h-36 flex-shrink-0 relative rounded-full overflow-hidden"
+                      style={{ background: `radial-gradient(circle, ${team.color}25, transparent)`, border: `1px solid ${team.color}55`, boxShadow: `0 0 30px ${team.color}40` }}>
+                      <Image src={team.logo} alt={team.name} fill className="object-contain p-3" />
+                    </div>
+                    <div className="flex-1 text-center md:text-left">
+                      <div className="inline-flex items-center gap-2 font-mono-custom text-[9px] font-black tracking-[0.2em] px-2 py-1 mb-3"
+                        style={{ color: team.color, border: `1px solid ${team.color}66` }}>
+                        EXCLUSIVE PARTNER
+                      </div>
+                      <h3 className="text-3xl md:text-5xl font-black tracking-tight mb-2" style={{ color: team.color }}>{team.name.toUpperCase()}</h3>
+                      {team.description && (
+                        <p className="font-mono-custom text-white/40 text-sm leading-relaxed max-w-2xl mb-4 line-clamp-3">
+                          {team.description}
+                        </p>
+                      )}
+                      <div className="flex items-center justify-center md:justify-start gap-5 font-mono-custom text-[10px] tracking-widest text-white/30">
+                        <span>{team.items.length} EXCLUSIVE ITEMS</span>
+                        {team.social && (
+                          <Link
+                            href={team.social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{ color: team.color + 'cc' }}
+                            className="transition-colors"
+                          >
+                            [ {team.social.label} ↗ ]
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      className="font-mono-custom text-[10px] tracking-[0.25em] font-black px-8 py-4 shrink-0 transition-all duration-200 whitespace-nowrap"
+                      style={{ border: `1px solid ${team.color}`, color: team.color }}
+                    >
+                      VIEW STORE →
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {!activeTeam && (
+          <>
+            {featuredTeams.length > 0 && (
+              <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ALL PARTNER STORES</div>
+            )}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {sortedTeams.map((team) => (
+            {regularTeams.map((team) => (
               <div
                 key={team.id}
                 onClick={() => setActiveTeam(team.id)}
@@ -201,14 +265,6 @@ export default function Teams() {
                   boxShadow: hoveredTeam === team.id ? `0 0 20px ${team.color}33, 0 0 40px ${team.color}15, inset 0 0 20px ${team.color}08` : 'none',
                 }}
               >
-                {team.featured && (
-                  <div
-                    className="absolute top-2 right-2 z-30 font-mono-custom text-[8px] font-black tracking-[0.15em] px-2 py-1"
-                    style={{ color: team.color, border: `1px solid ${team.color}66`, background: '#050505cc' }}
-                  >
-                    EXCLUSIVE
-                  </div>
-                )}
                 <div className="h-48 relative overflow-hidden flex items-center justify-center p-6"
                   style={{background: hoveredTeam === team.id ? `radial-gradient(circle at center, ${team.color}12, transparent 70%)` : `radial-gradient(circle at center, ${team.color}05, transparent 70%)`}}>
                   <div className="absolute inset-0 grid-bg opacity-20" />
@@ -229,6 +285,7 @@ export default function Teams() {
               </div>
             ))}
           </div>
+          </>
         )}
 
         {activeTeam && selected && (
