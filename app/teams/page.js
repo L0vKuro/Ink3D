@@ -15,7 +15,7 @@ const teams = [
     color: "#D41D30",
     featured: true,
     social: { label: "X", href: "https://x.com/OvertakeSector" },
-    description: "OvertakeSector is built on precision — a competitive org where every play is calculated and every edge is earned. The crosshair-and-star mark isn't decoration, it's a mission statement: lock on, take the lead, hold the line. Fielding rosters across multiple titles, OvertakeSector has built a reputation for discipline over flash and results over noise, backed by a fanbase that shows up the same way the org competes. This exclusive INK3D collection runs on OvertakeSector's own palette — Crimson Red against Onyx Grey and Obsidian Fog — a direct translation of the brand's official guidelines onto the merch itself. Every piece here is part of the same identity you see on stream: sharp, deliberate, and unmistakably Overtake. As one of INK3D's exclusive partner stores, OvertakeSector gets first placement and its own full lineup — keychains, lightboxes, coasters, apparel accents, and more — so fans can rep the crosshair wherever they go.",
+    description: "OvertakeSector is built on precision, discipline, and results. The crosshair-and-star logo represents the team's mindset: lock on, take the lead, and never back down. This exclusive INK3D collection features OvertakeSector's signature Crimson Red, Onyx Grey, and Obsidian Fog colors. From keychains and lightboxes to coasters and more, every item reflects the same identity fans see on stream.",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
