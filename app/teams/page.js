@@ -49,8 +49,8 @@ const teams = [
     ],
   },
   {
-    id: "outkatz",
-    name: "Outkatz",
+    id: "outkastz",
+    name: "Outkastz",
     logo: "/team-Outkastz.png",
     color: "#2d6a4f",
     items: [
