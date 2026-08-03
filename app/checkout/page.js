@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 import { useCart } from "../context/CartContext";
 
 const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
@@ -36,26 +37,17 @@ export default function Checkout() {
 
   async function autoApplyRefDiscount(ref) {
     try {
-      const res = await fetch("/api/admin/discounts");
+      // Public endpoint — works for anonymous customers, no admin/affiliate
+      // login required (see app/api/discounts/route.js).
+      const res = await fetch("/api/discounts");
       const data = await res.json();
-      const affiliateCode = data.codes?.find(d => d.affiliateId && d.code === ref);
-      if (!affiliateCode) {
-        // Try matching by referral code — find affiliate whose referralCode matches ref
-        const allCodes = data.codes ?? [];
-        // Look for affiliate discount code linked to this ref
-        const res2 = await fetch("/api/admin/affiliates");
-        const affData = await res2.json();
-        const affiliate = affData.affiliates?.find(a => a.referralCode === ref);
-        if (affiliate) {
-          const matchedCode = allCodes.find(d => d.code === affiliate.discountCode);
-          if (matchedCode) {
-            setDiscountCode(matchedCode.code);
-            setDiscountApplied({ percent: matchedCode.percent, code: matchedCode.code });
-          }
-        }
-      } else {
-        setDiscountCode(affiliateCode.code);
-        setDiscountApplied({ percent: affiliateCode.percent, code: affiliateCode.code });
+      const codes = data.codes ?? [];
+      // Match either the affiliate's referral code (?ref=) or, if someone
+      // passes a discount code directly as ref, the discount code itself.
+      const matched = codes.find(d => d.referralCode === ref) ?? codes.find(d => d.code === ref);
+      if (matched) {
+        setDiscountCode(matched.code);
+        setDiscountApplied({ percent: matched.percent, code: matched.code });
       }
     } catch (err) {
       console.error("Auto-apply ref discount error:", err);
@@ -73,7 +65,9 @@ export default function Checkout() {
     setDiscountLoading(true);
     setDiscountError("");
     try {
-      const res = await fetch("/api/admin/discounts");
+      // Public endpoint — works for anonymous customers, no admin/affiliate
+      // login required (see app/api/discounts/route.js).
+      const res = await fetch("/api/discounts");
       const data = await res.json();
       const found = data.codes?.find(d => d.code === code);
       if (found) {
@@ -283,17 +277,7 @@ export default function Checkout() {
         </div>
       </div>
 
-      <footer className="border-t border-white/[0.05]">
-        <div className="px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
-          <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
-          <div className="flex gap-8">
-            {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
-              <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 transition-colors tracking-widest hover:text-white/70">{name}</Link>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
