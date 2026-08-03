@@ -56,6 +56,7 @@ export async function POST(req) {
 
   await resend.emails.send({
     from: "INK3D Studio <orders@ink3d.lol>",
+    replyTo: "service.ink3dstudio@gmail.com",
     to: email,
     subject: "WELCOME TO INK3D — YOUR DASHBOARD IS READY",
     html: `
@@ -106,6 +107,7 @@ export async function PATCH(req) {
 
   await resend.emails.send({
     from: "INK3D Studio <orders@ink3d.lol>",
+    replyTo: "service.ink3dstudio@gmail.com",
     to: affiliate.email,
     subject: "INK3D — YOUR PASSWORD HAS BEEN RESET",
     html: `
