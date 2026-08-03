@@ -1,11 +1,9 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
 import Nav from "./components/Nav";
 import { useCart } from "./context/CartContext";
-
 const products = [
   { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K", image: "/reignabove-keychain.png", contain: true },
   { id: 2, name: "CUBAN HYPE CHAIN", price: "$34.99", tag: "CHAIN", desc: "Drip that hits different.", sku: "INK-002", rating: "4.8", reviews: "1.8K", image: "/ninefly-cubanhypechain.png", contain: true },
@@ -14,7 +12,6 @@ const products = [
   { id: 5, name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", desc: "Heavy. Clean. Iconic.", sku: "INK-005", rating: "4.9", reviews: "756", image: "/outkastz-cuban necklace.png", contain: true },
   { id: 6, name: "WALL ART", price: "$39.99", tag: "WALL ART", desc: "Turn your wall into a statement.", sku: "INK-006", rating: "4.6", reviews: "3.1K", image: "/vaultix-wallart.pmg.png", contain: true },
 ];
-
 const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
   CHAIN:      "text-[#ae1fe3] border-[#ae1fe3]/50 bg-[#ae1fe3]/10",
@@ -23,34 +20,27 @@ const tagColors = {
   NECKLACE:   "text-pink-400 border-pink-400/50 bg-pink-400/10",
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
 };
-
 const stats = [
   { value: "500+", label: "UNITS SHIPPED", sub: "AND COUNTING" },
   { value: "100%", label: "SATISFACTION", sub: "GUARANTEED" },
   { value: "3-7D", label: "DELIVERY TIME", sub: "BUSINESS DAYS" },
   { value: "2024", label: "EST. MILFORD", sub: "MILFORD, NH" },
 ];
-
 export default function Home() {
   const { addItem } = useCart();
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const ref = params.get("ref");
     if (ref) sessionStorage.setItem("ink3d_ref", ref.toUpperCase());
   }, []);
-
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
-
       <Nav active="HOME" />
-
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 grid-bg clip-diagonal overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none" style={{background: '#ae1fe308'}} />
         <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/[0.05] blur-[120px] pointer-events-none" />
         <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none" style={{background: '#ae1fe310'}} />
-
         <div className="font-mono-custom text-[10px] text-white/20 tracking-[0.3em] mb-8 flex items-center gap-4">
           <span>INK3D_STUDIO</span>
           <span style={{color: '#ae1fe344'}}>——</span>
@@ -58,11 +48,9 @@ export default function Home() {
           <span style={{color: '#ae1fe344'}}>——</span>
           <span>MILFORD_NH</span>
         </div>
-
         <div className="mb-6">
           <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={300} height={120} className="object-contain mx-auto flicker" />
         </div>
-
         <div className="relative mb-2">
           <div className="text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none glitch-wrapper" data-text="INK3D">
             INK3D
@@ -71,18 +59,15 @@ export default function Home() {
             INK3D
           </div>
         </div>
-
         <div className="text-[clamp(1.2rem,4vw,3rem)] font-black tracking-[0.25em] text-white/10 mb-8 select-none">
           STUDIO
         </div>
-
         <p className="text-white/40 text-sm md:text-base max-w-lg tracking-wider leading-relaxed mb-3 font-mono-custom">
           // engineered for those who refuse to blend in
         </p>
         <p className="text-white/20 text-xs tracking-[0.3em] mb-12 font-mono-custom">
           ACCESSORIES — EST. 2024 — MILFORD, NH
         </p>
-
         <div className="flex flex-col sm:flex-row gap-4 mb-16">
           <Link href="/teams">
             <button className="glow-btn font-black px-12 py-4 text-xs tracking-[0.25em] transition-colors duration-200 relative overflow-hidden group" style={{background: '#ae1fe3', color: '#fff'}}>
@@ -96,7 +81,6 @@ export default function Home() {
             </button>
           </Link>
         </div>
-
         <div className="flex gap-8 md:gap-16 font-mono-custom text-[10px]">
           <div className="text-center">
             <div className="font-bold" style={{color: '#ae1fe3'}}>500+</div>
@@ -113,7 +97,6 @@ export default function Home() {
             <div className="text-white/20 tracking-widest">DELIVERY</div>
           </div>
         </div>
-
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
           <span className="font-mono-custom text-[9px] text-white/15 tracking-[0.4em]">SCROLL_DOWN</span>
           <div className="w-px h-12 relative overflow-hidden" style={{background: 'linear-gradient(to bottom, #ae1fe344, transparent)'}}>
@@ -121,7 +104,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* MARQUEE 1 */}
       <div className="py-3 overflow-hidden border-y" style={{background: '#ae1fe3', borderColor: '#c040ff'}}>
         <div className="marquee-track">
@@ -132,7 +114,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
       {/* MARQUEE 2 */}
       <div className="py-2.5 overflow-hidden border-b border-white/[0.04]">
         <div className="marquee-track-reverse">
@@ -143,7 +124,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
       {/* STATS */}
       <section className="px-6 md:px-12 py-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04]">
         {stats.map((s) => (
@@ -154,7 +134,6 @@ export default function Home() {
           </div>
         ))}
       </section>
-
       {/* PRODUCTS */}
       <section id="products" className="px-6 md:px-12 py-24 max-w-screen-2xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
@@ -173,7 +152,6 @@ export default function Home() {
             <div style={{color: '#ae1fe344'}}>UPDATED: 2026.06.11</div>
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-12 gap-px bg-white/[0.04]">
           {products.map((product, i) => {
             const isWide = i === 0 || i === 5;
@@ -224,7 +202,6 @@ export default function Home() {
           })}
         </div>
       </section>
-
       {/* PROMO BANNER */}
       <section className="mx-6 md:mx-12 mb-24 relative overflow-hidden clip-diagonal-reverse">
         <div className="px-10 md:px-16 py-16 md:py-20 relative" style={{background: '#ae1fe3'}}>
@@ -247,7 +224,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* AFFILIATE */}
       <section className="px-6 md:px-12 py-24 relative overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-30" />
@@ -283,7 +259,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
       {/* FOOTER */}
       <footer className="border-t border-white/[0.05]">
         <div className="px-6 md:px-12 py-12">
@@ -294,7 +269,7 @@ export default function Home() {
               <div className="font-mono-custom text-[10px] text-white/10 mt-1">MILFORD, NH — EST. 2024</div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-[11px]">
-             {[
+              {[
                 { title: "SHOP", links: [["All Products","#"],["New Arrivals","#"],["Collections","#"],["Sale","#"]] },
                 { title: "INFO", links: [["About","/about"],["Contact","#"],["Affiliates","/program"],["Press","#"]] },
                 { title: "LEGAL", links: [["Cookie Policy","/cookie-policy"],["Terms","/terms"],["Returns","/returns"],["Shipping","/shipping"]] },
@@ -304,8 +279,6 @@ export default function Home() {
                   {col.links.map(([label, href]) => (
                     <Link key={label} href={href} className="block text-white/25 hover:text-white/70 transition-colors mb-2 tracking-wider hover-line">{label}</Link>
                   ))}
-                </div>
-              ))}
                 </div>
               ))}
             </div>
@@ -320,7 +293,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-
     </main>
   );
 }
