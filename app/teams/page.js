@@ -4,9 +4,27 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 import { useCart } from "../context/CartContext";
 
 const teams = [
+  {
+    id: "overtakesector",
+    name: "OvertakeSector",
+    logo: "/team-OvertakeSector.jpg",
+    color: "#D41D30",
+    featured: true,
+    social: { label: "X", href: "https://x.com/OvertakeSector" },
+    description: "OvertakeSector is built on precision — a competitive org where every play is calculated and every edge is earned. The crosshair-and-star mark isn't decoration, it's a mission statement: lock on, take the lead, hold the line. Fielding rosters across multiple titles, OvertakeSector has built a reputation for discipline over flash and results over noise, backed by a fanbase that shows up the same way the org competes. This exclusive INK3D collection runs on OvertakeSector's own palette — Crimson Red against Onyx Grey and Obsidian Fog — a direct translation of the brand's official guidelines onto the merch itself. Every piece here is part of the same identity you see on stream: sharp, deliberate, and unmistakably Overtake. As one of INK3D's exclusive partner stores, OvertakeSector gets first placement and its own full lineup — keychains, lightboxes, coasters, apparel accents, and more — so fans can rep the crosshair wherever they go.",
+    items: [
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
+      { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
+      { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET" },
+    ],
+  },
   {
     id: "atlantis",
     name: "Atlantis Esports",
@@ -49,8 +67,8 @@ const teams = [
     ],
   },
   {
-    id: "outkastz",
-    name: "Outkastz",
+    id: "outkatz",
+    name: "Outkatz",
     logo: "/team-Outkastz.png",
     color: "#2d6a4f",
     items: [
@@ -142,6 +160,8 @@ const tagColors = {
   FIDGET:     "text-orange-400 border-orange-400/50 bg-orange-400/10",
 };
 
+const sortedTeams = [...teams].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+
 export default function Teams() {
   const [activeTeam, setActiveTeam] = useState(null);
   const [hoveredTeam, setHoveredTeam] = useState(null);
@@ -169,18 +189,26 @@ export default function Teams() {
 
         {!activeTeam && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {teams.map((team) => (
+            {sortedTeams.map((team) => (
               <div
                 key={team.id}
                 onClick={() => setActiveTeam(team.id)}
                 onMouseEnter={() => setHoveredTeam(team.id)}
                 onMouseLeave={() => setHoveredTeam(null)}
-                className="bg-[#0a0a0a] cursor-pointer transition-all duration-300 border border-transparent"
+                className="relative bg-[#0a0a0a] cursor-pointer transition-all duration-300 border border-transparent"
                 style={{
                   borderColor: hoveredTeam === team.id ? team.color + '60' : 'transparent',
                   boxShadow: hoveredTeam === team.id ? `0 0 20px ${team.color}33, 0 0 40px ${team.color}15, inset 0 0 20px ${team.color}08` : 'none',
                 }}
               >
+                {team.featured && (
+                  <div
+                    className="absolute top-2 right-2 z-30 font-mono-custom text-[8px] font-black tracking-[0.15em] px-2 py-1"
+                    style={{ color: team.color, border: `1px solid ${team.color}66`, background: '#050505cc' }}
+                  >
+                    EXCLUSIVE
+                  </div>
+                )}
                 <div className="h-48 relative overflow-hidden flex items-center justify-center p-6"
                   style={{background: hoveredTeam === team.id ? `radial-gradient(circle at center, ${team.color}12, transparent 70%)` : `radial-gradient(circle at center, ${team.color}05, transparent 70%)`}}>
                   <div className="absolute inset-0 grid-bg opacity-20" />
@@ -219,9 +247,29 @@ export default function Teams() {
                 <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none mb-2" style={{color: selected.color}}>
                   {selected.name.toUpperCase()}
                 </h2>
-                <p className="font-mono-custom text-white/30 text-xs tracking-widest">{selected.items.length} EXCLUSIVE ITEMS — POWERED BY INK3D</p>
+                <div className="flex items-center gap-4 flex-wrap">
+                  <p className="font-mono-custom text-white/30 text-xs tracking-widest">{selected.items.length} EXCLUSIVE ITEMS — POWERED BY INK3D</p>
+                  {selected.social && (
+                    <Link
+                      href={selected.social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono-custom text-[10px] tracking-widest transition-colors"
+                      style={{ color: selected.color + 'aa' }}
+                    >
+                      [ {selected.social.label} ↗ ]
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
+
+            {selected.description && (
+              <div className="mb-16 pb-8 border-b border-white/[0.05] max-w-3xl">
+                <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-4" style={{ color: selected.color + '66' }}>// ABOUT {selected.name.toUpperCase()}</div>
+                <p className="font-mono-custom text-white/40 text-sm leading-relaxed">{selected.description}</p>
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04]">
               {selected.items.map((item, i) => (
                 <div key={i} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer">
@@ -272,17 +320,7 @@ export default function Teams() {
         )}
       </div>
 
-      <footer className="border-t border-white/[0.05]">
-        <div className="px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
-          <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
-          <div className="flex gap-8">
-            {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
-              <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 transition-colors tracking-widest hover:text-white/70">{name}</Link>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
     </main>
   );
