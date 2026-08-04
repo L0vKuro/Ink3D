@@ -1,10 +1,8 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Nav from "../components/Nav";
-
 const creators = [
   {
     id: "impulse",
@@ -26,22 +24,38 @@ const creators = [
     items: [],
   },
 ];
-
 const tagColors = {
   KEYCHAIN: "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
   COASTER:  "text-green-400 border-green-400/50 bg-green-400/10",
 };
-
 export default function Creators() {
   const [activeCreator, setActiveCreator] = useState(null);
   const [hoveredCreator, setHoveredCreator] = useState(null);
   const selected = creators.find(c => c.id === activeCreator);
 
+  // Same fix as the teams page: opening a creator's store is local state on
+  // the same /creators URL, not real navigation, so the back button has
+  // nothing to land on. Push a history entry on open, close on popstate.
+  useEffect(() => {
+    function handlePopState() {
+      setActiveCreator(null);
+    }
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  function openCreator(id) {
+    window.history.pushState({ creatorView: true }, "");
+    setActiveCreator(id);
+  }
+
+  function closeCreator() {
+    window.history.back();
+  }
+
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
-
       <Nav active="CREATORS" />
-
       <div className="pt-24 px-6 md:px-12 pb-24">
         {/* HEADER */}
         <div className="mb-16">
@@ -56,7 +70,6 @@ export default function Creators() {
             // Select a creator to browse their exclusive INK3D collection
           </p>
         </div>
-
         {/* CREATOR GRID */}
         {!activeCreator && (
           <>
@@ -64,7 +77,7 @@ export default function Creators() {
               {creators.map((creator) => (
                 <div
                   key={creator.id}
-                  onClick={() => creator.items.length > 0 && setActiveCreator(creator.id)}
+                  onClick={() => creator.items.length > 0 && openCreator(creator.id)}
                   onMouseEnter={() => setHoveredCreator(creator.id)}
                   onMouseLeave={() => setHoveredCreator(null)}
                   className="bg-[#0a0a0a] transition-all duration-300 border border-transparent"
@@ -95,7 +108,6 @@ export default function Creators() {
                 </div>
               ))}
             </div>
-
             {/* DESCRIPTION SECTION */}
             <div className="border border-white/[0.06] p-10 md:p-16 relative overflow-hidden">
               <div className="absolute inset-0 grid-bg opacity-10" />
@@ -140,11 +152,10 @@ export default function Creators() {
             </div>
           </>
         )}
-
         {/* INDIVIDUAL CREATOR STORE */}
         {activeCreator && selected && (
           <div>
-            <button onClick={() => setActiveCreator(null)} className="font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors mb-10 flex items-center gap-2">
+            <button onClick={closeCreator} className="font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors mb-10 flex items-center gap-2">
               ← BACK_TO_ALL_CREATORS
             </button>
             <div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-16 pb-8 border-b border-white/[0.05]">
@@ -195,7 +206,6 @@ export default function Creators() {
           </div>
         )}
       </div>
-
       {/* FOOTER */}
       <footer className="border-t border-white/[0.05]">
         <div className="px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -208,7 +218,6 @@ export default function Creators() {
           </div>
         </div>
       </footer>
-
     </main>
   );
 }
