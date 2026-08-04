@@ -1,16 +1,13 @@
 import { Resend } from "resend";
 import { ratelimit } from "../../lib/ratelimit";
 import { sanitize } from "../../lib/sanitize";
-
 const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req) {
   const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
   const { success } = await ratelimit.limit(ip);
   if (!success) {
     return Response.json({ error: "Too many requests" }, { status: 429 });
   }
-
   const raw = await req.json();
   const fullName = sanitize(raw.fullName);
   const email = sanitize(raw.email);
@@ -24,7 +21,6 @@ export async function POST(req) {
   const discord = sanitize(raw.discord);
   const logo = raw.logo;
   const logoName = sanitize(raw.logoName);
-
   const socials = [
     twitter && `<div style="margin-bottom:6px;"><strong>Twitter/X:</strong> <a href="${twitter}" style="color:#ae1fe3;">${twitter}</a></div>`,
     tiktok && `<div style="margin-bottom:6px;"><strong>TikTok:</strong> <a href="${tiktok}" style="color:#ae1fe3;">${tiktok}</a></div>`,
@@ -33,16 +29,14 @@ export async function POST(req) {
     twitch && `<div style="margin-bottom:6px;"><strong>Twitch:</strong> <a href="${twitch}" style="color:#ae1fe3;">${twitch}</a></div>`,
     discord && `<div style="margin-bottom:6px;"><strong>Discord:</strong> <a href="${discord}" style="color:#ae1fe3;">${discord}</a></div>`,
   ].filter(Boolean).join('');
-
   const attachments = [];
   if (logo && logoName) {
     const base64Data = logo.split(',')[1];
     const mimeType = logo.split(';')[0].split(':')[1];
     attachments.push({ filename: logoName, content: base64Data, type: mimeType });
   }
-
   await resend.emails.send({
-    from: "INK3D Studio <apply@ink3d.lol>",
+    from: "INK3D Studio <apply@ink3dshop.com>",
     to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
     subject: `NEW APPLICATION — ${fullName} — ${teamName}`,
     attachments,
