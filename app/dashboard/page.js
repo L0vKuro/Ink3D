@@ -1,9 +1,7 @@
 "use client";
-
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
 export default function Dashboard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,11 +13,9 @@ export default function Dashboard() {
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotStatus, setForgotStatus] = useState(null);
   const [forgotLoading, setForgotLoading] = useState(false);
-
   const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
   const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
   const tierColors = { BRONZE: '#cd7f32', SILVER: '#c0c0c0', GOLD: '#ffd60a', DIAMOND: '#00b4d8', ELITE: '#ae1fe3' };
-
   async function handleLogin(e) {
     e.preventDefault();
     setLoading(true);
@@ -37,7 +33,6 @@ export default function Dashboard() {
     }
     setLoading(false);
   }
-
   async function handleForgot(e) {
     e.preventDefault();
     setForgotLoading(true);
@@ -49,19 +44,16 @@ export default function Dashboard() {
     setForgotStatus("sent");
     setForgotLoading(false);
   }
-
   function handleLogout() {
     setAffiliate(null);
     setEmail("");
     setPassword("");
   }
-
   const stats = affiliate ? {
     orders: statsView === "lifetime" ? (affiliate.stats?.lifetimeOrders ?? 0) : (affiliate.stats?.monthlyOrders ?? 0),
     sales: statsView === "lifetime" ? (affiliate.stats?.lifetimeSales ?? 0) : (affiliate.stats?.monthlySales ?? 0),
     earnings: statsView === "lifetime" ? (affiliate.stats?.lifetimeEarnings ?? 0) : (affiliate.stats?.monthlyEarnings ?? 0),
   } : null;
-
   const orders = affiliate?.stats?.orders ?? [];
   const now = new Date();
   const thisMonthOrders = orders.filter(o => {
@@ -69,7 +61,6 @@ export default function Dashboard() {
     return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
   });
   const displayOrders = statsView === "lifetime" ? orders : thisMonthOrders;
-
   if (!affiliate) {
     return (
       <main className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center px-6">
@@ -80,7 +71,6 @@ export default function Dashboard() {
             <h1 className="text-3xl font-black tracking-tight">AFFILIATE DASHBOARD</h1>
             <p className="font-mono-custom text-white/20 text-xs mt-2 tracking-widest">// INK3D PROGRAM MEMBERS ONLY</p>
           </div>
-
           {!showForgot ? (
             <>
               <form onSubmit={handleLogin} className="space-y-4">
@@ -143,7 +133,6 @@ export default function Dashboard() {
       </main>
     );
   }
-
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <div className="border-b border-white/[0.06] px-6 md:px-12 py-4 flex justify-between items-center">
@@ -153,7 +142,6 @@ export default function Dashboard() {
         </div>
         <button onClick={handleLogout} className="font-mono-custom text-[9px] text-white/20 hover:text-white transition-colors tracking-widest">[ LOGOUT ]</button>
       </div>
-
       <div className="px-6 md:px-12 py-12 max-w-5xl mx-auto">
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-2">
@@ -165,7 +153,6 @@ export default function Dashboard() {
           </div>
           <div className="font-mono-custom text-white/30 text-sm">{affiliate.email} — {affiliate.commission}% COMMISSION</div>
         </div>
-
         <div className="flex gap-2 mb-8">
           {["lifetime", "month"].map(v => (
             <button key={v} onClick={() => setStatsView(v)}
@@ -180,7 +167,6 @@ export default function Dashboard() {
             </button>
           ))}
         </div>
-
         <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-white/[0.04] mb-12">
           {[
             { label: "ORDERS", value: stats.orders },
@@ -193,15 +179,14 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           <div className="border border-white/[0.06] p-6">
             <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-4" style={{color: '#ae1fe366'}}>// YOUR REFERRAL LINK</div>
             <div className="bg-[#0a0a0a] border border-white/[0.05] px-4 py-3 font-mono-custom text-sm text-white/60 mb-3 break-all">
-              ink3d.lol/?ref={affiliate.referralCode}
+              ink3dshop.com/?ref={affiliate.referralCode}
             </div>
             <button
-              onClick={() => navigator.clipboard.writeText(`https://ink3d.lol/?ref=${affiliate.referralCode}`)}
+              onClick={() => navigator.clipboard.writeText(`https://ink3dshop.com/?ref=${affiliate.referralCode}`)}
               className="font-mono-custom text-[9px] tracking-widest px-4 py-2 transition-all duration-200"
               style={{border: '1px solid #ae1fe344', color: '#ae1fe3'}}
               onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#fff'; }}
@@ -217,7 +202,6 @@ export default function Dashboard() {
             <div className="font-mono-custom text-[9px] text-white/30 tracking-widest">{affiliate.discountPercent}% OFF FOR YOUR CUSTOMERS</div>
           </div>
         </div>
-
         <div className="border border-white/[0.06] p-6">
           <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>
             // {statsView === "lifetime" ? "ALL" : "THIS MONTH'S"} ORDERS
@@ -244,7 +228,6 @@ export default function Dashboard() {
           )}
         </div>
       </div>
-
       <footer className="border-t border-white/[0.05] mt-12">
         <div className="px-6 md:px-12 py-8 flex justify-between items-center">
           <span className="font-mono-custom text-[9px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
