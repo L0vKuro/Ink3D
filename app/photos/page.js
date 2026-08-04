@@ -11,7 +11,7 @@ const photos = [
   { file: "/Shinto Gaming Keychain.jpg", label: "SHINTO GAMING KEYCHAIN" },
   { file: "/IMG_5708.jpg", label: "WLG Lightbox" },
   { file: "/Vancover Surge Keychain.jpg", label: "VANCOUVER SURGE KEYCHAIN" },
-  { file: "/tpc hype chain v3.jpg", label: "TPC HYPE CHAIN V3" },
+  { file: "/tpc hype chain v3.jpg", label: "TPC HYPE CHAIN " },
   { file: "/100T coaster set.jpg", label: "100T COASTER SET" },
   { file: "/Cloud 9 keychain_.jpg", label: "CLOUD9 KEYCHAIN" },
   { file: "/Envoy lightbox in his setup_.jpg", label: "ENVOY LIGHTBOX IN SETUP" },
