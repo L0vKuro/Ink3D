@@ -1,13 +1,10 @@
 "use client";
-
 import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Nav from "../components/Nav";
-
 const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-4 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
 const labelClass = "font-mono-custom text-[9px] tracking-[0.4em] mb-2 block";
-
 export default function Apply() {
   const [form, setForm] = useState({
     fullName: "", email: "", teamName: "", reason: "",
@@ -19,11 +16,10 @@ export default function Apply() {
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const fileRef = useRef();
-
+  const loadedAt = useRef(Date.now());
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
-
   function handleFile(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -32,10 +28,15 @@ export default function Apply() {
     reader.onload = () => setLogo(reader.result);
     reader.readAsDataURL(file);
   }
-
   async function handleSubmit(e) {
     e.preventDefault();
-    if (honeypot) return; // bot detected — silently reject
+    // Bot detection: honeypot field filled, or form submitted suspiciously fast.
+    // NOTE: browsers can sometimes autofill hidden fields named things like
+    // "website" from saved autofill data, which would silently block real
+    // users here. Keep this field name obscure and unrelated to common
+    // autofill categories (address, website, company, etc).
+    const elapsed = Date.now() - loadedAt.current;
+    if (honeypot || elapsed < 1200) return;
     if (!form.twitter) return alert("Twitter/X is required.");
     setLoading(true);
     try {
@@ -51,7 +52,6 @@ export default function Apply() {
     }
     setLoading(false);
   }
-
   if (status === "success") {
     return (
       <main className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center px-6">
@@ -74,13 +74,10 @@ export default function Apply() {
       </main>
     );
   }
-
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <Nav active="PROGRAM" />
-
       <div className="pt-32 px-6 md:px-12 pb-24 max-w-3xl mx-auto">
-
         {/* HEADER */}
         <div className="mb-16">
           <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-4 flex items-center gap-3" style={{color: '#ae1fe366'}}>
@@ -95,21 +92,20 @@ export default function Apply() {
             // Tell us about yourself. We review every application personally.
           </p>
         </div>
-
         <form onSubmit={handleSubmit} className="space-y-10">
-
-          {/* HONEYPOT — hidden from real users, bots fill this in */}
+          {/* HONEYPOT — hidden from real users, bots fill this in. Field name kept
+              obscure on purpose so browser autofill doesn't populate it for real users. */}
           <div style={{position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none'}} aria-hidden="true">
             <input
               type="text"
-              name="website"
+              name="hp_confirm_2x9"
+              id="hp_confirm_2x9"
               value={honeypot}
               onChange={e => setHoneypot(e.target.value)}
               tabIndex={-1}
               autoComplete="off"
             />
           </div>
-
           {/* PERSONAL INFO */}
           <div className="border border-white/[0.06] p-8 relative">
             <div className="absolute -top-3 left-6 bg-[#050505] px-3">
@@ -126,7 +122,6 @@ export default function Apply() {
               </div>
             </div>
           </div>
-
           {/* TEAM INFO */}
           <div className="border border-white/[0.06] p-8 relative">
             <div className="absolute -top-3 left-6 bg-[#050505] px-3">
@@ -160,7 +155,6 @@ export default function Apply() {
               </div>
             </div>
           </div>
-
           {/* WHY JOIN */}
           <div className="border border-white/[0.06] p-8 relative">
             <div className="absolute -top-3 left-6 bg-[#050505] px-3">
@@ -174,7 +168,6 @@ export default function Apply() {
               className={`${inputClass} resize-none`}
             />
           </div>
-
           {/* SOCIALS */}
           <div className="border border-white/[0.06] p-8 relative">
             <div className="absolute -top-3 left-6 bg-[#050505] px-3">
@@ -207,7 +200,6 @@ export default function Apply() {
               </div>
             </div>
           </div>
-
           {/* SUBMIT */}
           <div className="pt-4">
             {status === "error" && (
@@ -227,10 +219,8 @@ export default function Apply() {
               // WE REVIEW EVERY APPLICATION WITHIN 48 HOURS
             </div>
           </div>
-
         </form>
       </div>
-
       <footer className="border-t border-white/[0.05]">
         <div className="px-6 md:px-12 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
           <Link href="/"><Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={80} height={32} className="object-contain cursor-pointer" /></Link>
