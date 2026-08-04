@@ -220,7 +220,7 @@ export default function Teams() {
                   <div className="relative flex flex-col md:flex-row items-center gap-8 p-8 md:p-12">
                     <div className="w-28 h-28 md:w-36 md:h-36 flex-shrink-0 relative rounded-full overflow-hidden"
                       style={{ background: `radial-gradient(circle, ${team.color}25, transparent)`, border: `1px solid ${team.color}55`, boxShadow: `0 0 30px ${team.color}40` }}>
-                      <Image src={team.logo} alt={team.name} fill className="object-contain p-1" />
+                      <Image src={team.logo} alt={team.name} fill className="object-contain p-0" />
                     </div>
                     <div className="flex-1 text-center md:text-left">
                       <div className="inline-flex items-center gap-2 font-mono-custom text-[9px] font-black tracking-[0.2em] px-2 py-1 mb-3"
