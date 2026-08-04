@@ -1,8 +1,6 @@
 import { redis } from "../../../lib/ratelimit";
 import { Resend } from "resend";
-
 const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function GET() {
   try {
     const affiliates = await redis.get("ink3d_affiliates");
@@ -11,12 +9,9 @@ export async function GET() {
     return Response.json({ affiliates: [] });
   }
 }
-
 export async function POST(req) {
   const { name, email, password, referralCode, discountCode, discountPercent, tier } = await req.json();
-
   const existing = await redis.get("ink3d_affiliates") ?? [];
-
   if (existing.find(a => a.email === email)) {
     return Response.json({ error: "Email already exists" }, { status: 400 });
   }
@@ -26,9 +21,7 @@ export async function POST(req) {
   if (existing.find(a => a.discountCode === discountCode.toUpperCase())) {
     return Response.json({ error: "Discount code already exists" }, { status: 400 });
   }
-
   const tierCommissions = { BRONZE: 10, SILVER: 13, GOLD: 16, DIAMOND: 20, ELITE: 25 };
-
   const newAffiliate = {
     id: `aff_${Date.now()}`,
     name,
@@ -50,12 +43,10 @@ export async function POST(req) {
       orders: [],
     },
   };
-
   const updated = [...existing, newAffiliate];
   await redis.set("ink3d_affiliates", updated);
-
   await resend.emails.send({
-    from: "INK3D Studio <orders@ink3d.lol>",
+    from: "INK3D Studio <orders@ink3dshop.com>",
     replyTo: "service.ink3dstudio@gmail.com",
     to: email,
     subject: "WELCOME TO INK3D — YOUR DASHBOARD IS READY",
@@ -72,10 +63,10 @@ export async function POST(req) {
         </div>
         <div style="background:#0a0a0a;border:1px solid #1a1a1a;padding:24px;margin-bottom:24px;">
           <div style="font-size:9px;color:#ae1fe366;letter-spacing:4px;margin-bottom:16px;">// YOUR LINKS & CODES</div>
-          <div style="margin-bottom:8px;"><strong>Referral Link:</strong> <a href="https://ink3d.lol/?ref=${referralCode.toUpperCase()}" style="color:#ae1fe3;">ink3d.lol/?ref=${referralCode.toUpperCase()}</a></div>
+          <div style="margin-bottom:8px;"><strong>Referral Link:</strong> <a href="https://ink3dshop.com/?ref=${referralCode.toUpperCase()}" style="color:#ae1fe3;">ink3dshop.com/?ref=${referralCode.toUpperCase()}</a></div>
           <div style="margin-bottom:8px;"><strong>Discount Code:</strong> <span style="color:#ae1fe3;">${discountCode.toUpperCase()}</span> (${discountPercent}% off)</div>
         </div>
-        <a href="https://ink3d.lol/dashboard" style="display:block;background:#ae1fe3;color:#fff;text-align:center;padding:16px;font-weight:900;font-size:12px;letter-spacing:3px;text-decoration:none;margin-bottom:24px;">
+        <a href="https://ink3dshop.com/dashboard" style="display:block;background:#ae1fe3;color:#fff;text-align:center;padding:16px;font-weight:900;font-size:12px;letter-spacing:3px;text-decoration:none;margin-bottom:24px;">
           ACCESS YOUR DASHBOARD →
         </a>
         <div style="font-size:9px;color:#ffffff20;letter-spacing:3px;text-align:center;">
@@ -84,10 +75,8 @@ export async function POST(req) {
       </div>
     `,
   });
-
   return Response.json({ success: true, affiliate: newAffiliate });
 }
-
 export async function DELETE(req) {
   const { id } = await req.json();
   const existing = await redis.get("ink3d_affiliates") ?? [];
@@ -95,18 +84,15 @@ export async function DELETE(req) {
   await redis.set("ink3d_affiliates", updated);
   return Response.json({ success: true });
 }
-
 export async function PATCH(req) {
   const { id, password } = await req.json();
   const existing = await redis.get("ink3d_affiliates") ?? [];
   const affiliate = existing.find(a => a.id === id);
   if (!affiliate) return Response.json({ error: "Not found" }, { status: 404 });
-
   const updated = existing.map(a => a.id === id ? { ...a, password } : a);
   await redis.set("ink3d_affiliates", updated);
-
   await resend.emails.send({
-    from: "INK3D Studio <orders@ink3d.lol>",
+    from: "INK3D Studio <orders@ink3dshop.com>",
     replyTo: "service.ink3dstudio@gmail.com",
     to: affiliate.email,
     subject: "INK3D — YOUR PASSWORD HAS BEEN RESET",
@@ -118,7 +104,7 @@ export async function PATCH(req) {
           <div style="margin-bottom:8px;"><strong>Email:</strong> ${affiliate.email}</div>
           <div style="margin-bottom:8px;"><strong>New Password:</strong> ${password}</div>
         </div>
-        <a href="https://ink3d.lol/dashboard" style="display:block;background:#ae1fe3;color:#fff;text-align:center;padding:16px;font-weight:900;font-size:12px;letter-spacing:3px;text-decoration:none;">
+        <a href="https://ink3dshop.com/dashboard" style="display:block;background:#ae1fe3;color:#fff;text-align:center;padding:16px;font-weight:900;font-size:12px;letter-spacing:3px;text-decoration:none;">
           LOGIN TO DASHBOARD →
         </a>
         <div style="margin-top:32px;font-size:9px;color:#ffffff20;letter-spacing:3px;text-align:center;">
@@ -127,6 +113,5 @@ export async function PATCH(req) {
       </div>
     `,
   });
-
   return Response.json({ success: true });
 }
