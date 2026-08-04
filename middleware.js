@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-
 export function middleware(req) {
   const origin = req.headers.get("origin");
-  const allowedOrigins = ["https://www.ink3d.lol", "https://ink3d.lol"];
+  const allowedOrigins = ["https://www.ink3dshop.com", "https://ink3dshop.com", "https://www.ink3d.lol", "https://ink3d.lol"];
   const { pathname } = req.nextUrl;
-
   // PROTECT ADMIN PAGE — but not the login page itself
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
     const token = req.cookies.get("ink3d_admin")?.value;
@@ -12,7 +10,6 @@ export function middleware(req) {
       return NextResponse.redirect(new URL("/admin/login", req.url));
     }
   }
-
   // PROTECT ADMIN API ROUTES
   if (pathname.startsWith("/api/admin") && !pathname.startsWith("/api/admin/login")) {
     const token = req.cookies.get("ink3d_admin")?.value;
@@ -20,7 +17,6 @@ export function middleware(req) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
   }
-
   // CORS + SECURITY HEADERS FOR ALL API ROUTES
   if (pathname.startsWith("/api/")) {
     const res = NextResponse.next();
@@ -35,10 +31,8 @@ export function middleware(req) {
     res.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
     return res;
   }
-
   return NextResponse.next();
 }
-
 export const config = {
   matcher: ["/admin/:path*", "/api/:path*"],
 };
