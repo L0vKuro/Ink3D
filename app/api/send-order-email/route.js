@@ -1,16 +1,13 @@
 import { Resend } from "resend";
 import { ratelimit, redis } from "../../lib/ratelimit";
 import { sanitize } from "../../lib/sanitize";
-
 const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req) {
   const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
   const { success } = await ratelimit.limit(ip);
   if (!success) {
     return Response.json({ error: "Too many requests" }, { status: 429 });
   }
-
   const raw = await req.json();
   const customerName = sanitize(raw.customerName);
   const customerEmail = sanitize(raw.customerEmail);
@@ -22,20 +19,17 @@ export async function POST(req) {
   const orderId = sanitize(raw.orderId);
   const referralCode = sanitize(raw.referralCode);
   const items = raw.items;
-
   // AFFILIATE ATTRIBUTION
   if (referralCode) {
     try {
       const affiliates = await redis.get("ink3d_affiliates") ?? [];
       const isDiscountAttribution = referralCode.startsWith("DISCOUNT:");
       const lookupCode = isDiscountAttribution ? referralCode.replace("DISCOUNT:", "") : referralCode;
-
       const affIndex = affiliates.findIndex(a =>
         isDiscountAttribution
           ? a.discountCode === lookupCode
           : a.referralCode === lookupCode
       );
-
       if (affIndex !== -1) {
         const aff = affiliates[affIndex];
         const saleAmount = parseFloat(total);
@@ -43,7 +37,6 @@ export async function POST(req) {
         const now = new Date();
         const thisMonth = `${now.getFullYear()}-${now.getMonth()}`;
         const isNewMonth = aff.stats?.currentMonth !== thisMonth;
-
         const orderEntry = {
           orderId,
           date: now.toISOString(),
@@ -53,7 +46,6 @@ export async function POST(req) {
           customerName,
           via: isDiscountAttribution ? `discount:${lookupCode}` : `ref:${lookupCode}`,
         };
-
         affiliates[affIndex] = {
           ...aff,
           stats: {
@@ -68,14 +60,12 @@ export async function POST(req) {
             orders: [...(aff.stats?.orders ?? []), orderEntry],
           },
         };
-
         await redis.set("ink3d_affiliates", affiliates);
-
         // Notify the affiliate that their referral/discount code was used.
         if (aff.email) {
           try {
             await resend.emails.send({
-              from: "INK3D Studio <orders@ink3d.lol>",
+              from: "INK3D Studio <orders@ink3dshop.com>",
               replyTo: "service.ink3dstudio@gmail.com",
               to: aff.email,
               subject: `YOUR CODE WAS USED — +$${earnings.toFixed(2)} EARNED`,
@@ -89,7 +79,7 @@ export async function POST(req) {
                     <div style="margin-bottom:8px;"><strong>Sale amount:</strong> $${saleAmount.toFixed(2)}</div>
                     <div style="margin-bottom:8px;color:#22c55e;"><strong>Your commission (${aff.commission}%):</strong> +$${earnings.toFixed(2)}</div>
                   </div>
-                  <a href="https://ink3d.lol/dashboard" style="display:block;background:#ae1fe3;color:#fff;text-align:center;padding:16px;font-weight:900;font-size:12px;letter-spacing:3px;text-decoration:none;margin-bottom:24px;">
+                  <a href="https://ink3dshop.com/dashboard" style="display:block;background:#ae1fe3;color:#fff;text-align:center;padding:16px;font-weight:900;font-size:12px;letter-spacing:3px;text-decoration:none;margin-bottom:24px;">
                     VIEW YOUR DASHBOARD →
                   </a>
                   <div style="font-size:9px;color:#ffffff20;letter-spacing:3px;text-align:center;">
@@ -107,7 +97,6 @@ export async function POST(req) {
       console.error("Affiliate attribution error:", err);
     }
   }
-
   const itemRows = items.map(item => `
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #fff; font-family: monospace;">${sanitize(item.name)}${item.teamName ? ` — ${sanitize(item.teamName)} Edition` : ''}${item.size ? ` (${sanitize(item.size)})` : ''}</td>
@@ -116,9 +105,8 @@ export async function POST(req) {
       <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #fff; font-family: monospace; text-align: right;">$${(parseFloat(item.price.replace('$','')) * item.qty).toFixed(2)}</td>
     </tr>
   `).join('');
-
   await resend.emails.send({
-    from: "INK3D Studio <orders@ink3d.lol>",
+    from: "INK3D Studio <orders@ink3dshop.com>",
     replyTo: "service.ink3dstudio@gmail.com",
     to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
     subject: `NEW ORDER — ${orderId} — $${total}`,
@@ -126,20 +114,17 @@ export async function POST(req) {
       <div style="background: #050505; padding: 40px; font-family: monospace; color: #fff; max-width: 600px;">
         <div style="color: #ae1fe3; font-size: 11px; letter-spacing: 4px; margin-bottom: 8px;">SYS://ORDER_RECEIVED</div>
         <h1 style="color: #fff; font-size: 32px; margin: 0 0 32px 0; letter-spacing: -1px;">NEW ORDER</h1>
-
         <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; margin-bottom: 24px;">
           <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// CUSTOMER</div>
           <div style="color: #fff; margin-bottom: 4px;"><strong>Name:</strong> ${customerName}</div>
           <div style="color: #fff; margin-bottom: 4px;"><strong>Email:</strong> ${customerEmail}</div>
           <div style="color: #ae1fe3; margin-bottom: 4px;"><strong>Order ID:</strong> ${orderId}</div>
         </div>
-
         <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; margin-bottom: 24px;">
           <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// SHIPPING ADDRESS</div>
           <div style="color: #fff; margin-bottom: 4px;"><strong>Ship To:</strong> ${shippingName}</div>
           <div style="color: #fff;">${shippingAddress}</div>
         </div>
-
         <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; margin-bottom: 24px;">
           <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// ITEMS</div>
           <table style="width: 100%; border-collapse: collapse;">
@@ -154,7 +139,6 @@ export async function POST(req) {
             <tbody>${itemRows}</tbody>
           </table>
         </div>
-
         ${discountCode ? `
         <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; margin-bottom: 24px;">
           <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// DISCOUNT</div>
@@ -162,19 +146,16 @@ export async function POST(req) {
           <div style="color: #22c55e;"><strong>Amount:</strong> -$${discountAmount}</div>
         </div>
         ` : ''}
-
         ${referralCode && !referralCode.startsWith("DISCOUNT:") ? `
         <div style="background: #0a0a0a; border: 1px solid #1a1a1a; padding: 24px; margin-bottom: 24px;">
           <div style="font-size: 9px; color: #ae1fe366; letter-spacing: 4px; margin-bottom: 16px;">// REFERRAL</div>
           <div style="color: #ae1fe3;"><strong>Referred by:</strong> ${referralCode}</div>
         </div>
         ` : ''}
-
         <div style="background: #ae1fe3; padding: 20px 24px; display: flex; justify-content: space-between;">
           <span style="font-size: 12px; letter-spacing: 3px; color: #fff;">TOTAL</span>
           <span style="font-size: 20px; font-weight: 900; color: #fff;">$${total}</span>
         </div>
-
         <div style="margin-top: 32px; font-size: 9px; color: #ffffff20; letter-spacing: 3px; text-align: center;">
           INK3D STUDIO — MILFORD, NH — EST. 2024
         </div>
