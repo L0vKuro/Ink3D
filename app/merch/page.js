@@ -35,18 +35,6 @@ const merch = [
       { label: "BACK", src: "/Ink3D_Front_Logo-_back.png" },
     ],
   },
-  {
-    id: "merch-3",
-    name: "INK3D TEE — BACK LOGO",
-    price: "$35.00",
-    tag: "TEE",
-    desc: "Bold back logo tee. Statement piece.",
-    hasSize: true,
-    images: [
-      { label: "FRONT", src: "/Ink3D_Back_Logo-_Front.png" },
-      { label: "BACK", src: "/Ink3D_Back_Logo-_Back.png" },
-    ],
-  },
 ];
 const tagColors = {
   HOODIE: "text-[#ae1fe3] border-[#ae1fe3]/50 bg-[#ae1fe3]/10",
