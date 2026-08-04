@@ -19,6 +19,7 @@ const photos = [
   { file: "/Optic coaster set.jpg", label: "OPTIC COASTER SET" },
   { file: "/Optic texas keychain _ Lightbox_.jpg", label: "OPTIC TEXAS KEYCHAIN + LIGHTBOX" },
   { file: "/ROKKR Keychain Back.jpg", label: "ROKKR KEYCHAIN — BACK" },
+  { file: "/tpc male hypechain.jpg", label: "TPC MVP CHAIN" },
 ];
 
 export default function Photos() {
