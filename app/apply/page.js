@@ -30,35 +30,24 @@ export default function Apply() {
   }
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("[DEBUG] handleSubmit fired");
-    // Bot detection: honeypot field filled, or form submitted suspiciously fast.
-    // NOTE: browsers can sometimes autofill hidden fields named things like
-    // "website" from saved autofill data, which would silently block real
-    // users here. Keep this field name obscure and unrelated to common
-    // autofill categories (address, website, company, etc).
+    // Bot detection: submitted suspiciously fast (bots don't wait; humans take
+    // several seconds to fill this form out). We deliberately do NOT block on
+    // the honeypot field's value — Chrome's autofill will fill every text
+    // input in a form (including ones hidden via CSS) once a user accepts an
+    // autofill suggestion on any field, which made this reject real users.
     const elapsed = Date.now() - loadedAt.current;
-    console.log("[DEBUG] honeypot value:", JSON.stringify(honeypot), "elapsed ms:", elapsed);
-    if (honeypot || elapsed < 1200) {
-      console.log("[DEBUG] BLOCKED by bot check — honeypot filled?", !!honeypot, "too fast?", elapsed < 1200);
-      return;
-    }
-    if (!form.twitter) {
-      console.log("[DEBUG] BLOCKED — twitter field empty");
-      return alert("Twitter/X is required.");
-    }
-    console.log("[DEBUG] passed checks, sending fetch...");
+    if (elapsed < 1200) return;
+    if (!form.twitter) return alert("Twitter/X is required.");
     setLoading(true);
     try {
       const res = await fetch("/api/send-application", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, logo, logoName }),
+        body: JSON.stringify({ ...form, logo, logoName, honeypot }),
       });
-      console.log("[DEBUG] fetch responded with status:", res.status);
       if (res.ok) setStatus("success");
       else setStatus("error");
-    } catch (err) {
-      console.log("[DEBUG] fetch threw an error:", err);
+    } catch {
       setStatus("error");
     }
     setLoading(false);
@@ -104,8 +93,9 @@ export default function Apply() {
           </p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-10">
-          {/* HONEYPOT — hidden from real users, bots fill this in. Field name kept
-              obscure on purpose so browser autofill doesn't populate it for real users. */}
+          {/* HONEYPOT — hidden from real users, bots fill this in. NOT used to
+              block submission (see handleSubmit) since browser autofill can
+              populate hidden fields too; kept only for optional server-side logging. */}
           <div style={{position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none'}} aria-hidden="true">
             <input
               type="text"
