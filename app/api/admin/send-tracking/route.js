@@ -12,7 +12,7 @@ export async function POST(req) {
   const trackingLink = sanitize(raw.trackingLink);
   const orderId = sanitize(raw.orderId);
   await resend.emails.send({
-    from: "INK3D Studio <orders@ink3d.lol>",
+    from: "INK3D Studio <orders@ink3dshop.com>",
     replyTo: "service.ink3dstudio@gmail.com",
     to: customerEmail,
     subject: `YOUR ORDER IS ON THE WAY — ${orderId}`,
