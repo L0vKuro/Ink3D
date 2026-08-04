@@ -108,7 +108,7 @@ export async function POST(req) {
   await resend.emails.send({
     from: "INK3D Studio <orders@ink3dshop.com>",
     replyTo: "service.ink3dstudio@gmail.com",
-    to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
+    to: ["the service.ink3dstudio@gmail.com", "dalmazank7@gmail.com"],
     subject: `NEW ORDER — ${orderId} — $${total}`,
     html: `
       <div style="background: #050505; padding: 40px; font-family: monospace; color: #fff; max-width: 600px;">
