@@ -1,12 +1,10 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { useCart } from "../context/CartContext";
-
 const teams = [
   {
     id: "overtakesector",
@@ -150,7 +148,6 @@ const teams = [
     ],
   },
 ];
-
 const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
   LIGHTBOX:   "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
@@ -159,21 +156,40 @@ const tagColors = {
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
   FIDGET:     "text-orange-400 border-orange-400/50 bg-orange-400/10",
 };
-
 const featuredTeams = teams.filter(t => t.featured);
 const regularTeams = teams.filter(t => !t.featured);
-
 export default function Teams() {
   const [activeTeam, setActiveTeam] = useState(null);
   const [hoveredTeam, setHoveredTeam] = useState(null);
   const { addItem } = useCart();
   const selected = teams.find(t => t.id === activeTeam);
 
+  // The team detail view is just local state on the same /teams URL — no
+  // real navigation happens when opening one, so the browser back button
+  // has nothing to land on and skips straight past /teams to whatever page
+  // came before it. Fix: manually push a history entry when a team opens,
+  // and let the back button (popstate) close the detail view instead of
+  // leaving the page entirely.
+  useEffect(() => {
+    function handlePopState() {
+      setActiveTeam(null);
+    }
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  function openTeam(id) {
+    window.history.pushState({ teamView: true }, "");
+    setActiveTeam(id);
+  }
+
+  function closeTeam() {
+    window.history.back();
+  }
+
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
-
       <Nav active="TEAMS" />
-
       <div className="pt-24 px-6 md:px-12 pb-24">
         <div className="mb-16">
           <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-4 flex items-center gap-3" style={{color: '#ae1fe366'}}>
@@ -187,7 +203,6 @@ export default function Teams() {
             // Select a team to browse their exclusive INK3D collection
           </p>
         </div>
-
         {!activeTeam && featuredTeams.length > 0 && (
           <div className="mb-16">
             <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-6 flex items-center gap-3" style={{color: '#ae1fe366'}}>
@@ -197,7 +212,7 @@ export default function Teams() {
               {featuredTeams.map((team) => (
                 <div
                   key={team.id}
-                  onClick={() => setActiveTeam(team.id)}
+                  onClick={() => openTeam(team.id)}
                   className="relative overflow-hidden cursor-pointer group border transition-all duration-300"
                   style={{ borderColor: team.color + '40', background: `linear-gradient(120deg, ${team.color}14, #0a0a0a 65%)` }}
                 >
@@ -246,7 +261,6 @@ export default function Teams() {
             </div>
           </div>
         )}
-
         {!activeTeam && (
           <>
             {featuredTeams.length > 0 && (
@@ -256,7 +270,7 @@ export default function Teams() {
             {regularTeams.map((team) => (
               <div
                 key={team.id}
-                onClick={() => setActiveTeam(team.id)}
+                onClick={() => openTeam(team.id)}
                 onMouseEnter={() => setHoveredTeam(team.id)}
                 onMouseLeave={() => setHoveredTeam(null)}
                 className="relative bg-[#0a0a0a] cursor-pointer transition-all duration-300 border border-transparent"
@@ -287,10 +301,9 @@ export default function Teams() {
           </div>
           </>
         )}
-
         {activeTeam && selected && (
           <div>
-            <button onClick={() => setActiveTeam(null)}
+            <button onClick={closeTeam}
               className="font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors mb-10 flex items-center gap-2">
               ← BACK_TO_ALL_TEAMS
             </button>
@@ -320,7 +333,6 @@ export default function Teams() {
                 </div>
               </div>
             </div>
-
             {selected.description && (
               <div className="mb-16 pb-8 border-b border-white/[0.05] max-w-3xl">
                 <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-4" style={{ color: selected.color + '66' }}>// ABOUT {selected.name.toUpperCase()}</div>
@@ -376,9 +388,7 @@ export default function Teams() {
           </div>
         )}
       </div>
-
       <Footer />
-
     </main>
   );
 }
