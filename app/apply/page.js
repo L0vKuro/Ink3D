@@ -30,14 +30,23 @@ export default function Apply() {
   }
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log("[DEBUG] handleSubmit fired");
     // Bot detection: honeypot field filled, or form submitted suspiciously fast.
     // NOTE: browsers can sometimes autofill hidden fields named things like
     // "website" from saved autofill data, which would silently block real
     // users here. Keep this field name obscure and unrelated to common
     // autofill categories (address, website, company, etc).
     const elapsed = Date.now() - loadedAt.current;
-    if (honeypot || elapsed < 1200) return;
-    if (!form.twitter) return alert("Twitter/X is required.");
+    console.log("[DEBUG] honeypot value:", JSON.stringify(honeypot), "elapsed ms:", elapsed);
+    if (honeypot || elapsed < 1200) {
+      console.log("[DEBUG] BLOCKED by bot check — honeypot filled?", !!honeypot, "too fast?", elapsed < 1200);
+      return;
+    }
+    if (!form.twitter) {
+      console.log("[DEBUG] BLOCKED — twitter field empty");
+      return alert("Twitter/X is required.");
+    }
+    console.log("[DEBUG] passed checks, sending fetch...");
     setLoading(true);
     try {
       const res = await fetch("/api/send-application", {
@@ -45,9 +54,11 @@ export default function Apply() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, logo, logoName }),
       });
+      console.log("[DEBUG] fetch responded with status:", res.status);
       if (res.ok) setStatus("success");
       else setStatus("error");
-    } catch {
+    } catch (err) {
+      console.log("[DEBUG] fetch threw an error:", err);
       setStatus("error");
     }
     setLoading(false);
