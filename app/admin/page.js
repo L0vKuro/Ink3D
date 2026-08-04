@@ -1,21 +1,16 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-
 const TIERS = ["BRONZE", "SILVER", "GOLD", "DIAMOND", "ELITE"];
 const TIER_COMMISSIONS = { BRONZE: 10, SILVER: 13, GOLD: 16, DIAMOND: 20, ELITE: 25 };
-
 export default function Admin() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("tracking");
-
   const [tracking, setTracking] = useState({ customerEmail: "", customerName: "", trackingLink: "", orderId: "" });
   const [trackingStatus, setTrackingStatus] = useState(null);
   const [trackingLoading, setTrackingLoading] = useState(false);
-
   const [discounts, setDiscounts] = useState([]);
   const [archive, setArchive] = useState([]);
   const [discountsLoading, setDiscountsLoading] = useState(false);
@@ -23,7 +18,6 @@ export default function Admin() {
   const [newPercent, setNewPercent] = useState("");
   const [discountMsg, setDiscountMsg] = useState("");
   const [showArchive, setShowArchive] = useState(false);
-
   const [affiliates, setAffiliates] = useState([]);
   const [affiliatesLoading, setAffiliatesLoading] = useState(false);
   const [affiliateMsg, setAffiliateMsg] = useState("");
@@ -33,12 +27,10 @@ export default function Admin() {
   const [newAffiliate, setNewAffiliate] = useState({
     name: "", email: "", password: "", referralCode: "", discountCode: "", discountPercent: "", tier: "BRONZE",
   });
-
   useEffect(() => {
     if (activeTab === "discounts") loadDiscounts();
     if (activeTab === "affiliates") loadAffiliates();
   }, [activeTab]);
-
   async function loadDiscounts() {
     setDiscountsLoading(true);
     const res = await fetch("/api/admin/discounts");
@@ -48,7 +40,6 @@ export default function Admin() {
     setArchive(data.archive ?? []);
     setDiscountsLoading(false);
   }
-
   async function loadAffiliates() {
     setAffiliatesLoading(true);
     const res = await fetch("/api/admin/affiliates");
@@ -57,12 +48,10 @@ export default function Admin() {
     setAffiliates(data.affiliates ?? []);
     setAffiliatesLoading(false);
   }
-
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin/login");
   }
-
   async function handleSendTracking(e) {
     e.preventDefault();
     setTrackingLoading(true);
@@ -77,7 +66,6 @@ export default function Admin() {
     if (res.ok) setTracking({ customerEmail: "", customerName: "", trackingLink: "", orderId: "" });
     setTrackingLoading(false);
   }
-
   async function addDiscount() {
     if (!newCode || !newPercent) return;
     const code = newCode.trim().toUpperCase();
@@ -99,7 +87,6 @@ export default function Admin() {
       setDiscountMsg(`// ${data.error?.toUpperCase() ?? 'ERROR'}`);
     }
   }
-
   async function removeDiscount(code) {
     const res = await fetch("/api/admin/discounts", {
       method: "DELETE",
@@ -112,7 +99,6 @@ export default function Admin() {
       setDiscountMsg(`// ${code} ARCHIVED`);
     }
   }
-
   async function createAffiliate() {
     const { name, email, password, referralCode, discountCode, discountPercent, tier } = newAffiliate;
     if (!name || !email || !password || !referralCode || !discountCode || !discountPercent) {
@@ -135,7 +121,6 @@ export default function Admin() {
       setAffiliateMsg(`// ${data.error?.toUpperCase() ?? 'ERROR'}`);
     }
   }
-
   async function deleteAffiliate(id, name) {
     if (!confirm(`Remove ${name} from the program?`)) return;
     const res = await fetch("/api/admin/affiliates", {
@@ -148,7 +133,6 @@ export default function Admin() {
       setAffiliateMsg(`// ${name.toUpperCase()} REMOVED`);
     }
   }
-
   async function handleResetPassword(id) {
     if (!resetPassword) return;
     const res = await fetch("/api/admin/affiliates", {
@@ -162,19 +146,16 @@ export default function Admin() {
       setAffiliateMsg("// PASSWORD RESET — EMAIL SENT");
     }
   }
-
   function generatePassword() {
     const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$';
     const pw = Array.from({length: 12}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
     setNewAffiliate(p => ({...p, password: pw}));
   }
-
   const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
   const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
   const tierColors = { BRONZE: '#cd7f32', SILVER: '#c0c0c0', GOLD: '#ffd60a', DIAMOND: '#00b4d8', ELITE: '#ae1fe3' };
   const regularCodes = discounts.filter(d => !d.affiliateId);
   const affiliateCodes = discounts.filter(d => d.affiliateId);
-
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <div className="border-b border-white/[0.06] px-6 md:px-12 py-4 flex justify-between items-center">
@@ -184,7 +165,6 @@ export default function Admin() {
         </div>
         <button onClick={handleLogout} className="font-mono-custom text-[9px] text-white/20 hover:text-white transition-colors tracking-widest">[ LOGOUT ]</button>
       </div>
-
       <div className="px-6 md:px-12 py-12 max-w-5xl mx-auto">
         <div className="flex gap-1 mb-12 border-b border-white/[0.06] overflow-x-auto">
           {["tracking", "discounts", "affiliates"].map(tab => (
@@ -195,7 +175,6 @@ export default function Admin() {
             </button>
           ))}
         </div>
-
         {/* TRACKING TAB */}
         {activeTab === "tracking" && (
           <div>
@@ -234,7 +213,6 @@ export default function Admin() {
             </form>
           </div>
         )}
-
         {/* DISCOUNTS TAB */}
         {activeTab === "discounts" && (
           <div>
@@ -249,7 +227,6 @@ export default function Admin() {
                 {showArchive ? '[ HIDE ARCHIVE ]' : '[ CODE ARCHIVES ]'} {archive.length > 0 && `(${archive.length})`}
               </button>
             </div>
-
             {showArchive && (
               <div className="border p-8 mb-6" style={{borderColor: '#ae1fe320', background: '#0a0a0a'}}>
                 <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// CODE ARCHIVES</div>
@@ -272,7 +249,6 @@ export default function Admin() {
                 )}
               </div>
             )}
-
             <div className="border border-white/[0.06] p-8 mb-6">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ACTIVE CODES</div>
               {discountsLoading ? (
@@ -308,7 +284,6 @@ export default function Admin() {
                 </div>
               )}
             </div>
-
             <div className="border border-white/[0.06] p-8">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ADD NEW CODE</div>
               <div className="flex gap-4">
@@ -333,7 +308,6 @@ export default function Admin() {
             </div>
           </div>
         )}
-
         {/* AFFILIATES TAB */}
         {activeTab === "affiliates" && (
           <div>
@@ -350,9 +324,7 @@ export default function Admin() {
                 {showCreateAffiliate ? '[ CANCEL ]' : '[ + CREATE AFFILIATE ]'}
               </button>
             </div>
-
             {affiliateMsg && <div className="font-mono-custom text-[9px] text-green-400 tracking-widest mb-6">{affiliateMsg}</div>}
-
             {showCreateAffiliate && (
               <div className="border border-white/[0.06] p-8 mb-8" style={{borderColor: '#ae1fe330'}}>
                 <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// NEW AFFILIATE</div>
@@ -398,7 +370,7 @@ export default function Admin() {
                   <div>
                     <label className={labelClass}>REFERRAL CODE</label>
                     <input value={newAffiliate.referralCode} onChange={e => setNewAffiliate(p => ({...p, referralCode: e.target.value.toUpperCase()}))} placeholder="DAVID" className={inputClass} />
-                    <div className="font-mono-custom text-[8px] text-white/20 mt-1">ink3d.lol/?ref={newAffiliate.referralCode || 'CODE'}</div>
+                    <div className="font-mono-custom text-[8px] text-white/20 mt-1">ink3dshop.com/?ref={newAffiliate.referralCode || 'CODE'}</div>
                   </div>
                   <div>
                     <label className={labelClass}>DISCOUNT CODE</label>
@@ -418,7 +390,6 @@ export default function Admin() {
                 </button>
               </div>
             )}
-
             <div className="space-y-4">
               {affiliatesLoading ? (
                 <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// LOADING...</div>
@@ -448,7 +419,6 @@ export default function Admin() {
                         </button>
                       </div>
                     </div>
-
                     {resetPasswordId === a.id && (
                       <div className="flex gap-3 mb-4">
                         <input value={resetPassword} onChange={e => setResetPassword(e.target.value)} placeholder="New password" className={`${inputClass} flex-1`} />
@@ -463,7 +433,6 @@ export default function Admin() {
                         </button>
                       </div>
                     )}
-
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                       <div className="bg-[#050505] p-3 border border-white/[0.04]">
                         <div className="font-mono-custom text-[8px] text-white/30 tracking-widest mb-1">LIFETIME ORDERS</div>
@@ -482,9 +451,8 @@ export default function Admin() {
                         <div className="font-black text-xl" style={{color: tierColors[a.tier]}}>{a.commission}%</div>
                       </div>
                     </div>
-
                     <div className="flex gap-6 font-mono-custom text-[9px] text-white/30">
-                      <span>REF LINK: <span className="text-white/50">ink3d.lol/?ref={a.referralCode}</span></span>
+                      <span>REF LINK: <span className="text-white/50">ink3dshop.com/?ref={a.referralCode}</span></span>
                       <span>DISCOUNT: <span style={{color: '#ae1fe3'}}>{a.discountCode}</span> ({a.discountPercent}% off)</span>
                     </div>
                   </div>
