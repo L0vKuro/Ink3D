@@ -5,6 +5,13 @@ import Image from "next/image";
 import Nav from "../components/Nav";
 const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-4 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
 const labelClass = "font-mono-custom text-[9px] tracking-[0.4em] mb-2 block";
+const tiers = [
+  { icon: "🥉", label: "STARTING TIER", name: "BRONZE", color: "#cd7f32", commission: "10%", desc: "You're in. Welcome to the INK3D network. Start sharing your link and building your audience." },
+  { icon: "🥈", label: "10 SALES", name: "SILVER", color: "#c0c0c0", commission: "13%", desc: "You're moving. People are buying through you and the community is noticing." },
+  { icon: "🥇", label: "25 SALES", name: "GOLD", color: "#ffd60a", commission: "16%", desc: "You're a force. Your influence is real and INK3D is growing because of you." },
+  { icon: "💎", label: "50 SALES", name: "DIAMOND", color: "#00b4d8", commission: "20%", desc: "Elite status. You're one of the top affiliates driving the brand forward." },
+  { icon: "👑", label: "100 SALES", name: "ELITE", color: "#ae1fe3", commission: "25%", desc: "The top 1%. You don't just rep INK3D — you are INK3D." },
+];
 export default function Apply() {
   const [form, setForm] = useState({
     fullName: "", email: "", teamName: "", reason: "",
@@ -91,6 +98,38 @@ export default function Apply() {
           <p className="font-mono-custom text-white/30 text-sm max-w-xl leading-relaxed">
             // Tell us about yourself. We review every application personally.
           </p>
+        </div>
+        {/* AFFILIATE TIERS */}
+        <div className="mb-16">
+          <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-4 flex items-center gap-3" style={{color: '#ae1fe366'}}>
+            <span>◆</span> SYS://TIERS_LOADED
+          </div>
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight leading-none mb-2">
+            AFFILIATE <span style={{color: '#ae1fe3'}}>TIERS</span>
+          </h2>
+          <p className="font-mono-custom text-white/30 text-sm max-w-xl leading-relaxed mb-8">
+            // Every affiliate starts at Bronze. The more you sell, the higher you climb — and the more you earn. There's no cap on what you can make.
+          </p>
+          <div className="border border-white/[0.06]">
+            {tiers.map((tier, i) => (
+              <div
+                key={tier.name}
+                className={`flex flex-col md:flex-row md:items-center gap-4 md:gap-8 p-6 md:p-8 ${i !== tiers.length - 1 ? 'border-b border-white/[0.06]' : ''}`}
+              >
+                <div className="text-3xl shrink-0">{tier.icon}</div>
+                <div className="shrink-0 md:w-32">
+                  <div className="font-mono-custom text-[9px] tracking-widest text-white/30 mb-1">{tier.label}</div>
+                  <div className="font-black text-lg tracking-wide" style={{ color: tier.color }}>{tier.name}</div>
+                </div>
+                <p className="font-mono-custom text-white/40 text-sm leading-relaxed flex-1">{tier.desc}</p>
+                <div className="text-left md:text-right shrink-0">
+                  <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">COMMISSION</div>
+                  <div className="font-black text-2xl" style={{ color: tier.color }}>{tier.commission}</div>
+                  <div className="font-mono-custom text-[8px] text-white/20 tracking-widest">PER SALE</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <form onSubmit={handleSubmit} className="space-y-10">
           {/* HONEYPOT — hidden from real users, bots fill this in. NOT used to
