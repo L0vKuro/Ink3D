@@ -37,7 +37,7 @@ export async function POST(req) {
   }
   await resend.emails.send({
     from: "INK3D Studio <apply@ink3dshop.com>",
-    to: ["rmsm97@yahoo.com", "dalmazank7@gmail.com"],
+    to: ["service.ink3dstudio@gmail.com", "dalmazank7@gmail.com"],
     subject: `NEW APPLICATION — ${fullName} — ${teamName}`,
     attachments,
     html: `
