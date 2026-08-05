@@ -20,7 +20,9 @@ const photos = [
   { file: "/Optic texas keychain _ Lightbox_.jpg", label: "OPTIC TEXAS KEYCHAIN + LIGHTBOX" },
   { file: "/ROKKR Keychain Back.jpg", label: "ROKKR KEYCHAIN — BACK" },
   { file: "/tpc male hype chain.jpg", label: "TPC MVP CHAIN" },
-   { file: "/tpv trophy.jpg", label: "TPC MVP TROPHY" },
+  { file: "/tpv trophy.jpg", label: "TPC MVP TROPHY" },
+  { file: "/Fire-Semblance Controller Holder.jpg", label: "Fire-Semblance PS5 Controller Holder" },
+  
 ];
 
 export default function Photos() {
