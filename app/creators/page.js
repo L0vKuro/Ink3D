@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Nav from "../components/Nav";
+import { useCart } from "../context/CartContext";
 const creators = [
   {
     id: "impulse",
