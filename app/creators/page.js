@@ -200,13 +200,6 @@ export default function Creators() {
                       onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
                       [ ADD_TO_CART ]
                     </button>
-                        <button
-                      onClick={() => addItem({
-                        id: `${selected.id}-${item.name}`,
-                        name: item.name,
-                        price: item.price,
-                        image: item.image,
-                        CreatorName: selected.name,
                       })}
                   </div>
                 </div>
