@@ -146,16 +146,15 @@ const teams = [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" },
   },
-  {
+    {
     id: "7ven",
-    name: " 7ven CLub",
+    name: "7ven CLub",
     logo: "/7ven.jpg",
-    color: "#39ff14 ",
+    color: "#e63946",
     items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/vaultix-coaster.png" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/vaultix-keychain.png" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/eym-keychain.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/eym-lightbox.png" },
+    ],
   },
 ];
 const tagColors = {
