@@ -146,14 +146,6 @@ const teams = [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" },
   },    
-  {
-    id: "7ven",
-    name: "7ven Club",
-    logo: "/7ven.jpg",
-    color: "#00b4d8",
-    items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/atlantis-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
     ],
   };
   const tagColors = {
