@@ -29,8 +29,8 @@ const teams = [
     logo: "/Atlantis 2026 logo.png",
     color: "#00b4d8",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/atlantis-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/" },
     ],
   },
   {
