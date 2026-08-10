@@ -151,7 +151,7 @@ const teams = [
     id: "7ven club",
     name: "7ven Club",
     logo: "/7ven.jpg",
-    color: "#ffffff",
+    color: "#39FF14",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image:  "/" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/" }
