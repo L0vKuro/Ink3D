@@ -128,7 +128,7 @@ const teams = [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/veriphy-lightbox1.avif" },
     ],
   },
-  {
+{
     id: "wlg",
     name: "White Leopard Gaming",
     logo: "/team-White Leopard.png",
@@ -137,18 +137,17 @@ const teams = [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/whiteleopard-lightbox.png" },
     ],
   },
-  {
+  { 
     id: "ninefly",
-  name: "Ninefly",
-  logo: "/team-Ninefly.jpg",
-  color: "#ffffff",
-  items: [
-    { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
-    { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" }
-  ] 
-};
-    ],
-  };
+    name: "Ninefly",
+    logo: "/team-Ninefly.jpg",
+    color: "#ffffff",
+    items: [
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" }
+    ] 
+  } 
+]; 
   const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
   LIGHTBOX:   "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
