@@ -156,6 +156,7 @@ const teams = [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
     ],
   },
+  
       const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
   LIGHTBOX:   "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
