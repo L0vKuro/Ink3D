@@ -137,15 +137,15 @@ const teams = [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/whiteleopard-lightbox.png" },
     ],
   },
-  {
     id: "ninefly",
-    name: "Ninefly",
-    logo: "/team-Ninefly.jpg",
-    color: "#ffffff",
-    items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" },
-  },    
+  name: "Ninefly",
+  logo: "/team-Ninefly.jpg",
+  color: "#ffffff",
+  items: [
+    { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
+    { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" }
+  ] 
+};
     ],
   };
   const tagColors = {
