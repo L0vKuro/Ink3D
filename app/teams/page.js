@@ -137,6 +137,7 @@ const teams = [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/whiteleopard-lightbox.png" },
     ],
   },
+  {
     id: "ninefly",
   name: "Ninefly",
   logo: "/team-Ninefly.jpg",
