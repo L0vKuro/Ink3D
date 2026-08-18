@@ -12,8 +12,8 @@ const creators = [
     color: "#ae1fe3",
     desc: "Content creator and community builder partnered with INK3D.",
     items: [
-      { name: "KEYCHAIN", price: 5.00, tag: "KEYCHAIN", image: "/impulse-keychain.png" }, // No quotes, no dollar sign
-      { name: "COASTER SET OF 4", price: 15.00, tag: "COASTER", image: "/impulse-coaster.png" }, // No quotes, no dollar sign
+      { name: "KEYCHAIN", price: $5.00, tag: "KEYCHAIN", image: "/impulse-keychain.png" }, // No quotes, no dollar sign
+      { name: "COASTER SET OF 4", price: $15.00, tag: "COASTER", image: "/impulse-coaster.png" }, // No quotes, no dollar sign
     ],
   },
   {
