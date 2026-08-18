@@ -157,6 +157,18 @@ const teams = [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/" }
     ] 
   } 
+  { 
+    id: "PRS",
+    name: "PRS GAMING",
+    logo: "/prs cover photo.png",
+    color: "#89CFF0",
+    items: [
+     { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/" },
+      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/" },
+    ] 
+  } 
 ]; 
   const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
