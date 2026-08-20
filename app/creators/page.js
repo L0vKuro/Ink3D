@@ -5,6 +5,26 @@ import { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import { useCart } from "../context/CartContext";
 const creators = [
+const addItem = (newItem) => {
+  setCartItems((currentItems) => {
+    const existingItem = currentItems.find(
+      (item) => item.id === newItem.id
+    );
+
+    if (existingItem) {
+      return currentItems.map((item) =>
+        item.id === newItem.id
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+            }
+          : item
+      );
+    }
+
+    return [...currentItems, newItem];
+  });
+};
   {
     id: "impulse",
     name: "Impulse",
