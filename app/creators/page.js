@@ -195,20 +195,27 @@ export default function Creators() {
                         <div className="font-mono-custom text-[9px] text-white/20">USD</div>
                       </div>
                     </div>
-                    <button
-                     onClick={() => addItem({
-                     id: `${selected.id}-${item.name}`,
-                     name: item.name,
-                     price: item.price,
-                     image: item.image,
-                     teamName: selected.name,
-  })}
+                   <button
+  onClick={() => {
+    const numericPrice = typeof item.price === 'string' 
+      ? parseFloat(item.price.replace(/[^0-9.]/g, '')) 
+      : item.price;
+    addItem({
+      id: `${selected.id}-${item.name.toLowerCase().replace(/\s+/g, '-')}`,
+      name: item.name,
+      price: numericPrice,
+      image: item.image,
+      teamName: selected.name,
+      quantity: 1
+    });
+  }}
   className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
   onMouseEnter={e => { e.currentTarget.style.borderColor=selected.color; e.currentTarget.style.color=selected.color; e.currentTarget.style.background=selected.color+'10'; }}
   onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}
 >
   [ ADD_TO_CART ]
 </button>
+
                   </div>
                 </div>
               ))}
