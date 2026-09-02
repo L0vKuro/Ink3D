@@ -145,6 +145,14 @@ export default function Payment() {
                         value: finalTotal,
                         breakdown,
                         currency_code: "USD",
+                          shipping: {
+              currency_code: "USD",
+                          },
+                       },
+                         shipping: {
+                         currency_code: "USD",
+                         value: "8.00" // Your Flat Rate Shipping cost
+                      }
                       },
                       items: items.map(item => ({
                         name: item.teamName ? `${item.name} — ${item.teamName} Edition` : item.name,
