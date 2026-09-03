@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -8,35 +7,29 @@ import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 import { useCart } from "../../context/CartContext";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-
 export default function Payment() {
   const router = useRouter();
   const { items, total, clearCart } = useCart();
   const [checkoutData, setCheckoutData] = useState(null);
   const [orderConfirmed, setOrderConfirmed] = useState(false);
   const [customerName, setCustomerName] = useState("");
-
   useEffect(() => {
     const data = sessionStorage.getItem("ink3d_checkout");
     if (!data) { router.push("/checkout"); return; }
     setCheckoutData(JSON.parse(data));
   }, []);
-
   if (!checkoutData) return null;
-
   const itemTotal = total.toFixed(2);
   const discountAmount = checkoutData.discountAmount ? parseFloat(checkoutData.discountAmount).toFixed(2) : "0.00";
+  const shippingFee = checkoutData.shippingFee ? parseFloat(checkoutData.shippingFee).toFixed(2) : "0.00";
   const finalTotal = checkoutData.finalTotal;
-
   async function sendOrderEmail(details) {
     try {
       const ref = localStorage.getItem("ink3d_ref");
-
       let referralCode = ref ?? null;
       if (!referralCode && checkoutData.discountCode) {
         referralCode = `DISCOUNT:${checkoutData.discountCode}`;
       }
-
       await fetch("/api/send-order-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -58,7 +51,6 @@ export default function Payment() {
       console.error("Email error:", err);
     }
   }
-
   if (orderConfirmed) {
     return (
       <main className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center px-6">
@@ -99,36 +91,29 @@ export default function Payment() {
       </main>
     );
   }
-
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <Nav active="HOME" />
-
       <div className="pt-28 px-6 md:px-12 pb-24 max-w-6xl mx-auto">
         <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-2" style={{color: '#ae1fe366'}}>// CHECKOUT</div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-12">COMPLETE YOUR ORDER</h1>
-
         <div className="grid md:grid-cols-[1fr_380px] gap-8">
-
           <div className="border border-white/[0.06] p-8 relative h-fit">
             <div className="absolute -top-3 left-6 bg-[#050505] px-3">
               <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// SECURE PAYMENT</span>
             </div>
-
             <button
               onClick={() => router.push("/checkout")}
               className="font-mono-custom text-[9px] text-white/30 hover:text-white transition-colors tracking-widest mb-8 flex items-center gap-2"
             >
               ← BACK TO INFO
             </button>
-
             <div className="mb-6 p-4 border border-white/[0.05] bg-[#0a0a0a]">
               <div className="font-mono-custom text-[9px] text-white/30 tracking-widest mb-1">SHIPPING TO</div>
               <div className="font-black text-sm">{checkoutData.fullName}</div>
               <div className="font-mono-custom text-[10px] text-white/40">{checkoutData.address}, {checkoutData.city}, {checkoutData.state} {checkoutData.zip}</div>
               <div className="font-mono-custom text-[10px] text-white/40">{checkoutData.email}</div>
             </div>
-
             <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID, currency: "USD" }}>
               <PayPalButtons
                 style={{ layout: "vertical", color: "black", label: "pay", height: 50 }}
@@ -139,15 +124,15 @@ export default function Payment() {
                   if (parseFloat(discountAmount) > 0) {
                     breakdown.discount = { currency_code: "USD", value: discountAmount };
                   }
+                  if (parseFloat(shippingFee) > 0) {
+                    breakdown.shipping = { currency_code: "USD", value: shippingFee };
+                  }
                   return actions.order.create({
                     purchase_units: [{
                       amount: {
                         value: finalTotal,
-                        breakdown,
                         currency_code: "USD",
-                          shipping: {
-              currency_code: "USD",
-                          },
+                        breakdown,
                       },
                       items: items.map(item => ({
                         name: item.teamName ? `${item.name} — ${item.teamName} Edition` : item.name,
@@ -173,7 +158,6 @@ export default function Payment() {
               />
             </PayPalScriptProvider>
           </div>
-
           <div className="border border-white/[0.06] p-6 h-fit sticky top-28">
             <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// ORDER SUMMARY</div>
             <div className="space-y-4 mb-6">
@@ -205,6 +189,12 @@ export default function Payment() {
                   <span>-${checkoutData.discountAmount}</span>
                 </div>
               )}
+              {parseFloat(shippingFee) > 0 && (
+                <div className="flex justify-between font-mono-custom text-[10px] text-white/40">
+                  <span>SHIPPING</span>
+                  <span>${shippingFee}</span>
+                </div>
+              )}
               <div className="flex justify-between font-black text-lg pt-2 border-t border-white/[0.06]">
                 <span>TOTAL</span>
                 <span style={{color: '#ae1fe3'}}>${finalTotal}</span>
@@ -212,10 +202,8 @@ export default function Payment() {
               <div className="font-mono-custom text-[9px] text-white/20 tracking-widest text-center pt-2">🔒 SECURED BY PAYPAL</div>
             </div>
           </div>
-
         </div>
       </div>
-
       <Footer />
     </main>
   );
