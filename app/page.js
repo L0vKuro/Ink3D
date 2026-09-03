@@ -1,275 +1,298 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
-import { useCart } from "../context/CartContext";
-const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
-const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
-export default function Checkout() {
-  const router = useRouter();
-  const { items, total } = useCart();
-  const [form, setForm] = useState({
-    fullName: "", email: "",
-    address: "", city: "", state: "", zip: "", country: "US",
-  });
-  const [discountCode, setDiscountCode] = useState("");
-  const [discountApplied, setDiscountApplied] = useState(null);
-  const [discountError, setDiscountError] = useState("");
-  const [discountLoading, setDiscountLoading] = useState(false);
-  const [errors, setErrors] = useState({});
-  const discountAmount = discountApplied ? (total * discountApplied.percent / 100) : 0;
-  // $8 flat shipping fee, applied whenever the cart has at least one
-  // non-Merch item. Merch (hoodies/tees) is the only source that sets a
-  // `size` field on the cart item, so "no size" reliably means it came from
-  // Teams, Creators, or the homepage product grid — everything this fee
-  // should apply to.
-  const hasShippableItem = items.some(item => !item.size);
-  const shippingFee = hasShippableItem ? 8 : 0;
-  const finalTotal = (total - discountAmount + shippingFee).toFixed(2);
-  // Auto-apply discount from ref link
+import { useEffect } from "react";
+import Nav from "./components/Nav";
+import { useCart } from "./context/CartContext";
+const products = [
+  { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K", image: "/reignabove-keychain.png", contain: true },
+  { id: 2, name: "CUBAN HYPE CHAIN", price: "$34.99", tag: "CHAIN", desc: "Drip that hits different.", sku: "INK-002", rating: "4.8", reviews: "1.8K", image: "/ninefly-cubanhypechain.png", contain: true },
+  { id: 3, name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", desc: "Light up your setup.", sku: "INK-003", rating: "5.0", reviews: "987", image: "/eym-lightbox.png", contain: true },
+  { id: 4, name: "COASTER", price: "$9.99", tag: "COASTER", desc: "Protect the desk. Rep the brand.", sku: "INK-004", rating: "4.7", reviews: "1.2K", image: "/vaultix-coaster.png", contain: true },
+  { id: 5, name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", desc: "Heavy. Clean. Iconic.", sku: "INK-005", rating: "4.9", reviews: "756", image: "/outkastz-cuban necklace.png", contain: true },
+  { id: 6, name: "WALL ART", price: "$39.99", tag: "WALL ART", desc: "Turn your wall into a statement.", sku: "INK-006", rating: "4.6", reviews: "3.1K", image: "/vaultix-wallart.pmg.png", contain: true },
+];
+const tagColors = {
+  KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
+  CHAIN:      "text-[#ae1fe3] border-[#ae1fe3]/50 bg-[#ae1fe3]/10",
+  LIGHTBOX:   "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
+  COASTER:    "text-green-400 border-green-400/50 bg-green-400/10",
+  NECKLACE:   "text-pink-400 border-pink-400/50 bg-pink-400/10",
+  "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
+};
+const stats = [
+  { value: "500+", label: "UNITS SHIPPED", sub: "AND COUNTING" },
+  { value: "100%", label: "SATISFACTION", sub: "GUARANTEED" },
+  { value: "3-7D", label: "DELIVERY TIME", sub: "BUSINESS DAYS" },
+  { value: "2024", label: "EST. MILFORD", sub: "MILFORD, NH" },
+];
+export default function Home() {
+  const { addItem } = useCart();
   useEffect(() => {
-    const ref = localStorage.getItem("ink3d_ref");
-    if (ref) {
-      autoApplyRefDiscount(ref);
-    }
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) sessionStorage.setItem("ink3d_ref", ref.toUpperCase());
   }, []);
-  async function autoApplyRefDiscount(ref) {
-    try {
-      // Public endpoint — works for anonymous customers, no admin/affiliate
-      // login required (see app/api/discounts/route.js).
-      const res = await fetch("/api/discounts");
-      const data = await res.json();
-      const codes = data.codes ?? [];
-      // Match either the affiliate's referral code (?ref=) or, if someone
-      // passes a discount code directly as ref, the discount code itself.
-      const matched = codes.find(d => d.referralCode === ref) ?? codes.find(d => d.code === ref);
-      if (matched) {
-        setDiscountCode(matched.code);
-        setDiscountApplied({ percent: matched.percent, code: matched.code });
-      }
-    } catch (err) {
-      console.error("Auto-apply ref discount error:", err);
-    }
-  }
-  function handleChange(e) {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-    setErrors(prev => ({ ...prev, [e.target.name]: "" }));
-  }
-  async function applyDiscount() {
-    const code = discountCode.trim().toUpperCase();
-    if (!code) return;
-    setDiscountLoading(true);
-    setDiscountError("");
-    try {
-      // Public endpoint — works for anonymous customers, no admin/affiliate
-      // login required (see app/api/discounts/route.js).
-      const res = await fetch("/api/discounts");
-      const data = await res.json();
-      const found = data.codes?.find(d => d.code === code);
-      if (found) {
-        setDiscountApplied({ percent: found.percent, code: found.code });
-        setDiscountError("");
-      } else {
-        setDiscountApplied(null);
-        setDiscountError("Invalid discount code.");
-      }
-    } catch {
-      setDiscountError("Error validating code. Try again.");
-    }
-    setDiscountLoading(false);
-  }
-  function validate() {
-    const e = {};
-    if (!form.fullName) e.fullName = "Required";
-    if (!form.email) e.email = "Required";
-    if (!form.address) e.address = "Required";
-    if (!form.city) e.city = "Required";
-    if (!form.state) e.state = "Required";
-    if (!form.zip) e.zip = "Required";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  }
-  function handleContinue() {
-    if (!validate()) return;
-    sessionStorage.setItem("ink3d_checkout", JSON.stringify({
-      ...form,
-      discountCode: discountApplied ? discountApplied.code : null,
-      discountPercent: discountApplied ? discountApplied.percent : null,
-      discountAmount: discountAmount.toFixed(2),
-      shippingFee: shippingFee.toFixed(2),
-      finalTotal,
-    }));
-    router.push("/checkout/payment");
-  }
-  if (items.length === 0) {
-    return (
-      <main className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center">
-        <Nav active="HOME" />
-        <div className="text-center">
-          <div className="font-mono-custom text-[9px] text-white/20 tracking-widest mb-4">// CART_EMPTY</div>
-          <h1 className="text-4xl font-black mb-6">YOUR CART IS EMPTY</h1>
-          <Link href="/teams">
-            <button className="font-black px-10 py-4 text-xs tracking-[0.25em] font-mono-custom glow-btn" style={{background: '#ae1fe3', color: '#fff'}}>SHOP NOW</button>
-          </Link>
-        </div>
-      </main>
-    );
-  }
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <Nav active="HOME" />
-      <div className="pt-28 px-6 md:px-12 pb-24 max-w-6xl mx-auto">
-        <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-2" style={{color: '#ae1fe366'}}>// CHECKOUT</div>
-        <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-12">COMPLETE YOUR ORDER</h1>
-        <div className="grid md:grid-cols-[1fr_380px] gap-8">
-          <div className="space-y-8">
-            <div className="border border-white/[0.06] p-8 relative">
-              <div className="absolute -top-3 left-6 bg-[#050505] px-3">
-                <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// CONTACT INFORMATION</span>
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className={labelClass}>FULL NAME <span style={{color: '#ae1fe3'}}>*</span></label>
-                  <input name="fullName" value={form.fullName} onChange={handleChange} placeholder="John Doe" className={inputClass} style={{borderColor: errors.fullName ? '#ff4444' : undefined}} />
-                  {errors.fullName && <div className="font-mono-custom text-[9px] text-red-400 mt-1">{errors.fullName}</div>}
-                </div>
-                <div>
-                  <label className={labelClass}>EMAIL <span style={{color: '#ae1fe3'}}>*</span></label>
-                  <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="you@email.com" className={inputClass} style={{borderColor: errors.email ? '#ff4444' : undefined}} />
-                  {errors.email && <div className="font-mono-custom text-[9px] text-red-400 mt-1">{errors.email}</div>}
-                </div>
-              </div>
-            </div>
-            <div className="border border-white/[0.06] p-8 relative">
-              <div className="absolute -top-3 left-6 bg-[#050505] px-3">
-                <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// SHIPPING ADDRESS</span>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <label className={labelClass}>STREET ADDRESS <span style={{color: '#ae1fe3'}}>*</span></label>
-                  <input name="address" value={form.address} onChange={handleChange} placeholder="123 Main St" className={inputClass} style={{borderColor: errors.address ? '#ff4444' : undefined}} />
-                  {errors.address && <div className="font-mono-custom text-[9px] text-red-400 mt-1">{errors.address}</div>}
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className={labelClass}>CITY <span style={{color: '#ae1fe3'}}>*</span></label>
-                    <input name="city" value={form.city} onChange={handleChange} placeholder="City" className={inputClass} style={{borderColor: errors.city ? '#ff4444' : undefined}} />
-                    {errors.city && <div className="font-mono-custom text-[9px] text-red-400 mt-1">{errors.city}</div>}
-                  </div>
-                  <div>
-                    <label className={labelClass}>STATE <span style={{color: '#ae1fe3'}}>*</span></label>
-                    <input name="state" value={form.state} onChange={handleChange} placeholder="TX" className={inputClass} style={{borderColor: errors.state ? '#ff4444' : undefined}} />
-                    {errors.state && <div className="font-mono-custom text-[9px] text-red-400 mt-1">{errors.state}</div>}
-                  </div>
-                  <div>
-                    <label className={labelClass}>ZIP <span style={{color: '#ae1fe3'}}>*</span></label>
-                    <input name="zip" value={form.zip} onChange={handleChange} placeholder="12345" className={inputClass} style={{borderColor: errors.zip ? '#ff4444' : undefined}} />
-                    {errors.zip && <div className="font-mono-custom text-[9px] text-red-400 mt-1">{errors.zip}</div>}
-                  </div>
-                </div>
-                <div>
-                  <label className={labelClass}>COUNTRY <span style={{color: '#ae1fe3'}}>*</span></label>
-                  <select name="country" value={form.country} onChange={handleChange} className={`${inputClass} cursor-pointer`}>
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="GB">United Kingdom</option>
-                    <option value="AU">Australia</option>
-                    <option value="MX">Mexico</option>
-                    <option value="OTHER">Other</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="border border-white/[0.06] p-8 relative">
-              <div className="absolute -top-3 left-6 bg-[#050505] px-3">
-                <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// DISCOUNT CODE</span>
-              </div>
-              <div className="flex gap-3">
-                <input
-                  value={discountCode}
-                  onChange={e => { setDiscountCode(e.target.value); setDiscountError(""); }}
-                  placeholder="Enter code"
-                  className={`${inputClass} flex-1`}
-                  style={{borderColor: discountApplied ? '#22c55e' : discountError ? '#ff4444' : undefined}}
-                />
-                <button
-                  onClick={applyDiscount}
-                  disabled={discountLoading}
-                  className="font-black px-6 font-mono-custom text-[10px] tracking-widest transition-all duration-200"
-                  style={{background: '#ae1fe3', color: '#fff', opacity: discountLoading ? 0.5 : 1}}
-                  onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}
-                >
-                  {discountLoading ? '...' : 'APPLY'}
-                </button>
-              </div>
-              {discountApplied && (
-                <div className="font-mono-custom text-[9px] text-green-400 mt-2 tracking-widest">
-                  ✓ {discountApplied.percent}% DISCOUNT APPLIED {discountApplied.code ? `(${discountApplied.code})` : ''}
-                </div>
-              )}
-              {discountError && <div className="font-mono-custom text-[9px] text-red-400 mt-2 tracking-widest">{discountError}</div>}
-            </div>
-            <button
-              onClick={handleContinue}
-              className="w-full py-5 font-black text-xs tracking-[0.25em] font-mono-custom transition-all duration-200 glow-btn"
-              style={{background: '#ae1fe3', color: '#fff'}}
-              onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; }}
-              onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}
-            >
-              CONTINUE TO PAYMENT →
-            </button>
+      {/* HERO */}
+      <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 grid-bg clip-diagonal overflow-hidden">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none" style={{background: '#ae1fe308'}} />
+        <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/[0.05] blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none" style={{background: '#ae1fe310'}} />
+        <div className="font-mono-custom text-[10px] text-white/20 tracking-[0.3em] mb-8 flex items-center gap-4">
+          <span>INK3D_STUDIO</span>
+          <span style={{color: '#ae1fe344'}}>——</span>
+          <span>COLLECTION_2026</span>
+          <span style={{color: '#ae1fe344'}}>——</span>
+          <span>MILFORD_NH</span>
+        </div>
+        <div className="mb-6">
+          <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={300} height={120} className="object-contain mx-auto flicker" />
+        </div>
+        <div className="relative mb-2">
+          <div className="text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none glitch-wrapper" data-text="INK3D">
+            INK3D
           </div>
-          <div className="border border-white/[0.06] p-6 h-fit sticky top-28">
-            <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// ORDER SUMMARY</div>
-            <div className="space-y-4 mb-6">
-              {items.map(item => (
-                <div key={item.id} className="flex gap-3">
-                  <div className="w-16 h-16 relative shrink-0 bg-[#0a0a0a] border border-white/[0.05]">
-                    <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
-                    <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center font-mono-custom text-[9px] font-black" style={{background: '#ae1fe3'}}>
-                      {item.qty}
+          <div className="absolute inset-0 text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none" style={{WebkitTextStroke: '1px #ae1fe322', color: 'transparent', transform: 'translate(3px, 3px)'}}>
+            INK3D
+          </div>
+        </div>
+        <div className="text-[clamp(1.2rem,4vw,3rem)] font-black tracking-[0.25em] text-white/10 mb-8 select-none">
+          STUDIO
+        </div>
+        <p className="text-white/40 text-sm md:text-base max-w-lg tracking-wider leading-relaxed mb-3 font-mono-custom">
+          // engineered for those who refuse to blend in
+        </p>
+        <p className="text-white/20 text-xs tracking-[0.3em] mb-12 font-mono-custom">
+          ACCESSORIES — EST. 2024 — MILFORD, NH
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 mb-16">
+          <Link href="/teams">
+            <button className="glow-btn font-black px-12 py-4 text-xs tracking-[0.25em] transition-colors duration-200 relative overflow-hidden group" style={{background: '#ae1fe3', color: '#fff'}}>
+              <span className="relative z-10">SHOP NOW</span>
+              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
+            </button>
+          </Link>
+          <Link href="/photos">
+            <button className="border border-white/15 text-white/60 px-12 py-4 text-xs font-black tracking-[0.25em] hover:text-white transition-all duration-200 bracket-box">
+              VIEW LOOKBOOK
+            </button>
+          </Link>
+        </div>
+        <div className="flex gap-8 md:gap-16 font-mono-custom text-[10px]">
+          <div className="text-center">
+            <div className="font-bold" style={{color: '#ae1fe3'}}>500+</div>
+            <div className="text-white/20 tracking-widest">SHIPPED</div>
+          </div>
+          <div className="text-white/10">|</div>
+          <div className="text-center">
+            <div className="text-white/60 font-bold">100%</div>
+            <div className="text-white/20 tracking-widest">SATISFACTION</div>
+          </div>
+          <div className="text-white/10">|</div>
+          <div className="text-center">
+            <div className="text-blue-400 font-bold">3-7D</div>
+            <div className="text-white/20 tracking-widest">DELIVERY</div>
+          </div>
+        </div>
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+          <span className="font-mono-custom text-[9px] text-white/15 tracking-[0.4em]">SCROLL_DOWN</span>
+          <div className="w-px h-12 relative overflow-hidden" style={{background: 'linear-gradient(to bottom, #ae1fe344, transparent)'}}>
+            <div className="scroll-dot absolute top-0 left-0 w-full h-3" style={{background: '#ae1fe399'}} />
+          </div>
+        </div>
+      </section>
+      {/* MARQUEE 1 */}
+      <div className="py-3 overflow-hidden border-y" style={{background: '#ae1fe3', borderColor: '#c040ff'}}>
+        <div className="marquee-track">
+          {Array(12).fill(null).map((_, i) => (
+            <span key={i} className="font-black text-[11px] tracking-[0.25em] px-8 font-mono-custom text-white">
+              INK3D STUDIO ◆ MILFORD NH ◆ EST. 2024 ◆ 100% SATISFACTION ◆ 3-7 DAY DELIVERY ◆ FREE SHIPPING $50+ ◆
+            </span>
+          ))}
+        </div>
+      </div>
+      {/* MARQUEE 2 */}
+      <div className="py-2.5 overflow-hidden border-b border-white/[0.04]">
+        <div className="marquee-track-reverse">
+          {Array(12).fill(null).map((_, i) => (
+            <span key={i} className="text-white/10 font-black text-[10px] tracking-[0.3em] px-8 font-mono-custom">
+              KEYCHAIN · CUBAN HYPE CHAIN · LIGHTBOX · COASTER · CUBAN NECKLACE · WALL ART ·
+            </span>
+          ))}
+        </div>
+      </div>
+      {/* STATS */}
+      <section className="px-6 md:px-12 py-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04]">
+        {stats.map((s) => (
+          <div key={s.value} className="bg-[#050505] p-8 md:p-10 text-center group hover:bg-[#0d0d0d] transition-colors duration-300 bracket-box">
+            <div className="stat-number text-3xl md:text-4xl font-black mb-1 transition-colors" style={{color: '#ae1fe3'}}>{s.value}</div>
+            <div className="font-mono-custom text-[10px] text-white/50 tracking-[0.2em] mb-1">{s.label}</div>
+            <div className="font-mono-custom text-[9px] text-white/20 tracking-[0.15em]">{s.sub}</div>
+          </div>
+        ))}
+      </section>
+      {/* PRODUCTS */}
+      <section id="products" className="px-6 md:px-12 py-24 max-w-screen-2xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-4 flex items-center gap-3" style={{color: '#ae1fe366'}}>
+              <span className="blink">◆</span> SYS://PRODUCTS_LOADED
+            </div>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none">
+              FEATURED<br />
+              <span style={{WebkitTextStroke: '1px rgba(255,255,255,0.3)', color: 'transparent'}}>ITEMS</span>
+            </h2>
+          </div>
+          <div className="font-mono-custom text-[10px] text-white/20 tracking-widest text-right">
+            <div className="mb-1">ITEMS: 06</div>
+            <div className="mb-1">STATUS: IN STOCK</div>
+            <div style={{color: '#ae1fe344'}}>UPDATED: 2026.06.11</div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-px bg-white/[0.04]">
+          {products.map((product, i) => {
+            const isWide = i === 0 || i === 5;
+            return (
+              <div key={product.id} className={`product-card bg-[#050505] border border-transparent cursor-pointer group ${isWide ? 'md:col-span-8' : 'md:col-span-4'}`}>
+                <div className={`bg-[#0a0a0a] flex items-center justify-center relative overflow-hidden ${isWide ? 'aspect-[16/7]' : 'aspect-square'}`}>
+                  <div className="absolute inset-0 grid-bg opacity-20 z-10" />
+                  <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/50 tracking-widest z-20">{product.sku}</div>
+                  <div className="absolute top-3 right-3 font-mono-custom text-[9px] tracking-widest z-20" style={{color: '#ae1fe3'}}>{product.tag}</div>
+                  <div className="absolute bottom-3 right-3 font-mono-custom text-[9px] text-white/50 z-20">★ {product.rating} ({product.reviews})</div>
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className={`transition-transform duration-700 group-hover:scale-105 ${product.contain ? 'object-contain p-6' : 'object-cover'}`}
+                  />
+                  {product.overlay && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/30 to-transparent opacity-80 z-10" />
+                  )}
+                </div>
+                <div className="p-5 border-t border-white/[0.05] relative z-10">
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`font-mono-custom text-[9px] font-black tracking-[0.2em] border px-2 py-0.5 ${tagColors[product.tag]}`}>
+                          {product.tag}
+                        </span>
+                        <span className="font-mono-custom text-[9px] text-white/20">#{product.sku}</span>
+                      </div>
+                      <h3 className="font-black tracking-wider text-sm md:text-base mb-1">{product.name}</h3>
+                      <p className="text-white/30 text-xs font-mono-custom">{product.desc}</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="font-black text-white text-lg">{product.price}</div>
+                      <div className="font-mono-custom text-[9px] text-white/20">USD</div>
                     </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-black text-xs tracking-wider truncate">{item.name}</div>
-                    {item.teamName && <div className="font-mono-custom text-[9px] text-white/30">{item.teamName} Edition</div>}
-                    {item.size && <div className="font-mono-custom text-[9px] text-white/30">Size: {item.size}</div>}
-                    <div className="font-black text-sm mt-1" style={{color: '#ae1fe3'}}>{item.price}</div>
-                  </div>
+                  <button
+                    onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image })}
+                    className="mt-4 w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
+                    onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; e.currentTarget.style.background='#ae1fe308'; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
+                    [ ADD_TO_CART ]
+                  </button>
                 </div>
-              ))}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+      {/* PROMO BANNER */}
+      <section className="mx-6 md:mx-12 mb-24 relative overflow-hidden clip-diagonal-reverse">
+        <div className="px-10 md:px-16 py-16 md:py-20 relative" style={{background: '#ae1fe3'}}>
+          <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)', backgroundSize: '10px 10px'}} />
+          <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px'}} />
+          <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+            <div>
+              <div className="font-mono-custom text-white/40 text-[10px] tracking-[0.4em] mb-3">// LIMITED_TIME_OFFER</div>
+              <h2 className="text-5xl md:text-7xl font-black text-white tracking-[-0.03em] leading-none mb-2">FREE<br />SHIPPING</h2>
+              <p className="font-mono-custom text-white/50 text-sm tracking-widest">ON_ALL_ORDERS &gt; $50.00</p>
             </div>
-            <div className="border-t border-white/[0.06] pt-4 space-y-2">
-              <div className="flex justify-between font-mono-custom text-[10px] text-white/40">
-                <span>SUBTOTAL</span>
-                <span>${total.toFixed(2)}</span>
-              </div>
-              {discountApplied && (
-                <div className="flex justify-between font-mono-custom text-[10px] text-green-400">
-                  <span>DISCOUNT ({discountApplied.percent}%)</span>
-                  <span>-${discountAmount.toFixed(2)}</span>
-                </div>
-              )}
-              {shippingFee > 0 && (
-                <div className="flex justify-between font-mono-custom text-[10px] text-white/40">
-                  <span>SHIPPING</span>
-                  <span>${shippingFee.toFixed(2)}</span>
-                </div>
-              )}
-              <div className="flex justify-between font-black text-lg pt-2 border-t border-white/[0.06]">
-                <span>TOTAL</span>
-                <span style={{color: '#ae1fe3'}}>${finalTotal}</span>
-              </div>
-              <div className="font-mono-custom text-[9px] text-white/20 tracking-widest text-center pt-2">🔒 SECURED BY PAYPAL</div>
+            <div className="flex flex-col gap-3">
+              <Link href="/teams">
+                <button className="bg-white font-black px-12 py-5 tracking-[0.2em] text-xs font-mono-custom transition-all duration-200 hover:bg-black hover:text-white" style={{color: '#ae1fe3'}}>
+                  SHOP_ALL_DROPS →
+                </button>
+              </Link>
+              <div className="font-mono-custom text-[9px] text-white/30 tracking-widest text-center">OFFER_EXPIRES: NEVER</div>
             </div>
           </div>
         </div>
-      </div>
-      <Footer />
+      </section>
+      {/* AFFILIATE */}
+      <section className="px-6 md:px-12 py-24 relative overflow-hidden">
+        <div className="absolute inset-0 grid-bg opacity-30" />
+        <div className="relative max-w-3xl mx-auto text-center">
+          <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-6 flex items-center justify-center gap-3" style={{color: '#ae1fe355'}}>
+            <span className="w-8 h-px" style={{background: '#ae1fe333'}} />
+            SYS://AFFILIATE_PROGRAM
+            <span className="w-8 h-px" style={{background: '#ae1fe333'}} />
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-3 leading-none">
+            EARN WITH<br />
+            <span className="flicker" style={{color: '#ae1fe3'}}>INK3D</span>
+          </h2>
+          <p className="font-mono-custom text-white/30 text-sm leading-relaxed mb-10 max-w-md mx-auto">
+            // Join our affiliate network. Promote products.<br />
+            // Earn commission on every sale you drive.
+          </p>
+          <div className="grid grid-cols-3 gap-px bg-white/[0.05] mb-10">
+            {[["10%","COMMISSION"],["30D","COOKIE"],["$50","MIN PAYOUT"]].map(([val, label]) => (
+              <div key={label} className="bg-[#050505] py-6 bracket-box">
+                <div className="stat-number text-2xl font-black" style={{color: '#ae1fe3'}}>{val}</div>
+                <div className="font-mono-custom text-[9px] text-white/30 tracking-widest mt-1">{label}</div>
+              </div>
+            ))}
+          </div>
+          <Link href="/program">
+            <button className="font-black px-12 py-4 text-xs tracking-[0.25em] font-mono-custom bracket-box transition-all duration-200"
+              style={{border: '1px solid #ae1fe344', color: '#ae1fe3', background: 'transparent'}}
+              onMouseEnter={e => { e.currentTarget.style.background='#ae1fe3'; e.currentTarget.style.color='#fff'; }}
+              onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.color='#ae1fe3'; }}>
+              [ APPLY_NOW ]
+            </button>
+          </Link>
+        </div>
+      </section>
+      {/* FOOTER */}
+      <footer className="border-t border-white/[0.05]">
+        <div className="px-6 md:px-12 py-12">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+            <div>
+              <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={100} height={40} className="object-contain mb-3" />
+              <div className="font-mono-custom text-[10px] text-white/20 tracking-widest">STUDIO // ACCESSORIES</div>
+              <div className="font-mono-custom text-[10px] text-white/10 mt-1">MILFORD, NH — EST. 2024</div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-[11px]">
+              {[
+                { title: "SHOP", links: [["All Products","#"],["New Arrivals","#"],["Collections","#"],["Sale","#"]] },
+                { title: "INFO", links: [["About","/about"],["Contact","#"],["Affiliates","/program"],["Press","#"]] },
+                { title: "LEGAL", links: [["Cookie Policy","/cookie-policy"],["Terms","/terms"],["Returns","/returns"],["Shipping","/shipping"]] },
+              ].map(col => (
+                <div key={col.title}>
+                  <div className="font-mono-custom text-[9px] tracking-[0.3em] mb-3" style={{color: '#ae1fe355'}}>{col.title}</div>
+                  {col.links.map(([label, href]) => (
+                    <Link key={label} href={href} className="block text-white/25 hover:text-white/70 transition-colors mb-2 tracking-wider hover-line">{label}</Link>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="border-t border-white/[0.04] pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <span className="font-mono-custom text-[10px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
+            <div className="flex gap-8">
+              {[["TWITTER","https://x.com/ink3dStudio"],["TIKTOK","https://www.tiktok.com/@ink3d.studio"],["DISCORD","https://discordapp.com/invite/rv99duMaW6"]].map(([name, href]) => (
+                <Link key={name} href={href} className="font-mono-custom text-[10px] text-white/20 transition-colors tracking-widest hover-line hover:text-white/70">{name}</Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
