@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -7,10 +6,8 @@ import Image from "next/image";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { useCart } from "../context/CartContext";
-
 const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
 const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
-
 export default function Checkout() {
   const router = useRouter();
   const { items, total } = useCart();
@@ -23,10 +20,14 @@ export default function Checkout() {
   const [discountError, setDiscountError] = useState("");
   const [discountLoading, setDiscountLoading] = useState(false);
   const [errors, setErrors] = useState({});
-
   const discountAmount = discountApplied ? (total * discountApplied.percent / 100) : 0;
-  const finalTotal = (total - discountAmount).toFixed(2);
-
+  // $8 flat shipping fee, applied only when the cart contains at least one
+  // Teams or Creators item. Those items always carry a `teamName` field
+  // (set in app/teams/page.js and app/creators/page.js); Merch items never
+  // do, so this scopes the fee correctly without touching Merch checkout.
+  const hasTeamOrCreatorItem = items.some(item => item.teamName);
+  const shippingFee = hasTeamOrCreatorItem ? 8 : 0;
+  const finalTotal = (total - discountAmount + shippingFee).toFixed(2);
   // Auto-apply discount from ref link
   useEffect(() => {
     const ref = localStorage.getItem("ink3d_ref");
@@ -34,7 +35,6 @@ export default function Checkout() {
       autoApplyRefDiscount(ref);
     }
   }, []);
-
   async function autoApplyRefDiscount(ref) {
     try {
       // Public endpoint — works for anonymous customers, no admin/affiliate
@@ -53,12 +53,10 @@ export default function Checkout() {
       console.error("Auto-apply ref discount error:", err);
     }
   }
-
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
     setErrors(prev => ({ ...prev, [e.target.name]: "" }));
   }
-
   async function applyDiscount() {
     const code = discountCode.trim().toUpperCase();
     if (!code) return;
@@ -82,7 +80,6 @@ export default function Checkout() {
     }
     setDiscountLoading(false);
   }
-
   function validate() {
     const e = {};
     if (!form.fullName) e.fullName = "Required";
@@ -94,7 +91,6 @@ export default function Checkout() {
     setErrors(e);
     return Object.keys(e).length === 0;
   }
-
   function handleContinue() {
     if (!validate()) return;
     sessionStorage.setItem("ink3d_checkout", JSON.stringify({
@@ -102,11 +98,11 @@ export default function Checkout() {
       discountCode: discountApplied ? discountApplied.code : null,
       discountPercent: discountApplied ? discountApplied.percent : null,
       discountAmount: discountAmount.toFixed(2),
+      shippingFee: shippingFee.toFixed(2),
       finalTotal,
     }));
     router.push("/checkout/payment");
   }
-
   if (items.length === 0) {
     return (
       <main className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center">
@@ -121,19 +117,14 @@ export default function Checkout() {
       </main>
     );
   }
-
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <Nav active="HOME" />
-
       <div className="pt-28 px-6 md:px-12 pb-24 max-w-6xl mx-auto">
         <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-2" style={{color: '#ae1fe366'}}>// CHECKOUT</div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-12">COMPLETE YOUR ORDER</h1>
-
         <div className="grid md:grid-cols-[1fr_380px] gap-8">
-
           <div className="space-y-8">
-
             <div className="border border-white/[0.06] p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// CONTACT INFORMATION</span>
@@ -151,7 +142,6 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-
             <div className="border border-white/[0.06] p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// SHIPPING ADDRESS</span>
@@ -192,7 +182,6 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-
             <div className="border border-white/[0.06] p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// DISCOUNT CODE</span>
@@ -223,7 +212,6 @@ export default function Checkout() {
               )}
               {discountError && <div className="font-mono-custom text-[9px] text-red-400 mt-2 tracking-widest">{discountError}</div>}
             </div>
-
             <button
               onClick={handleContinue}
               className="w-full py-5 font-black text-xs tracking-[0.25em] font-mono-custom transition-all duration-200 glow-btn"
@@ -234,7 +222,6 @@ export default function Checkout() {
               CONTINUE TO PAYMENT →
             </button>
           </div>
-
           <div className="border border-white/[0.06] p-6 h-fit sticky top-28">
             <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// ORDER SUMMARY</div>
             <div className="space-y-4 mb-6">
@@ -266,6 +253,12 @@ export default function Checkout() {
                   <span>-${discountAmount.toFixed(2)}</span>
                 </div>
               )}
+              {shippingFee > 0 && (
+                <div className="flex justify-between font-mono-custom text-[10px] text-white/40">
+                  <span>SHIPPING</span>
+                  <span>${shippingFee.toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex justify-between font-black text-lg pt-2 border-t border-white/[0.06]">
                 <span>TOTAL</span>
                 <span style={{color: '#ae1fe3'}}>${finalTotal}</span>
@@ -273,10 +266,8 @@ export default function Checkout() {
               <div className="font-mono-custom text-[9px] text-white/20 tracking-widest text-center pt-2">🔒 SECURED BY PAYPAL</div>
             </div>
           </div>
-
         </div>
       </div>
-
       <Footer />
     </main>
   );
