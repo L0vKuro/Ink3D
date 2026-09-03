@@ -21,12 +21,13 @@ export default function Checkout() {
   const [discountLoading, setDiscountLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const discountAmount = discountApplied ? (total * discountApplied.percent / 100) : 0;
-  // $8 flat shipping fee, applied only when the cart contains at least one
-  // Teams or Creators item. Those items always carry a `teamName` field
-  // (set in app/teams/page.js and app/creators/page.js); Merch items never
-  // do, so this scopes the fee correctly without touching Merch checkout.
-  const hasTeamOrCreatorItem = items.some(item => item.teamName);
-  const shippingFee = hasTeamOrCreatorItem ? 8 : 0;
+  // $8 flat shipping fee, applied whenever the cart has at least one
+  // non-Merch item. Merch (hoodies/tees) is the only source that sets a
+  // `size` field on the cart item, so "no size" reliably means it came from
+  // Teams, Creators, or the homepage product grid — everything this fee
+  // should apply to.
+  const hasShippableItem = items.some(item => !item.size);
+  const shippingFee = hasShippableItem ? 8 : 0;
   const finalTotal = (total - discountAmount + shippingFee).toFixed(2);
   // Auto-apply discount from ref link
   useEffect(() => {
