@@ -22,7 +22,7 @@ const photos = [
   { file: "/tpc male hype chain.jpg", label: "TPC MVP CHAIN" },
   { file: "/tpv trophy.jpg", label: "TPC MVP TROPHY" },
   { file: "/Fire-Semblance Controller Holder.jpg", label: "Fire-Semblance PS5 Controller Holder" },
-  { file: "/omit joy", label: "OMIT JOY TPC Womans Champs MVP " },
+  { file: "/omit joy.jpg", label: "OMIT JOY TPC Womans Champs MVP " },
   
 ];
 
