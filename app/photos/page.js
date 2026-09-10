@@ -22,8 +22,8 @@ const photos = [
   { file: "/tpc male hype chain.jpg", label: "TPC MVP CHAIN" },
   { file: "/tpv trophy.jpg", label: "TPC MVP TROPHY" },
   { file: "/Fire-Semblance Controller Holder.jpg", label: "Fire-Semblance PS5 Controller Holder" },
-  { file: "/omit joy.jpg", label: "OMIT JOY TPC Womans Champs MVP " },
-  
+  { file: "/omit joy.jpg", label: "OMIT JOY 2026 TPC Womans Champs MVP " },
+  { file: "/tpc womans hypechain.jpg", label: "FRONTDESKLADY 2025 TPC Womens CHAMPS MVP" },
 ];
 
 export default function Photos() {
