@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+
 const TIERS = ["BRONZE", "SILVER", "GOLD", "DIAMOND", "ELITE"];
 const TIER_COMMISSIONS = { BRONZE: 10, SILVER: 13, GOLD: 16, DIAMOND: 20, ELITE: 25 };
+
 export default function Admin() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("tracking");
@@ -24,13 +26,19 @@ export default function Admin() {
   const [showCreateAffiliate, setShowCreateAffiliate] = useState(false);
   const [resetPasswordId, setResetPasswordId] = useState(null);
   const [resetPassword, setResetPassword] = useState("");
+  
+  // NEW: Filter state for selecting specific months
+  const [selectedMonth, setSelectedMonth] = useState("ALL");
+
   const [newAffiliate, setNewAffiliate] = useState({
     name: "", email: "", password: "", referralCode: "", discountCode: "", discountPercent: "", tier: "BRONZE",
   });
+
   useEffect(() => {
     if (activeTab === "discounts") loadDiscounts();
     if (activeTab === "affiliates") loadAffiliates();
   }, [activeTab]);
+
   async function loadDiscounts() {
     setDiscountsLoading(true);
     const res = await fetch("/api/admin/discounts");
@@ -40,6 +48,7 @@ export default function Admin() {
     setArchive(data.archive ?? []);
     setDiscountsLoading(false);
   }
+
   async function loadAffiliates() {
     setAffiliatesLoading(true);
     const res = await fetch("/api/admin/affiliates");
@@ -48,10 +57,12 @@ export default function Admin() {
     setAffiliates(data.affiliates ?? []);
     setAffiliatesLoading(false);
   }
+
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin/login");
   }
+
   async function handleSendTracking(e) {
     e.preventDefault();
     setTrackingLoading(true);
@@ -66,6 +77,7 @@ export default function Admin() {
     if (res.ok) setTracking({ customerEmail: "", customerName: "", trackingLink: "", orderId: "" });
     setTrackingLoading(false);
   }
+
   async function addDiscount() {
     if (!newCode || !newPercent) return;
     const code = newCode.trim().toUpperCase();
@@ -87,6 +99,7 @@ export default function Admin() {
       setDiscountMsg(`// ${data.error?.toUpperCase() ?? 'ERROR'}`);
     }
   }
+
   async function removeDiscount(code) {
     const res = await fetch("/api/admin/discounts", {
       method: "DELETE",
@@ -99,6 +112,7 @@ export default function Admin() {
       setDiscountMsg(`// ${code} ARCHIVED`);
     }
   }
+
   async function createAffiliate() {
     const { name, email, password, referralCode, discountCode, discountPercent, tier } = newAffiliate;
     if (!name || !email || !password || !referralCode || !discountCode || !discountPercent) {
@@ -121,6 +135,7 @@ export default function Admin() {
       setAffiliateMsg(`// ${data.error?.toUpperCase() ?? 'ERROR'}`);
     }
   }
+
   async function deleteAffiliate(id, name) {
     if (!confirm(`Remove ${name} from the program?`)) return;
     const res = await fetch("/api/admin/affiliates", {
@@ -133,6 +148,7 @@ export default function Admin() {
       setAffiliateMsg(`// ${name.toUpperCase()} REMOVED`);
     }
   }
+
   async function handleResetPassword(id) {
     if (!resetPassword) return;
     const res = await fetch("/api/admin/affiliates", {
@@ -146,16 +162,19 @@ export default function Admin() {
       setAffiliateMsg("// PASSWORD RESET — EMAIL SENT");
     }
   }
+
   function generatePassword() {
     const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$';
     const pw = Array.from({length: 12}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
     setNewAffiliate(p => ({...p, password: pw}));
   }
+
   const inputClass = "w-full bg-[#0a0a0a] border border-white/[0.08] text-white font-mono-custom text-sm px-4 py-3 outline-none focus:border-[#ae1fe3] transition-colors duration-200 placeholder:text-white/20 tracking-wider";
   const labelClass = "font-mono-custom text-[9px] tracking-[0.3em] mb-2 block text-white/40";
   const tierColors = { BRONZE: '#cd7f32', SILVER: '#c0c0c0', GOLD: '#ffd60a', DIAMOND: '#00b4d8', ELITE: '#ae1fe3' };
   const regularCodes = discounts.filter(d => !d.affiliateId);
   const affiliateCodes = discounts.filter(d => d.affiliateId);
+
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <div className="border-b border-white/[0.06] px-6 md:px-12 py-4 flex justify-between items-center">
@@ -175,6 +194,7 @@ export default function Admin() {
             </button>
           ))}
         </div>
+
         {/* TRACKING TAB */}
         {activeTab === "tracking" && (
           <div>
@@ -213,6 +233,7 @@ export default function Admin() {
             </form>
           </div>
         )}
+
         {/* DISCOUNTS TAB */}
         {activeTab === "discounts" && (
           <div>
@@ -308,6 +329,7 @@ export default function Admin() {
             </div>
           </div>
         )}
+
         {/* AFFILIATES TAB */}
         {activeTab === "affiliates" && (
           <div>
@@ -324,7 +346,29 @@ export default function Admin() {
                 {showCreateAffiliate ? '[ CANCEL ]' : '[ + CREATE AFFILIATE ]'}
               </button>
             </div>
+
+            {/* MONTH FILTER DROPDOWN */}
+            <div className="mb-6 flex justify-between items-center bg-[#0a0a0a] border border-white/[0.06] p-4">
+              <div>
+                <label className={labelClass}>VIEW MONTHLY STATS</label>
+                <select 
+                  value={selectedMonth} 
+                  onChange={e => setSelectedMonth(e.target.value)} 
+                  className={`${inputClass} max-w-xs cursor-pointer py-2`}
+                >
+                  <option value="ALL">Show All Months Overview</option>
+                  {Array.from(new Set(affiliates.flatMap(a => Object.keys(a.stats?.monthlySales || {})))).map(m => (
+                    <option key={m} value={m}>{m}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="font-mono-custom text-[10px] text-white/30">
+                ACTIVE FILTER: <span style={{color: '#ae1fe3'}}>{selectedMonth}</span>
+              </div>
+            </div>
+
             {affiliateMsg && <div className="font-mono-custom text-[9px] text-green-400 tracking-widest mb-6">{affiliateMsg}</div>}
+            
             {showCreateAffiliate && (
               <div className="border border-white/[0.06] p-8 mb-8" style={{borderColor: '#ae1fe330'}}>
                 <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// NEW AFFILIATE</div>
@@ -390,6 +434,7 @@ export default function Admin() {
                 </button>
               </div>
             )}
+
             <div className="space-y-4">
               {affiliatesLoading ? (
                 <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// LOADING...</div>
@@ -419,6 +464,7 @@ export default function Admin() {
                         </button>
                       </div>
                     </div>
+
                     {resetPasswordId === a.id && (
                       <div className="flex gap-3 mb-4">
                         <input value={resetPassword} onChange={e => setResetPassword(e.target.value)} placeholder="New password" className={`${inputClass} flex-1`} />
@@ -433,6 +479,8 @@ export default function Admin() {
                         </button>
                       </div>
                     )}
+
+                    {/* ORIGINAL LIFETIME STATS (Unchanged) */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                       <div className="bg-[#050505] p-3 border border-white/[0.04]">
                         <div className="font-mono-custom text-[8px] text-white/30 tracking-widest mb-1">LIFETIME ORDERS</div>
@@ -451,10 +499,35 @@ export default function Admin() {
                         <div className="font-black text-xl" style={{color: tierColors[a.tier]}}>{a.commission}%</div>
                       </div>
                     </div>
-                    <div className="flex gap-6 font-mono-custom text-[9px] text-white/30">
+
+                    <div className="flex gap-6 font-mono-custom text-[9px] text-white/30 mb-4">
                       <span>REF LINK: <span className="text-white/50">ink3dshop.com/?ref={a.referralCode}</span></span>
                       <span>DISCOUNT: <span style={{color: '#ae1fe3'}}>{a.discountCode}</span> ({a.discountPercent}% off)</span>
                     </div>
+
+                    {/* NEW: MONTHLY BREAKDOWN TRACKER */}
+                    {a.stats?.monthlySales && Object.keys(a.stats.monthlySales).length > 0 && (
+                      <div className="mt-4 pt-4 border-t border-white/[0.04]">
+                        <div className="font-mono-custom text-[9px] tracking-[0.3em] mb-3" style={{color: '#ae1fe366'}}>
+                          // MONTHLY SALES HISTORY
+                        </div>
+                        <div className="space-y-2">
+                          {Object.entries(a.stats.monthlySales)
+                            .filter(([month]) => selectedMonth === "ALL" || selectedMonth === month)
+                            .map(([month, data]) => (
+                              <div key={month} className="flex justify-between items-center text-xs font-mono-custom bg-[#050505] px-4 py-2.5 border border-white/[0.03]">
+                                <span className="text-white/80 font-bold tracking-wider">{month}</span>
+                                <div className="flex gap-6 items-center">
+                                  <span className="text-white/40">{data.orders} orders</span>
+                                  <span className="text-[#ae1fe3] font-black">${data.sales.toFixed(2)} sales</span>
+                                  <span className="text-green-400 font-black">${data.earnings.toFixed(2)} payout</span>
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    )}
+
                   </div>
                 ))
               )}
@@ -463,5 +536,7 @@ export default function Admin() {
         )}
       </div>
     </main>
+  );
+}
   );
 }
