@@ -138,7 +138,13 @@ export default function About() {
             <div className="relative">
               <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// FULL STORY</div>
               <blockquote className="text-white/60 text-base md:text-lg leading-relaxed font-mono-custom border-l-2 pl-8" style={{borderColor: '#ae1fe3'}}>
-                "Whether you're looking for unique fan gear or professional Esports merch, we're here to make your ideas a reality with unmatched craftsmanship and attention to detail."
+                "Every business starts somewhere.
+
+For Ink3D Studio, it started with an idea, a 3D printer, and a desire to create things that people couldn't simply find sitting on a store shelf.
+What began as a small 3D printing and design operation grew into a vision for something much bigger: a company capable of taking an idea, turning it into a physical product, manufacturing it, customizing it, and putting it directly into the hands of the person who imagined it.
+That vision became Ink3D Studio. Ink3D wasn't built around mass-producing generic products. It was built around creativity, customization, and making something unique.
+From custom keychains and collectibles to controller stands, wall art, lightboxes, wearable pieces, and specialty merchandise, every product represents the same idea:
+If you can imagine it, we can work toward making it real."
               </blockquote>
               <div className="mt-8 font-mono-custom text-[10px] tracking-widest" style={{color: '#ae1fe366'}}>— INK3D STUDIO, MILFORD NH, EST. 2024</div>
             </div>
