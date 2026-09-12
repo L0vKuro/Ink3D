@@ -141,10 +141,16 @@ export default function About() {
                 "Every business starts somewhere.
 
 For Ink3D Studio, it started with an idea, a 3D printer, and a desire to create things that people couldn't simply find sitting on a store shelf.
+
 What began as a small 3D printing and design operation grew into a vision for something much bigger: a company capable of taking an idea, turning it into a physical product, manufacturing it, customizing it, and putting it directly into the hands of the person who imagined it.
-That vision became Ink3D Studio. Ink3D wasn't built around mass-producing generic products. It was built around creativity, customization, and making something unique.
+
+That vision became Ink3D Studio.
+
+Ink3D wasn't built around mass-producing generic products. It was built around creativity, customization, and making something unique.
+
 From custom keychains and collectibles to controller stands, wall art, lightboxes, wearable pieces, and specialty merchandise, every product represents the same idea:
-If you can imagine it, we can work toward making it real."
+
+If you can imagine it, we can work toward making it real.."
               </blockquote>
               <div className="mt-8 font-mono-custom text-[10px] tracking-widest" style={{color: '#ae1fe366'}}>— INK3D STUDIO, MILFORD NH, EST. 2024</div>
             </div>
