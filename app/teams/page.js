@@ -16,7 +16,7 @@ const teams = [
     description: "OvertakeSector is built on precision, discipline, and results. The crosshair-and-star logo represents the team's mindset: lock on, take the lead, and never back down. This exclusive INK3D collection features OvertakeSector's signature Crimson Red, Onyx Grey, and Obsidian Fog colors. From keychains and lightboxes to coasters and more, every item reflects the same identity fans see on stream.",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/Overtake Keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
@@ -30,7 +30,7 @@ const teams = [
     color: "#00b4d8",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/atlantis-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
+       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
     ],
   },
   {
@@ -49,7 +49,7 @@ const teams = [
     color: "#e63946",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/eym lightbox 1.jpg" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/eym lightbox 1.jpg" },
     ],
   },
   {
@@ -58,7 +58,7 @@ const teams = [
     logo: "/team-GodSlayers.jpg",
     color: "#ffd60a",
     items: [
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
+       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
       { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/godlayers-wall_art.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/godlayers-key_chain.png" },
@@ -82,7 +82,7 @@ const teams = [
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/reignabove-cuban.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/reignabove_coasters.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/reignabove-lightbox.png" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/reignabove-lightbox.png" },
     ],
   },
   {
@@ -93,7 +93,7 @@ const teams = [
     items: [
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
       { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/Shinto_Gaming_Club-lightbox.png" },
+       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/Shinto_Gaming_Club-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/Shinto_Gaming_Club-_coaster_set.png" },
     ],
   },
@@ -103,7 +103,7 @@ const teams = [
     logo: "/team-UpNxt.png",
     color: "#ff006e",
     items: [
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/upnext-lightbox.png" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/upnext-lightbox.png" },
     ],
   },
   {
@@ -113,7 +113,7 @@ const teams = [
     color: "#7b2d8b",
     items: [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
+       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/vaultix-coaster.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/vaultix-keychain.png" },
     ],
@@ -134,7 +134,7 @@ const teams = [
     logo: "/team-White Leopard.png",
     color: "#e63946",
     items: [
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/whiteleopard-lightbox.png" },
+       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/whiteleopard-lightbox.png" },
     ],
   },
   { 
@@ -144,7 +144,7 @@ const teams = [
     color: "#ffffff",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" }
+       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" }
     ] 
   }, 
     { 
@@ -154,7 +154,7 @@ const teams = [
     color: "#39FF14",
     items: [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" }
+       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" }
     ] 
   }, 
   { 
@@ -164,7 +164,7 @@ const teams = [
     color: "#89CFF0",
     items: [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
     ] 
