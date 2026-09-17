@@ -24,6 +24,7 @@ const photos = [
   { file: "/Fire-Semblance Controller Holder.jpg", label: "Fire-Semblance PS5 Controller Holder" },
   { file: "/omit joy.jpg", label: "OMIT JOY 2026 TPC Womans Champs MVP " },
   { file: "/tpc womans hypechain.jpg", label: "FRONTDESKLADY 2025 TPC Womens CHAMPS MVP" },
+  { file: "/eym lightbox 1.jpg", label: "EYM LIGHTBOX" },
 ];
 
 export default function Photos() {
