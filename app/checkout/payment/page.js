@@ -28,10 +28,12 @@ export default function Payment() {
     setLoading(true);
     setPayError("");
     try {
+      const ref = localStorage.getItem("ink3d_ref");
+      const referralCode = ref ?? (checkoutData.discountCode ? `DISCOUNT:${checkoutData.discountCode}` : null);
       const res = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, checkoutData }),
+        body: JSON.stringify({ items, checkoutData, referralCode }),
       });
       const data = await res.json();
       if (data.url) {
