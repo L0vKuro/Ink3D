@@ -213,7 +213,7 @@ export default function Admin() {
               </div>
               <div>
                 <label className={labelClass}>ORDER ID</label>
-                <input value={tracking.orderId} onChange={e => setTracking(p => ({...p, orderId: e.target.value}))} required placeholder="PayPal Order ID" className={inputClass} />
+                <input value={tracking.orderId} onChange={e => setTracking(p => ({...p, orderId: e.target.value}))} required placeholder="Order ID" className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>TRACKING LINK</label>
