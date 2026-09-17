@@ -27,7 +27,9 @@ export default function Checkout() {
   // Teams, Creators, or the homepage product grid — everything this fee
   // should apply to.
   const hasShippableItem = items.some(item => !item.size);
-  const shippingFee = hasShippableItem ? 8 : 0;
+  // Free shipping once the order subtotal hits $50; otherwise the $8 flat
+  // rate applies to any order containing a shippable (non-Merch) item.
+  const shippingFee = (hasShippableItem && total < 50) ? 8 : 0;
   const finalTotal = (total - discountAmount + shippingFee).toFixed(2);
   // Auto-apply discount from ref link
   useEffect(() => {
