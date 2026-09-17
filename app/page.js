@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
 import Nav from "./components/Nav";
 import { useCart } from "./context/CartContext";
 const products = [
@@ -28,11 +27,6 @@ const stats = [
 ];
 export default function Home() {
   const { addItem } = useCart();
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get("ref");
-    if (ref) sessionStorage.setItem("ink3d_ref", ref.toUpperCase());
-  }, []);
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <Nav active="HOME" />
