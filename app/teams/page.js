@@ -112,7 +112,7 @@ const teams = [
     logo: "/team-Vault ix.jpg",
     color: "#7b2d8b",
     items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart.png" },
+      { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/vaultix-wallart.png" },
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/vaultix-coaster.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/vaultix-keychain.png" },
@@ -144,7 +144,7 @@ const teams = [
     color: "#ffffff",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
-       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" }
+       { name: "LIGHTBOX", price: "$40.00", tag: "CUBAN", image: "/ninefly-cubanhypechain.png" }
     ] 
   }, 
     { 
@@ -153,7 +153,7 @@ const teams = [
     logo: "/7ven.jpg",
     color: "#39FF14",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" },
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" }
     ] 
   }, 
