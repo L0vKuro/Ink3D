@@ -1,4 +1,5 @@
 import { redis } from "../../../lib/ratelimit";
+import bcrypt from "bcryptjs";
 
 export async function POST(req) {
   const { token, password } = await req.json();
@@ -17,9 +18,10 @@ export async function POST(req) {
     return Response.json({ error: "Token expired" }, { status: 400 });
   }
 
+  const hashedPassword = await bcrypt.hash(password, 10);
   const affiliates = await redis.get("ink3d_affiliates") ?? [];
   const updated = affiliates.map(a =>
-    a.id === resetData.affiliateId ? { ...a, password } : a
+    a.id === resetData.affiliateId ? { ...a, password: hashedPassword } : a
   );
   await redis.set("ink3d_affiliates", updated);
   await redis.del(`ink3d_reset_${token}`);
