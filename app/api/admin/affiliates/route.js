@@ -1,6 +1,8 @@
 import { redis } from "../../../lib/ratelimit";
 import { Resend } from "resend";
+import bcrypt from "bcryptjs";
 const resend = new Resend(process.env.RESEND_API_KEY);
+
 export async function GET() {
   try {
     const affiliates = await redis.get("ink3d_affiliates");
@@ -9,6 +11,7 @@ export async function GET() {
     return Response.json({ affiliates: [] });
   }
 }
+
 export async function POST(req) {
   const { name, email, password, referralCode, discountCode, discountPercent, tier } = await req.json();
   const existing = await redis.get("ink3d_affiliates") ?? [];
@@ -22,11 +25,14 @@ export async function POST(req) {
     return Response.json({ error: "Discount code already exists" }, { status: 400 });
   }
   const tierCommissions = { BRONZE: 10, SILVER: 13, GOLD: 16, DIAMOND: 20, ELITE: 25 };
+  // Store the bcrypt hash, not the raw password. The plaintext `password`
+  // variable is still used below, only for the one-time welcome email.
+  const hashedPassword = await bcrypt.hash(password, 10);
   const newAffiliate = {
     id: `aff_${Date.now()}`,
     name,
     email,
-    password,
+    password: hashedPassword,
     referralCode: referralCode.toUpperCase(),
     discountCode: discountCode.toUpperCase(),
     discountPercent: parseInt(discountPercent),
@@ -77,6 +83,7 @@ export async function POST(req) {
   });
   return Response.json({ success: true, affiliate: newAffiliate });
 }
+
 export async function DELETE(req) {
   const { id } = await req.json();
   const existing = await redis.get("ink3d_affiliates") ?? [];
@@ -84,6 +91,7 @@ export async function DELETE(req) {
   await redis.set("ink3d_affiliates", updated);
   return Response.json({ success: true });
 }
+
 export async function PATCH(req) {
   const { id, password, tier } = await req.json();
   const existing = await redis.get("ink3d_affiliates") ?? [];
@@ -91,7 +99,7 @@ export async function PATCH(req) {
   if (!affiliate) return Response.json({ error: "Not found" }, { status: 404 });
   const tierCommissions = { BRONZE: 10, SILVER: 13, GOLD: 16, DIAMOND: 20, ELITE: 25 };
   const updates = {};
-  if (password) updates.password = password;
+  if (password) updates.password = await bcrypt.hash(password, 10);
   if (tier) {
     updates.tier = tier.toUpperCase();
     updates.commission = tierCommissions[tier.toUpperCase()] ?? affiliate.commission;
