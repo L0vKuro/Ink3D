@@ -266,7 +266,7 @@ export default function Checkout() {
                 <span>TOTAL</span>
                 <span style={{color: '#ae1fe3'}}>${finalTotal}</span>
               </div>
-              <div className="font-mono-custom text-[9px] text-white/20 tracking-widest text-center pt-2">🔒 SECURED BY PAYPAL</div>
+              <div className="font-mono-custom text-[9px] text-white/20 tracking-widest text-center pt-2">🔒 SECURED BY STRIPE</div>
             </div>
           </div>
         </div>
