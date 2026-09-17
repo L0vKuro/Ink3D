@@ -147,14 +147,14 @@ const teams = [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" }
     ] 
   }, 
-   { 
-    id: "7ven club",
+    { 
+    id: "7ven-club",
     name: "7ven Club",
     logo: "/7ven.jpg",
     color: "#39FF14",
     items: [
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image:  "/" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/" }
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" }
     ] 
   }, 
   { 
@@ -163,12 +163,12 @@ const teams = [
     logo: "/prs cover photo.png",
     color: "#89CFF0",
     items: [
-     { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/" },
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/" },
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
+      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
+      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
     ] 
-  } 
+  }
 ]; 
   const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
