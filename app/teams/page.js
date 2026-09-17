@@ -18,7 +18,7 @@ const teams = [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/Overtake Keychain.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
-      { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
+      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE" },
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
       { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET" },
     ],
@@ -79,7 +79,7 @@ const teams = [
     logo: "/team-ReignAbove.png",
     color: "#c9a227",
     items: [
-      { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/reignabove-cuban.png" },
+      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/reignabove-cuban.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/reignabove_coasters.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/reignabove-lightbox.png" },
@@ -91,7 +91,7 @@ const teams = [
     logo: "/team-SGC (shintogamingclub).jpg",
     color: "#e63946",
     items: [
-      { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
+     { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
       { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/Shinto_Gaming_Club-lightbox.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/Shinto_Gaming_Club-_coaster_set.png" },
