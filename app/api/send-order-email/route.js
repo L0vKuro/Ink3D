@@ -19,6 +19,14 @@ export async function POST(req) {
   const orderId = sanitize(raw.orderId);
   const referralCode = sanitize(raw.referralCode);
   const items = raw.items;
+  // Idempotency: the browser (checkout/success) and the Stripe webhook can
+  // both try to finalize the same order — whichever gets here first wins;
+  // the second call becomes a no-op so we never double-email or
+  // double-count affiliate commissions.
+  const existingOrders = await redis.get("ink3d_orders") ?? [];
+  if (existingOrders.some(o => o.id === orderId)) {
+    return Response.json({ success: true, alreadyProcessed: true });
+  }
   // AFFILIATE ATTRIBUTION
   if (referralCode) {
     try {
