@@ -17,7 +17,7 @@ const teams = [
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/Overtake Keychain.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
+      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
       { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET" },
@@ -59,7 +59,7 @@ const teams = [
     color: "#ffd60a",
     items: [
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
+     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
       { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/godlayers-wall_art.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/godlayers-key_chain.png" },
     ],
@@ -80,7 +80,7 @@ const teams = [
     color: "#c9a227",
     items: [
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/reignabove-cuban.png" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/reignabove_coasters.png" },
+     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/reignabove_coasters.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/reignabove-lightbox.png" },
     ],
@@ -94,7 +94,7 @@ const teams = [
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
       { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/Shinto_Gaming_Club-lightbox.png" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/Shinto_Gaming_Club-_coaster_set.png" },
+     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/Shinto_Gaming_Club-_coaster_set.png" },
     ],
   },
   {
@@ -114,7 +114,7 @@ const teams = [
     items: [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart.png" },
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/vaultix-coaster.png" },
+      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/vaultix-coaster.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/vaultix-keychain.png" },
     ],
   },
@@ -125,7 +125,7 @@ const teams = [
     color: "#ffd60a",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/veriphy-keychain.png" },
-      { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/veriphy-lightbox1.avif" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/veriphy-lightbox1.avif" },
     ],
   },
 {
@@ -165,7 +165,7 @@ const teams = [
     items: [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
-      { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
+     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
     ] 
   }
