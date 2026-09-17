@@ -97,6 +97,27 @@ export async function POST(req) {
       console.error("Affiliate attribution error:", err);
     }
   }
+  // Save the order so the admin panel can track fulfillment.
+  try {
+    const orders = await redis.get("ink3d_orders") ?? [];
+    orders.push({
+      id: orderId,
+      customerName,
+      customerEmail,
+      shippingAddress,
+      shippingName,
+      items,
+      total,
+      discountCode,
+      discountAmount,
+      referralCode,
+      fulfilled: false,
+      createdAt: new Date().toISOString(),
+    });
+    await redis.set("ink3d_orders", orders);
+  } catch (err) {
+    console.error("Order save error:", err);
+  }
   const itemRows = items.map(item => `
     <tr>
       <td style="padding: 8px 0; border-bottom: 1px solid #222; color: #fff; font-family: monospace;">${sanitize(item.name)}${item.teamName ? ` — ${sanitize(item.teamName)} Edition` : ''}${item.size ? ` (${sanitize(item.size)})` : ''}</td>
