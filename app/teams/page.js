@@ -19,8 +19,8 @@ const teams = [
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE" },
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
-      { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET" },
+      { name: "WALL ART", price: "$20.00", tag: "WALL ART" },
+      { name: "FIDGET TOY", price: "$8.00", tag: "FIDGET" },
     ],
   },
   {
@@ -60,7 +60,7 @@ const teams = [
     items: [
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/godlayers-wall_art.png" },
+     { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/godlayers-wall_art.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/godlayers-key_chain.png" },
     ],
   },
@@ -92,7 +92,7 @@ const teams = [
     color: "#e63946",
     items: [
      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
-      { name: "FIDGET TOY", price: "$14.99", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
+      { name: "FIDGET TOY", price: "$8.00", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/Shinto_Gaming_Club-lightbox.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/Shinto_Gaming_Club-_coaster_set.png" },
     ],
