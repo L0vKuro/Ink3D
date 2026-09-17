@@ -7,7 +7,7 @@ const TIERS = ["BRONZE", "SILVER", "GOLD", "DIAMOND", "ELITE"];
 const TIER_COMMISSIONS = { BRONZE: 10, SILVER: 13, GOLD: 16, DIAMOND: 20, ELITE: 25 };
 export default function Admin() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("tracking");
+  const [activeTab, setActiveTab] = useState("orders");
   const [tracking, setTracking] = useState({ customerEmail: "", customerName: "", trackingLink: "", orderId: "" });
   const [trackingStatus, setTrackingStatus] = useState(null);
   const [trackingLoading, setTrackingLoading] = useState(false);
@@ -26,12 +26,17 @@ export default function Admin() {
   const [resetPassword, setResetPassword] = useState("");
   const [editTierId, setEditTierId] = useState(null);
   const [editTierValue, setEditTierValue] = useState("");
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [showFulfilled, setShowFulfilled] = useState(false);
+  const [orderMsg, setOrderMsg] = useState("");
   const [newAffiliate, setNewAffiliate] = useState({
     name: "", email: "", password: "", referralCode: "", discountCode: "", discountPercent: "", tier: "BRONZE",
   });
   useEffect(() => {
     if (activeTab === "discounts") loadDiscounts();
     if (activeTab === "affiliates") loadAffiliates();
+    if (activeTab === "orders") loadOrders();
   }, [activeTab]);
   async function loadDiscounts() {
     setDiscountsLoading(true);
@@ -49,6 +54,35 @@ export default function Admin() {
     const data = await res.json();
     setAffiliates(data.affiliates ?? []);
     setAffiliatesLoading(false);
+  }
+  async function loadOrders() {
+    setOrdersLoading(true);
+    const res = await fetch("/api/admin/orders");
+    if (res.status === 401) { router.push("/admin/login"); return; }
+    const data = await res.json();
+    setOrders(data.orders ?? []);
+    setOrdersLoading(false);
+  }
+  async function handleToggleFulfilled(id, fulfilled) {
+    const res = await fetch("/api/admin/orders", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, fulfilled }),
+    });
+    if (res.status === 401) { router.push("/admin/login"); return; }
+    if (res.ok) {
+      await loadOrders();
+      setOrderMsg(fulfilled ? "// ORDER MARKED FULFILLED" : "// ORDER MOVED BACK TO PENDING");
+    }
+  }
+  function prefillTracking(order) {
+    setTracking({
+      customerEmail: order.customerEmail,
+      customerName: order.customerName,
+      trackingLink: "",
+      orderId: order.id,
+    });
+    setActiveTab("tracking");
   }
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
@@ -185,14 +219,91 @@ export default function Admin() {
       </div>
       <div className="px-6 md:px-12 py-12 max-w-5xl mx-auto">
         <div className="flex gap-1 mb-12 border-b border-white/[0.06] overflow-x-auto">
-          {["tracking", "discounts", "affiliates"].map(tab => (
+          {["orders", "tracking", "discounts", "affiliates"].map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
               className="font-mono-custom text-[10px] tracking-widest px-6 py-3 transition-all duration-200 whitespace-nowrap"
               style={{ color: activeTab === tab ? '#ae1fe3' : 'rgba(255,255,255,0.3)', borderBottom: activeTab === tab ? '1px solid #ae1fe3' : '1px solid transparent' }}>
-              {tab === "tracking" ? "// SEND TRACKING" : tab === "discounts" ? "// DISCOUNT CODES" : "// AFFILIATES"}
+              {tab === "orders" ? "// ORDERS" : tab === "tracking" ? "// SEND TRACKING" : tab === "discounts" ? "// DISCOUNT CODES" : "// AFFILIATES"}
             </button>
           ))}
         </div>
+        {/* ORDERS TAB */}
+        {activeTab === "orders" && (
+          <div>
+            <div className="flex justify-between items-start mb-8">
+              <div>
+                <h2 className="text-3xl font-black tracking-tight mb-2">ORDERS</h2>
+                <p className="font-mono-custom text-white/30 text-sm">// Orders waiting to be fulfilled.</p>
+              </div>
+              <button onClick={() => setShowFulfilled(!showFulfilled)}
+                className="font-mono-custom text-[9px] tracking-widest px-4 py-2 border transition-all duration-200 shrink-0"
+                style={{ borderColor: showFulfilled ? '#ae1fe3' : 'rgba(255,255,255,0.08)', color: showFulfilled ? '#ae1fe3' : 'rgba(255,255,255,0.30)' }}>
+                {showFulfilled ? '[ HIDE FULFILLED ]' : '[ VIEW FULFILLED ]'}
+              </button>
+            </div>
+            {orderMsg && <div className="font-mono-custom text-[9px] text-green-400 tracking-widest mb-6">{orderMsg}</div>}
+            {ordersLoading ? (
+              <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// LOADING...</div>
+            ) : (() => {
+              const visible = orders
+                .filter(o => showFulfilled ? o.fulfilled : !o.fulfilled)
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+              if (visible.length === 0) {
+                return (
+                  <div className="border border-white/[0.06] p-8 text-center">
+                    <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">
+                      {showFulfilled ? '// NO FULFILLED ORDERS YET' : '// NOTHING PENDING — ALL CAUGHT UP'}
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <div className="space-y-4">
+                  {visible.map(o => (
+                    <div key={o.id} className="border border-white/[0.06] p-6 bg-[#0a0a0a]">
+                      <div className="flex justify-between items-start mb-4 gap-4">
+                        <div>
+                          <div className="font-black text-lg tracking-wider mb-1">{o.customerName}</div>
+                          <div className="font-mono-custom text-[10px] text-white/30">{o.customerEmail}</div>
+                          <div className="font-mono-custom text-[9px] text-white/20 mt-1">{new Date(o.createdAt).toLocaleString()}</div>
+                        </div>
+                        <div className="flex gap-2 shrink-0">
+                          {!o.fulfilled && (
+                            <button onClick={() => prefillTracking(o)}
+                              className="font-mono-custom text-[9px] text-white/20 hover:text-[#ae1fe3] transition-colors tracking-widest">
+                              [ SEND TRACKING ]
+                            </button>
+                          )}
+                          <button onClick={() => handleToggleFulfilled(o.id, !o.fulfilled)}
+                            className="font-mono-custom text-[9px] tracking-widest transition-colors"
+                            style={{color: o.fulfilled ? 'rgba(255,255,255,0.2)' : '#22c55e'}}>
+                            {o.fulfilled ? '[ MOVE BACK TO PENDING ]' : '[ MARK FULFILLED ]'}
+                          </button>
+                        </div>
+                      </div>
+                      <div className="mb-4 p-4 border border-white/[0.05] bg-[#050505]">
+                        <div className="font-mono-custom text-[8px] text-white/20 tracking-widest mb-1">SHIP TO</div>
+                        <div className="font-mono-custom text-[10px] text-white/50">{o.shippingAddress}</div>
+                      </div>
+                      <div className="space-y-1 mb-4">
+                        {(o.items ?? []).map((item, i) => (
+                          <div key={i} className="flex justify-between font-mono-custom text-[10px] text-white/40">
+                            <span>{item.qty}× {item.name}{item.teamName ? ` — ${item.teamName}` : ''}{item.size ? ` (${item.size})` : ''}</span>
+                            <span>{item.price}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex justify-between items-center pt-3 border-t border-white/[0.05]">
+                        <span className="font-mono-custom text-[9px] text-white/20 tracking-widest">ORDER {o.id}</span>
+                        <span className="font-black text-lg" style={{color: '#ae1fe3'}}>${o.total}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+          </div>
+        )}
         {/* TRACKING TAB */}
         {activeTab === "tracking" && (
           <div>
