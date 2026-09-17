@@ -1,10 +1,11 @@
 import Stripe from "stripe";
+import { redis } from "../../lib/ratelimit";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
   try {
-    const { items, checkoutData } = await req.json();
+    const { items, checkoutData, referralCode } = await req.json();
 
     if (!items || items.length === 0) {
       return Response.json({ error: "Cart is empty." }, { status: 400 });
@@ -57,6 +58,14 @@ export async function POST(req) {
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/payment`,
     });
+
+    // Save the checkout data so the webhook can finalize this order even if
+    // the customer's browser never makes it back to /checkout/success.
+    try {
+      await redis.set(`ink3d_pending_${session.id}`, { items, checkoutData, referralCode }, { ex: 60 * 60 * 24 });
+    } catch (err) {
+      console.error("Pending order save error:", err);
+    }
 
     return Response.json({ url: session.url });
   } catch (err) {
