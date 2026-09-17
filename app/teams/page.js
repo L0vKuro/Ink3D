@@ -15,7 +15,7 @@ const teams = [
     social: { label: "X", href: "https://x.com/OvertakeSector" },
     description: "OvertakeSector is built on precision, discipline, and results. The crosshair-and-star logo represents the team's mindset: lock on, take the lead, and never back down. This exclusive INK3D collection features OvertakeSector's signature Crimson Red, Onyx Grey, and Obsidian Fog colors. From keychains and lightboxes to coasters and more, every item reflects the same identity fans see on stream.",
     items: [
-      { name: "KEYCHAIN", price: "$10.99", tag: "KEYCHAIN", image: "/Overtake Keychain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/Overtake Keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER" },
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE" },
@@ -29,7 +29,7 @@ const teams = [
     logo: "/Atlantis 2026 logo.png",
     color: "#00b4d8",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/atlantis-keychain.png" },
+     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/atlantis-keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
     ],
   },
@@ -39,7 +39,7 @@ const teams = [
     logo: "/team-Buckshot.png",
     color: "#ff4d6d",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/buckshot-keychain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/buckshot-keychain.png" },
     ],
   },
   {
@@ -48,7 +48,7 @@ const teams = [
     logo: "/team-EYM.jpg",
     color: "#e63946",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/eym-keychain.png" },
+     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/eym lightbox 1.jpg" },
     ],
   },
@@ -61,7 +61,7 @@ const teams = [
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
       { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/godlayers-wall_art.png" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/godlayers-key_chain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/godlayers-key_chain.png" },
     ],
   },
   {
@@ -70,7 +70,7 @@ const teams = [
     logo: "/team-Outkastz.png",
     color: "#2d6a4f",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/outkastz-key_chain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/outkastz-key_chain.png" },
     ],
   },
   {
@@ -81,7 +81,7 @@ const teams = [
     items: [
       { name: "CUBAN NECKLACE", price: "$59.99", tag: "NECKLACE", image: "/reignabove-cuban.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/reignabove_coasters.png" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/reignabove-keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/reignabove-lightbox.png" },
     ],
   },
@@ -115,7 +115,7 @@ const teams = [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/vaultix-wallart.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/vaultix-coaster.png" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/vaultix-keychain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/vaultix-keychain.png" },
     ],
   },
   {
@@ -124,7 +124,7 @@ const teams = [
     logo: "/team-Veriphy.jpg",
     color: "#ffd60a",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/veriphy-keychain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/veriphy-keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/veriphy-lightbox1.avif" },
     ],
   },
@@ -143,7 +143,7 @@ const teams = [
     logo: "/team-Ninefly.jpg",
     color: "#ffffff",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/ninefly-cubanhypechain.png" }
     ] 
   }, 
@@ -153,7 +153,7 @@ const teams = [
     logo: "/7ven.jpg",
     color: "#39FF14",
     items: [
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image:  "/" },
+     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image:  "/" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/" }
     ] 
   }, 
@@ -166,7 +166,7 @@ const teams = [
      { name: "WALL ART", price: "$39.99", tag: "WALL ART", image: "/" },
       { name: "LIGHTBOX", price: "$49.99", tag: "LIGHTBOX", image: "/" },
       { name: "COASTER SET OF 4", price: "$24.99", tag: "COASTER", image: "/" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", image: "/" },
+     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/" },
     ] 
   } 
 ]; 
