@@ -12,7 +12,7 @@ const merch = [
   {
     id: "merch-1",
     name: "INK3D HOODIE",
-    price: "$53.00",
+    price: "COMING SOON",
     tag: "HOODIE",
     desc: "Premium heavyweight hoodie. Wear the brand.",
     hasSize: true,
