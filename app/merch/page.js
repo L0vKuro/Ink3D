@@ -26,7 +26,7 @@ const merch = [
   {
     id: "merch-2",
     name: "INK3D TEE — FRONT LOGO",
-    price: "$35.00",
+    price: "$COMING SOON",
     tag: "TEE",
     desc: "Clean front logo tee. Streetwear cut.",
     hasSize: true,
