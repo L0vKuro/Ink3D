@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import CartSidebar from "./CartSidebar";
 
@@ -17,6 +17,7 @@ const links = [
 
 export default function Nav({ active }) {
   const { count, setOpen } = useCart();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -68,9 +69,41 @@ export default function Nav({ active }) {
             >
               CART ({count})
             </button>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden flex flex-col justify-center items-center gap-[5px] w-9 h-9 shrink-0"
+              aria-label="Toggle menu"
+            >
+              <span className="block w-5 h-[2px] transition-all duration-200" style={{ background: mobileOpen ? '#ae1fe3' : 'rgba(255,255,255,0.6)', transform: mobileOpen ? 'translateY(7px) rotate(45deg)' : 'none' }} />
+              <span className="block w-5 h-[2px] transition-all duration-200" style={{ background: mobileOpen ? '#ae1fe3' : 'rgba(255,255,255,0.6)', opacity: mobileOpen ? 0 : 1 }} />
+              <span className="block w-5 h-[2px] transition-all duration-200" style={{ background: mobileOpen ? '#ae1fe3' : 'rgba(255,255,255,0.6)', transform: mobileOpen ? 'translateY(-7px) rotate(-45deg)' : 'none' }} />
+            </button>
           </div>
         </div>
         <div className="h-px" style={{ background: 'linear-gradient(to right, transparent, #ae1fe344, transparent)' }} />
+        <div
+          className="md:hidden overflow-hidden transition-all duration-300 bg-[#050505] border-b border-white/[0.05]"
+          style={{ maxHeight: mobileOpen ? '480px' : '0px' }}
+        >
+          <div className="px-6 py-4 flex flex-col gap-1">
+            {links.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="py-3 text-sm font-black tracking-[0.15em] border-b border-white/[0.04] transition-colors duration-200"
+                style={{ color: active === link.label ? '#ae1fe3' : 'rgba(255,255,255,0.6)' }}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link href="/dashboard" onClick={() => setMobileOpen(false)}>
+              <div className="py-3 text-sm font-black tracking-[0.15em] font-mono-custom" style={{ color: '#ae1fe3' }}>
+                AFFILIATE LOGIN
+              </div>
+            </Link>
+          </div>
+        </div>
       </nav>
       <CartSidebar />
     </>
