@@ -21,17 +21,9 @@ export default function Checkout() {
   const [discountLoading, setDiscountLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const discountAmount = discountApplied ? (total * discountApplied.percent / 100) : 0;
-  // $8 flat shipping fee, applied whenever the cart has at least one
-  // non-Merch item. Merch (hoodies/tees) is the only source that sets a
-  // `size` field on the cart item, so "no size" reliably means it came from
-  // Teams, Creators, or the homepage product grid — everything this fee
-  // should apply to.
   const hasShippableItem = items.some(item => !item.size);
-  // Free shipping once the order subtotal hits $50; otherwise the $8 flat
-  // rate applies to any order containing a shippable (non-Merch) item.
   const shippingFee = (hasShippableItem && total < 50) ? 8 : 0;
   const finalTotal = (total - discountAmount + shippingFee).toFixed(2);
-  // Auto-apply discount from ref link
   useEffect(() => {
     const ref = localStorage.getItem("ink3d_ref");
     if (ref) {
@@ -40,13 +32,9 @@ export default function Checkout() {
   }, []);
   async function autoApplyRefDiscount(ref) {
     try {
-      // Public endpoint — works for anonymous customers, no admin/affiliate
-      // login required (see app/api/discounts/route.js).
       const res = await fetch("/api/discounts");
       const data = await res.json();
       const codes = data.codes ?? [];
-      // Match either the affiliate's referral code (?ref=) or, if someone
-      // passes a discount code directly as ref, the discount code itself.
       const matched = codes.find(d => d.referralCode === ref) ?? codes.find(d => d.code === ref);
       if (matched) {
         setDiscountCode(matched.code);
@@ -66,8 +54,6 @@ export default function Checkout() {
     setDiscountLoading(true);
     setDiscountError("");
     try {
-      // Public endpoint — works for anonymous customers, no admin/affiliate
-      // login required (see app/api/discounts/route.js).
       const res = await fetch("/api/discounts");
       const data = await res.json();
       const found = data.codes?.find(d => d.code === code);
@@ -128,7 +114,7 @@ export default function Checkout() {
         <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-12">COMPLETE YOUR ORDER</h1>
         <div className="grid md:grid-cols-[1fr_380px] gap-8">
           <div className="space-y-8">
-            <div className="border border-white/[0.06] p-8 relative">
+            <div className="border border-white/[0.06] p-5 sm:p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// CONTACT INFORMATION</span>
               </div>
@@ -145,7 +131,7 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-            <div className="border border-white/[0.06] p-8 relative">
+            <div className="border border-white/[0.06] p-5 sm:p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// SHIPPING ADDRESS</span>
               </div>
@@ -155,7 +141,7 @@ export default function Checkout() {
                   <input name="address" value={form.address} onChange={handleChange} placeholder="123 Main St" className={inputClass} style={{borderColor: errors.address ? '#ff4444' : undefined}} />
                   {errors.address && <div className="font-mono-custom text-[9px] text-red-400 mt-1">{errors.address}</div>}
                 </div>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   <div>
                     <label className={labelClass}>CITY <span style={{color: '#ae1fe3'}}>*</span></label>
                     <input name="city" value={form.city} onChange={handleChange} placeholder="City" className={inputClass} style={{borderColor: errors.city ? '#ff4444' : undefined}} />
@@ -185,11 +171,11 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-            <div className="border border-white/[0.06] p-8 relative">
+            <div className="border border-white/[0.06] p-5 sm:p-8 relative">
               <div className="absolute -top-3 left-6 bg-[#050505] px-3">
                 <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// DISCOUNT CODE</span>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <input
                   value={discountCode}
                   onChange={e => { setDiscountCode(e.target.value); setDiscountError(""); }}
@@ -200,7 +186,7 @@ export default function Checkout() {
                 <button
                   onClick={applyDiscount}
                   disabled={discountLoading}
-                  className="font-black px-6 font-mono-custom text-[10px] tracking-widest transition-all duration-200"
+                  className="font-black px-6 py-3 sm:py-0 font-mono-custom text-[10px] tracking-widest transition-all duration-200"
                   style={{background: '#ae1fe3', color: '#fff', opacity: discountLoading ? 0.5 : 1}}
                   onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; }}
                   onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}
@@ -225,7 +211,7 @@ export default function Checkout() {
               CONTINUE TO PAYMENT →
             </button>
           </div>
-          <div className="border border-white/[0.06] p-6 h-fit sticky top-28">
+          <div className="border border-white/[0.06] p-6 h-fit md:sticky md:top-28">
             <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// ORDER SUMMARY</div>
             <div className="space-y-4 mb-6">
               {items.map(item => (
