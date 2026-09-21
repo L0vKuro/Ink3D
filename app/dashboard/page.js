@@ -144,7 +144,7 @@ export default function Dashboard() {
       </div>
       <div className="px-6 md:px-12 py-12 max-w-5xl mx-auto">
         <div className="mb-12">
-          <div className="flex items-center gap-4 mb-2">
+          <div className="flex flex-wrap items-center gap-4 mb-2">
             <h1 className="text-4xl md:text-5xl font-black tracking-tight">{affiliate.name.toUpperCase()}</h1>
             <span className="font-mono-custom text-[10px] font-black px-3 py-1 tracking-widest"
               style={{background: tierColors[affiliate.tier] + '20', color: tierColors[affiliate.tier], border: `1px solid ${tierColors[affiliate.tier]}40`}}>
@@ -196,7 +196,7 @@ export default function Dashboard() {
           </div>
           <div className="border border-white/[0.06] p-6">
             <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-4" style={{color: '#ae1fe366'}}>// YOUR DISCOUNT CODE</div>
-            <div className="bg-[#0a0a0a] border border-white/[0.05] px-4 py-3 font-black text-2xl tracking-widest mb-3" style={{color: '#ae1fe3'}}>
+            <div className="bg-[#0a0a0a] border border-white/[0.05] px-4 py-3 font-black text-2xl tracking-widest mb-3 break-all" style={{color: '#ae1fe3'}}>
               {affiliate.discountCode}
             </div>
             <div className="font-mono-custom text-[9px] text-white/30 tracking-widest">{affiliate.discountPercent}% OFF FOR YOUR CUSTOMERS</div>
@@ -209,27 +209,29 @@ export default function Dashboard() {
           {displayOrders.length === 0 ? (
             <div className="font-mono-custom text-[9px] text-white/20 tracking-widest text-center py-8">// NO ORDERS YET</div>
           ) : (
-            <div className="space-y-3">
-              <div className="grid grid-cols-4 gap-4 font-mono-custom text-[8px] text-white/30 tracking-widest pb-2 border-b border-white/[0.05]">
-                <span>DATE</span>
-                <span>PRODUCT</span>
-                <span>SALE</span>
-                <span>YOUR EARNINGS</span>
-              </div>
-              {displayOrders.map((o, i) => (
-                <div key={i} className="grid grid-cols-4 gap-4 font-mono-custom text-[10px] py-2 border-b border-white/[0.03]">
-                  <span className="text-white/40">{new Date(o.date).toLocaleDateString()}</span>
-                  <span className="text-white/70 truncate">{o.product}</span>
-                  <span className="text-white/70">${o.saleAmount?.toFixed(2)}</span>
-                  <span className="text-green-400 font-black">${o.earnings?.toFixed(2)}</span>
+            <div className="overflow-x-auto">
+              <div className="space-y-3 min-w-[480px]">
+                <div className="grid grid-cols-4 gap-4 font-mono-custom text-[8px] text-white/30 tracking-widest pb-2 border-b border-white/[0.05]">
+                  <span>DATE</span>
+                  <span>PRODUCT</span>
+                  <span>SALE</span>
+                  <span>YOUR EARNINGS</span>
                 </div>
-              ))}
+                {displayOrders.map((o, i) => (
+                  <div key={i} className="grid grid-cols-4 gap-4 font-mono-custom text-[10px] py-2 border-b border-white/[0.03]">
+                    <span className="text-white/40">{new Date(o.date).toLocaleDateString()}</span>
+                    <span className="text-white/70 truncate">{o.product}</span>
+                    <span className="text-white/70">${o.saleAmount?.toFixed(2)}</span>
+                    <span className="text-green-400 font-black">${o.earnings?.toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
       </div>
       <footer className="border-t border-white/[0.05] mt-12">
-        <div className="px-6 md:px-12 py-8 flex justify-between items-center">
+        <div className="px-6 md:px-12 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <span className="font-mono-custom text-[9px] text-white/15 tracking-widest">© 2026 INK3D STUDIO. ALL RIGHTS RESERVED.</span>
           <Link href="/" className="font-mono-custom text-[9px] text-white/20 hover:text-white transition-colors tracking-widest">← BACK TO STORE</Link>
         </div>
