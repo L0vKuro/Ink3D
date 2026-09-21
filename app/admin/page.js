@@ -230,13 +230,13 @@ export default function Admin() {
         {/* ORDERS TAB */}
         {activeTab === "orders" && (
           <div>
-            <div className="flex justify-between items-start mb-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-8">
               <div>
                 <h2 className="text-3xl font-black tracking-tight mb-2">ORDERS</h2>
                 <p className="font-mono-custom text-white/30 text-sm">// Orders waiting to be fulfilled.</p>
               </div>
               <button onClick={() => setShowFulfilled(!showFulfilled)}
-                className="font-mono-custom text-[9px] tracking-widest px-4 py-2 border transition-all duration-200 shrink-0"
+                className="font-mono-custom text-[9px] tracking-widest px-4 py-2 border transition-all duration-200 self-start sm:shrink-0"
                 style={{ borderColor: showFulfilled ? '#ae1fe3' : 'rgba(255,255,255,0.08)', color: showFulfilled ? '#ae1fe3' : 'rgba(255,255,255,0.30)' }}>
                 {showFulfilled ? '[ HIDE FULFILLED ]' : '[ VIEW FULFILLED ]'}
               </button>
@@ -261,13 +261,13 @@ export default function Admin() {
                 <div className="space-y-4">
                   {visible.map(o => (
                     <div key={o.id} className="border border-white/[0.06] p-6 bg-[#0a0a0a]">
-                      <div className="flex justify-between items-start mb-4 gap-4">
-                        <div>
-                          <div className="font-black text-lg tracking-wider mb-1">{o.customerName}</div>
-                          <div className="font-mono-custom text-[10px] text-white/30">{o.customerEmail}</div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-4">
+                        <div className="min-w-0">
+                          <div className="font-black text-lg tracking-wider mb-1 break-words">{o.customerName}</div>
+                          <div className="font-mono-custom text-[10px] text-white/30 break-all">{o.customerEmail}</div>
                           <div className="font-mono-custom text-[9px] text-white/20 mt-1">{new Date(o.createdAt).toLocaleString()}</div>
                         </div>
-                        <div className="flex gap-2 shrink-0">
+                        <div className="flex gap-3 flex-wrap sm:shrink-0">
                           {!o.fulfilled && (
                             <button onClick={() => prefillTracking(o)}
                               className="font-mono-custom text-[9px] text-white/20 hover:text-[#ae1fe3] transition-colors tracking-widest">
@@ -283,19 +283,19 @@ export default function Admin() {
                       </div>
                       <div className="mb-4 p-4 border border-white/[0.05] bg-[#050505]">
                         <div className="font-mono-custom text-[8px] text-white/20 tracking-widest mb-1">SHIP TO</div>
-                        <div className="font-mono-custom text-[10px] text-white/50">{o.shippingAddress}</div>
+                        <div className="font-mono-custom text-[10px] text-white/50 break-words">{o.shippingAddress}</div>
                       </div>
                       <div className="space-y-1 mb-4">
                         {(o.items ?? []).map((item, i) => (
-                          <div key={i} className="flex justify-between font-mono-custom text-[10px] text-white/40">
+                          <div key={i} className="flex flex-col sm:flex-row sm:justify-between gap-1 font-mono-custom text-[10px] text-white/40">
                             <span>{item.qty}× {item.name}{item.teamName ? ` — ${item.teamName}` : ''}{item.size ? ` (${item.size})` : ''}</span>
                             <span>{item.price}</span>
                           </div>
                         ))}
                       </div>
                       <div className="flex justify-between items-center pt-3 border-t border-white/[0.05]">
-                        <span className="font-mono-custom text-[9px] text-white/20 tracking-widest">ORDER {o.id}</span>
-                        <span className="font-black text-lg" style={{color: '#ae1fe3'}}>${o.total}</span>
+                        <span className="font-mono-custom text-[9px] text-white/20 tracking-widest break-all">ORDER {o.id}</span>
+                        <span className="font-black text-lg shrink-0 ml-3" style={{color: '#ae1fe3'}}>${o.total}</span>
                       </div>
                     </div>
                   ))}
@@ -311,7 +311,7 @@ export default function Admin() {
               <h2 className="text-3xl font-black tracking-tight mb-2">SEND TRACKING</h2>
               <p className="font-mono-custom text-white/30 text-sm">// Send a tracking link to a customer via email.</p>
             </div>
-            <form onSubmit={handleSendTracking} className="border border-white/[0.06] p-8 space-y-6">
+            <form onSubmit={handleSendTracking} className="border border-white/[0.06] p-5 sm:p-8 space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className={labelClass}>CUSTOMER NAME</label>
@@ -345,26 +345,26 @@ export default function Admin() {
         {/* DISCOUNTS TAB */}
         {activeTab === "discounts" && (
           <div>
-            <div className="flex justify-between items-start mb-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-8">
               <div>
                 <h2 className="text-3xl font-black tracking-tight mb-2">DISCOUNT CODES</h2>
                 <p className="font-mono-custom text-white/30 text-sm">// Manage active discount codes.</p>
               </div>
               <button onClick={() => setShowArchive(!showArchive)}
-                className="font-mono-custom text-[9px] tracking-widest px-4 py-2 border transition-all duration-200 shrink-0"
+                className="font-mono-custom text-[9px] tracking-widest px-4 py-2 border transition-all duration-200 self-start sm:shrink-0"
                 style={{ borderColor: showArchive ? '#ae1fe3' : 'rgba(255,255,255,0.08)', color: showArchive ? '#ae1fe3' : 'rgba(255,255,255,0.30)' }}>
                 {showArchive ? '[ HIDE ARCHIVE ]' : '[ CODE ARCHIVES ]'} {archive.length > 0 && `(${archive.length})`}
               </button>
             </div>
             {showArchive && (
-              <div className="border p-8 mb-6" style={{borderColor: '#ae1fe320', background: '#0a0a0a'}}>
+              <div className="border p-5 sm:p-8 mb-6" style={{borderColor: '#ae1fe320', background: '#0a0a0a'}}>
                 <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// CODE ARCHIVES</div>
                 {archive.length === 0 ? (
                   <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// NO ARCHIVED CODES</div>
                 ) : (
                   <div className="space-y-3">
                     {archive.map(d => (
-                      <div key={d.code} className="flex justify-between items-center border border-white/[0.04] px-4 py-3 bg-[#050505]">
+                      <div key={d.code} className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 border border-white/[0.04] px-4 py-3 bg-[#050505]">
                         <div className="flex items-center gap-6">
                           <span className="font-black tracking-wider text-white/30 line-through">{d.code}</span>
                           <span className="font-mono-custom text-[9px] text-white/20">{d.percent}% OFF</span>
@@ -378,7 +378,7 @@ export default function Admin() {
                 )}
               </div>
             )}
-            <div className="border border-white/[0.06] p-8 mb-6">
+            <div className="border border-white/[0.06] p-5 sm:p-8 mb-6">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ACTIVE CODES</div>
               {discountsLoading ? (
                 <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// LOADING...</div>
@@ -387,19 +387,19 @@ export default function Admin() {
               ) : (
                 <div className="space-y-3">
                   {regularCodes.map(d => (
-                    <div key={d.code} className="flex justify-between items-center border border-white/[0.05] px-4 py-3 bg-[#0a0a0a]">
+                    <div key={d.code} className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 border border-white/[0.05] px-4 py-3 bg-[#0a0a0a]">
                       <div className="flex items-center gap-6">
                         <span className="font-black tracking-wider" style={{color: '#ae1fe3'}}>{d.code}</span>
                         <span className="font-mono-custom text-[9px] text-white/40">{d.percent}% OFF</span>
                       </div>
-                      <button onClick={() => removeDiscount(d.code)} className="font-mono-custom text-[9px] text-white/20 hover:text-red-400 transition-colors tracking-widest">[ REMOVE ]</button>
+                      <button onClick={() => removeDiscount(d.code)} className="font-mono-custom text-[9px] text-white/20 hover:text-red-400 transition-colors tracking-widest self-start sm:self-auto">[ REMOVE ]</button>
                     </div>
                   ))}
                   {affiliateCodes.length > 0 && (
                     <div className="mt-4 pt-4 border-t border-white/[0.04]">
                       <div className="font-mono-custom text-[9px] tracking-[0.3em] mb-3 text-white/20">// AFFILIATE CODES — MANAGE IN AFFILIATES TAB</div>
                       {affiliateCodes.map(d => (
-                        <div key={d.code} className="flex justify-between items-center border border-white/[0.03] px-4 py-3 bg-[#0a0a0a] mb-2 opacity-40">
+                        <div key={d.code} className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 border border-white/[0.03] px-4 py-3 bg-[#0a0a0a] mb-2 opacity-40">
                           <div className="flex items-center gap-6">
                             <span className="font-black tracking-wider text-white/50">{d.code}</span>
                             <span className="font-mono-custom text-[9px] text-white/30">{d.percent}% OFF</span>
@@ -413,19 +413,19 @@ export default function Admin() {
                 </div>
               )}
             </div>
-            <div className="border border-white/[0.06] p-8">
+            <div className="border border-white/[0.06] p-5 sm:p-8">
               <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ADD NEW CODE</div>
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1">
                   <label className={labelClass}>CODE</label>
                   <input value={newCode} onChange={e => setNewCode(e.target.value.toUpperCase())} placeholder="SUMMER25" className={inputClass} />
                 </div>
-                <div className="w-32">
+                <div className="w-full sm:w-32">
                   <label className={labelClass}>% OFF</label>
                   <input type="number" min="1" max="100" value={newPercent} onChange={e => setNewPercent(e.target.value)} placeholder="25" className={inputClass} />
                 </div>
                 <div className="flex items-end">
-                  <button onClick={addDiscount} className="px-6 py-3 font-black text-xs tracking-widest font-mono-custom transition-all duration-200"
+                  <button onClick={addDiscount} className="w-full sm:w-auto px-6 py-3 font-black text-xs tracking-widest font-mono-custom transition-all duration-200"
                     style={{background: '#ae1fe3', color: '#fff'}}
                     onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; }}
                     onMouseLeave={e => { e.currentTarget.style.background='#ae1fe3'; }}>
@@ -440,13 +440,13 @@ export default function Admin() {
         {/* AFFILIATES TAB */}
         {activeTab === "affiliates" && (
           <div>
-            <div className="flex justify-between items-start mb-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-8">
               <div>
                 <h2 className="text-3xl font-black tracking-tight mb-2">AFFILIATES</h2>
                 <p className="font-mono-custom text-white/30 text-sm">// Manage affiliate accounts and view their stats.</p>
               </div>
               <button onClick={() => setShowCreateAffiliate(!showCreateAffiliate)}
-                className="font-mono-custom text-[9px] tracking-widest px-4 py-2 transition-all duration-200 shrink-0"
+                className="font-mono-custom text-[9px] tracking-widest px-4 py-2 transition-all duration-200 self-start sm:shrink-0"
                 style={{background: showCreateAffiliate ? 'transparent' : '#ae1fe3', color: showCreateAffiliate ? '#ae1fe3' : '#fff', border: '1px solid #ae1fe3'}}
                 onMouseEnter={e => { e.currentTarget.style.background='#c040ff'; e.currentTarget.style.color='#fff'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = showCreateAffiliate ? 'transparent' : '#ae1fe3'; e.currentTarget.style.color = showCreateAffiliate ? '#ae1fe3' : '#fff'; }}>
@@ -455,7 +455,7 @@ export default function Admin() {
             </div>
             {affiliateMsg && <div className="font-mono-custom text-[9px] text-green-400 tracking-widest mb-6">{affiliateMsg}</div>}
             {showCreateAffiliate && (
-              <div className="border border-white/[0.06] p-8 mb-8" style={{borderColor: '#ae1fe330'}}>
+              <div className="border border-white/[0.06] p-5 sm:p-8 mb-8" style={{borderColor: '#ae1fe330'}}>
                 <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// NEW AFFILIATE</div>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div>
@@ -499,7 +499,7 @@ export default function Admin() {
                   <div>
                     <label className={labelClass}>REFERRAL CODE</label>
                     <input value={newAffiliate.referralCode} onChange={e => setNewAffiliate(p => ({...p, referralCode: e.target.value.toUpperCase()}))} placeholder="DAVID" className={inputClass} />
-                    <div className="font-mono-custom text-[8px] text-white/20 mt-1">ink3dshop.com/?ref={newAffiliate.referralCode || 'CODE'}</div>
+                    <div className="font-mono-custom text-[8px] text-white/20 mt-1 break-all">ink3dshop.com/?ref={newAffiliate.referralCode || 'CODE'}</div>
                   </div>
                   <div>
                     <label className={labelClass}>DISCOUNT CODE</label>
@@ -529,15 +529,15 @@ export default function Admin() {
               ) : (
                 affiliates.map(a => (
                   <div key={a.id} className="border border-white/[0.06] p-6 bg-[#0a0a0a]">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <div className="flex items-center gap-3 mb-1">
-                          <span className="font-black text-lg tracking-wider">{a.name}</span>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-4">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-3 mb-1">
+                          <span className="font-black text-lg tracking-wider break-words">{a.name}</span>
                           <span className="font-mono-custom text-[9px] font-black px-2 py-0.5 tracking-widest" style={{background: tierColors[a.tier] + '20', color: tierColors[a.tier], border: `1px solid ${tierColors[a.tier]}40`}}>{a.tier}</span>
                         </div>
-                        <div className="font-mono-custom text-[10px] text-white/30">{a.email}</div>
+                        <div className="font-mono-custom text-[10px] text-white/30 break-all">{a.email}</div>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-3 flex-wrap sm:shrink-0">
                         <button onClick={() => { setEditTierId(a.id); setEditTierValue(a.tier); setResetPasswordId(null); }}
                           className="font-mono-custom text-[9px] text-white/20 hover:text-[#ae1fe3] transition-colors tracking-widest">
                           [ EDIT TIER ]
@@ -553,35 +553,39 @@ export default function Admin() {
                       </div>
                     </div>
                     {editTierId === a.id && (
-                      <div className="flex gap-3 mb-4">
+                      <div className="flex flex-col sm:flex-row gap-3 mb-4">
                         <select value={editTierValue} onChange={e => setEditTierValue(e.target.value)} className={`${inputClass} flex-1 cursor-pointer`}>
                           {TIERS.map(t => (
                             <option key={t} value={t}>{t} — {TIER_COMMISSIONS[t]}% commission</option>
                           ))}
                         </select>
-                        <button onClick={() => handleEditTier(a.id, a.name)}
-                          className="px-4 font-mono-custom text-[9px] tracking-widest font-black transition-all duration-200"
-                          style={{background: '#ae1fe3', color: '#fff'}}>
-                          SAVE
-                        </button>
-                        <button onClick={() => setEditTierId(null)}
-                          className="px-4 font-mono-custom text-[9px] tracking-widest text-white/30 hover:text-white transition-colors">
-                          CANCEL
-                        </button>
+                        <div className="flex gap-3">
+                          <button onClick={() => handleEditTier(a.id, a.name)}
+                            className="px-4 font-mono-custom text-[9px] tracking-widest font-black transition-all duration-200"
+                            style={{background: '#ae1fe3', color: '#fff'}}>
+                            SAVE
+                          </button>
+                          <button onClick={() => setEditTierId(null)}
+                            className="px-4 font-mono-custom text-[9px] tracking-widest text-white/30 hover:text-white transition-colors">
+                            CANCEL
+                          </button>
+                        </div>
                       </div>
                     )}
                     {resetPasswordId === a.id && (
-                      <div className="flex gap-3 mb-4">
+                      <div className="flex flex-col sm:flex-row gap-3 mb-4">
                         <input value={resetPassword} onChange={e => setResetPassword(e.target.value)} placeholder="New password" className={`${inputClass} flex-1`} />
-                        <button onClick={() => handleResetPassword(a.id)}
-                          className="px-4 font-mono-custom text-[9px] tracking-widest font-black transition-all duration-200"
-                          style={{background: '#ae1fe3', color: '#fff'}}>
-                          SEND
-                        </button>
-                        <button onClick={() => setResetPasswordId(null)}
-                          className="px-4 font-mono-custom text-[9px] tracking-widest text-white/30 hover:text-white transition-colors">
-                          CANCEL
-                        </button>
+                        <div className="flex gap-3">
+                          <button onClick={() => handleResetPassword(a.id)}
+                            className="px-4 font-mono-custom text-[9px] tracking-widest font-black transition-all duration-200"
+                            style={{background: '#ae1fe3', color: '#fff'}}>
+                            SEND
+                          </button>
+                          <button onClick={() => setResetPasswordId(null)}
+                            className="px-4 font-mono-custom text-[9px] tracking-widest text-white/30 hover:text-white transition-colors">
+                            CANCEL
+                          </button>
+                        </div>
                       </div>
                     )}
                     <div className="font-mono-custom text-[8px] tracking-[0.3em] mb-2 text-white/20">// LIFETIME</div>
@@ -604,7 +608,7 @@ export default function Admin() {
                       </div>
                     </div>
                     <div className="font-mono-custom text-[8px] tracking-[0.3em] mb-2 text-white/20">// THIS MONTH</div>
-                    <div className="grid grid-cols-3 gap-4 mb-4">
+                    <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
                       <div className="bg-[#050505] p-3 border border-white/[0.04]">
                         <div className="font-mono-custom text-[8px] text-white/30 tracking-widest mb-1">ORDERS</div>
                         <div className="font-black text-lg text-white/70">{a.stats?.monthlyOrders ?? 0}</div>
@@ -618,8 +622,8 @@ export default function Admin() {
                         <div className="font-black text-lg text-green-400/80">${(a.stats?.monthlyEarnings ?? 0).toFixed(2)}</div>
                       </div>
                     </div>
-                    <div className="flex gap-6 font-mono-custom text-[9px] text-white/30">
-                      <span>REF LINK: <span className="text-white/50">ink3dshop.com/?ref={a.referralCode}</span></span>
+                    <div className="flex flex-col sm:flex-row sm:gap-6 gap-1 font-mono-custom text-[9px] text-white/30">
+                      <span className="break-all">REF LINK: <span className="text-white/50">ink3dshop.com/?ref={a.referralCode}</span></span>
                       <span>DISCOUNT: <span style={{color: '#ae1fe3'}}>{a.discountCode}</span> ({a.discountPercent}% off)</span>
                     </div>
                   </div>
