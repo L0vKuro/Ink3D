@@ -56,7 +56,7 @@ export default function Payment() {
         <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-2" style={{color: '#ae1fe366'}}>// CHECKOUT</div>
         <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-12">COMPLETE YOUR ORDER</h1>
         <div className="grid md:grid-cols-[1fr_380px] gap-8">
-          <div className="border border-white/[0.06] p-8 relative h-fit">
+          <div className="border border-white/[0.06] p-5 sm:p-8 relative h-fit">
             <div className="absolute -top-3 left-6 bg-[#050505] px-3">
               <span className="font-mono-custom text-[9px] tracking-[0.4em]" style={{color: '#ae1fe3'}}>// SECURE PAYMENT</span>
             </div>
@@ -82,7 +82,7 @@ export default function Payment() {
             </button>
             {payError && <div className="font-mono-custom text-[9px] text-red-400 mt-3 tracking-widest">{payError}</div>}
           </div>
-          <div className="border border-white/[0.06] p-6 h-fit sticky top-28">
+          <div className="border border-white/[0.06] p-6 h-fit md:sticky md:top-28">
             <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-6" style={{color: '#ae1fe3'}}>// ORDER SUMMARY</div>
             <div className="space-y-4 mb-6">
               {items.map(item => (
