@@ -172,8 +172,8 @@ const teams = [
    { 
     id: "oblivion",
     name: "Oblivion Esports",
-    logo: "/prs cover photo.png",
-    color: "#89CFF0",
+    logo: "/oblivion png.png",
+    color: "#8A00C4",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" },
    ] 
