@@ -169,6 +169,15 @@ const teams = [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
    ] 
   }, 
+   { 
+    id: "oblivion",
+    name: "Oblivion Esports",
+    logo: "/prs cover photo.png",
+    color: "#89CFF0",
+    items: [
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" },
+   ] 
+  }, 
 ]; 
   const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
