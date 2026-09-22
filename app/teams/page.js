@@ -168,7 +168,7 @@ const teams = [
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
     ] 
-  }
+  },
    { 
     id: "Oblivion",
     name: "Oblivion Esports",
