@@ -167,17 +167,8 @@ const teams = [
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
-    ] 
-  },
-   { 
-    id: "Oblivion",
-    name: "Oblivion Esports",
-    logo: "/oblivion png.png",
-    color: "#8AOOC4",
-    items: [
-      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/},
-    ] 
-  }
+   ] 
+  }, 
 ]; 
   const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
