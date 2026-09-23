@@ -8,7 +8,7 @@ import { useCart } from "../context/CartContext";
 
 const sizes = ["XS", "S", "M", "L", "XL", "2XL"];
 
-const merch = [
+const Ink3d Originals = [
   {
     id: "merch-1",
     name: "INK3D HOODIE",
