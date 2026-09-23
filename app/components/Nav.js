@@ -29,13 +29,13 @@ export default function Nav({ active }) {
   return (
     <>
       <nav className="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.05]">
-        <div className="px-6 md:px-12 py-3 flex justify-between items-center">
-          <div className="flex items-center gap-3">
+        <div className="px-6 md:px-12 py-3 flex justify-between items-center relative">
+          <div className="flex items-center gap-3 z-10">
             <Link href="/">
               <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={50} height={50} className="object-contain cursor-pointer" />
             </Link>
           </div>
-          <div className="hidden md:flex gap-5 text-[11px] font-bold tracking-[0.15em] text-white/40">
+          <div className="hidden md:flex gap-6 text-[11px] font-black tracking-[0.1em] text-white/40 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {links.map((link) => (
               <Link
                 key={link.label}
@@ -47,7 +47,7 @@ export default function Nav({ active }) {
               </Link>
             ))}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 z-10">
             <span className="font-mono-custom text-[10px] hidden md:block" style={{ color: '#ae1fe388' }}>
               <span className="blink">▋</span> ONLINE
             </span>
