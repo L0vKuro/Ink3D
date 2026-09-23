@@ -9,6 +9,7 @@ const links = [
   { label: "HOME", href: "/" },
   { label: "TEAMS", href: "/teams" },
   { label: "CREATORS", href: "/creators" },
+  { label: "ORIGINALS", href: "/originals" },
   { label: "PROGRAM", href: "/program" },
   { label: "MERCH", href: "/merch" },
   { label: "ABOUT", href: "/about" },
@@ -34,7 +35,7 @@ export default function Nav({ active }) {
               <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={50} height={50} className="object-contain cursor-pointer" />
             </Link>
           </div>
-          <div className="hidden md:flex gap-6 text-[11px] font-bold tracking-[0.15em] text-white/40">
+          <div className="hidden md:flex gap-5 text-[11px] font-bold tracking-[0.15em] text-white/40">
             {links.map((link) => (
               <Link
                 key={link.label}
@@ -83,7 +84,7 @@ export default function Nav({ active }) {
         <div className="h-px" style={{ background: 'linear-gradient(to right, transparent, #ae1fe344, transparent)' }} />
         <div
           className="md:hidden overflow-hidden transition-all duration-300 bg-[#050505] border-b border-white/[0.05]"
-          style={{ maxHeight: mobileOpen ? '480px' : '0px' }}
+          style={{ maxHeight: mobileOpen ? '560px' : '0px' }}
         >
           <div className="px-6 py-4 flex flex-col gap-1">
             {links.map((link) => (
