@@ -14,7 +14,7 @@ import { useCart } from "../context/CartContext";
 // 2. Add an entry below, e.g.:
 //    { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", image: "/originals-controller-stand.png", credit: "NightStawker" },
 const items = [
-  // (empty until first items are finalized)
+  { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", image: "/controller-stand.png", credit: "NightStawker" },
 ];
 
 const tagColors = {
