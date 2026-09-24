@@ -14,7 +14,7 @@ import { useCart } from "../context/CartContext";
 // 2. Add an entry below, e.g.:
 //    { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", image: "/originals-controller-stand.png", credit: "NightStawker" },
 const items = [
-  { id: "controller-stand", name: "CONTROLLER STAND ( color can vary )", price: "$25.00", tag: "ACCESSORY", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
+  { id: "controller-stand", name: "CONTROLLER STAND ( color can vary )", price: "$25.00", tag: "Controller Stand", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
 ];
 
 const tagColors = {
@@ -25,7 +25,7 @@ const tagColors = {
   NECKLACE:  "text-pink-400 border-pink-400/50 bg-pink-400/10",
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
   FIDGET:    "text-orange-400 border-orange-400/50 bg-orange-400/10",
-  "controller stand ": "text-lime green-400 border-lime green-400/50 bg-lime green-400/10",
+  "Controller Stand ": "text-lime green-400 border-lime green-400/50 bg-lime green-400/10",
 };
 
 export default function Originals() {
