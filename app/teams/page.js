@@ -155,13 +155,7 @@ const teams = [
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" }, 
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" }
-      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },  images: [
-      { label: "FRONT", src: "/" },
-      { label: "BACK", src: "/" },
-      { label: "LEFT", src: "" },
-      { label: "RIGHT", src: "/" },
-
-
+      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
     ] 
   }, 
   { 
