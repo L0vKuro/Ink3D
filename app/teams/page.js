@@ -153,8 +153,8 @@ const teams = [
     logo: "/7ven.jpg",
     color: "#39ff14",
     items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART" , image: "/" },
-      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/" },
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART" , image: "/coming soon.jpg" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/coming soon.jpg" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" , image: "/7ven coster.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" , image: "/7ven keychain.png" },
    ] 
