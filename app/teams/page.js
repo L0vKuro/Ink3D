@@ -157,7 +157,7 @@ const teams = [
     { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX",
     ] 
   }, 
-  { 
+   { 
     id: "PRS",
     name: "PRS GAMING",
     logo: "/prs cover photo.png",
