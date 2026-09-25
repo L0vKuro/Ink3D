@@ -147,16 +147,6 @@ const teams = [
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/ninefly-cubanhypechain.png" }, 
     ] 
   }, 
-    { 
-    id: "7ven-club",
-    name: "7ven Club",
-    logo: "/7ven.jpg",
-    color: "#39FF14",
-    items: [
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" }, 
-    { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX",
-    ] 
-  }, 
    { 
     id: "PRS",
     name: "PRS GAMING",
