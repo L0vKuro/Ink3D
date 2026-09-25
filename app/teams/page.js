@@ -158,19 +158,6 @@ const teams = [
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
    ] 
-   { 
-    id: "PRS",
-    name: "PRS GAMING",
-    logo: "/prs cover photo.png",
-    color: "#89CFF0",
-    items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
-      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
-     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
-   ] 
-  }, 
-   ] 
   }, 
    { 
     id: "oblivion",
