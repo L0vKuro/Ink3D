@@ -148,6 +148,17 @@ const teams = [
     ] 
   }, 
    { 
+    id: "7ven",
+    name: "7ven Club",
+    logo: "/7ven.jpg",
+    color: "#39ff14",
+    items: [
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
+     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+   ] 
+   { 
     id: "PRS",
     name: "PRS GAMING",
     logo: "/prs cover photo.png",
@@ -159,16 +170,6 @@ const teams = [
       { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
    ] 
   }, 
-   { 
-    id: "7ven",
-    name: "7ven Club",
-    logo: "/7ven.jpg",
-    color: "#39ff14",
-    items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
-      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
-     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
-      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
    ] 
   }, 
    { 
