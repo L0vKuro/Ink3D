@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Nav from "../components/Nav";
+import ProductImage from "../components/ProductImage";
 import { useCart } from "../context/CartContext";
 const creators = [
   {
@@ -35,9 +36,6 @@ export default function Creators() {
   const { addItem } = useCart();
   const selected = creators.find(c => c.id === activeCreator);
 
-  // Same fix as the teams page: opening a creator's store is local state on
-  // the same /creators URL, not real navigation, so the back button has
-  // nothing to land on. Push a history entry on open, close on popstate.
   useEffect(() => {
     function handlePopState() {
       setActiveCreator(null);
@@ -180,9 +178,13 @@ export default function Creators() {
                     style={{background: `radial-gradient(circle at center, ${selected.color}08, #0a0a0a)`}}>
                     <div className="absolute inset-0 grid-bg opacity-20" />
                     <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/30 tracking-widest z-20">INK-{String(i+1).padStart(3,'0')}</div>
-                    {item.image && (
-                      <Image src={item.image} alt={item.name} fill className="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10" />
-                    )}
+                    <ProductImage
+                      image={item.image}
+                      images={item.images}
+                      alt={item.name}
+                      imgClassName="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10"
+                      placeholderColor={selected.color}
+                    />
                   </div>
                   <div className="p-5 border-t border-white/[0.05]">
                     <div className="flex justify-between items-start gap-4 mb-4">
@@ -201,7 +203,7 @@ export default function Creators() {
                         id: `${selected.id}-${item.name}`,
                         name: item.name,
                         price: item.price,
-                        image: item.image,
+                        image: item.image ?? item.images?.[0],
                         teamName: selected.name,
                       })}
                       className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
