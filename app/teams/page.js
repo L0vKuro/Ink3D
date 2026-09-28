@@ -169,7 +169,6 @@ const teams = [
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" },
     ] 
-  }
    }, 
   { 
     id: "Rejects",
