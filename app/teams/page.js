@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import ProductImage from "../components/ProductImage";
 import { useCart } from "../context/CartContext";
 const teams = [
   {
@@ -147,27 +148,28 @@ const teams = [
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/ninefly-cubanhypechain.png" }, 
     ] 
   }, 
-   { 
-    id: "7ven",
+    { 
+    id: "7ven-club",
     name: "7ven Club",
     logo: "/7ven.jpg",
-    color: "#39ff14",
+    color: "#39FF14",
     items: [
-      { name: "WALL ART", price: "$39.99", tag: "WALL ART" , image: "/coming soon.jpg" },
-      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/coming soon.jpg" },
-     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" , image: "/7ven coster.png" },
-      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" , image: "/7ven keychain.png" },
-   ] 
+     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" }, 
+       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" }
+    ] 
   }, 
-   { 
-    id: "oblivion",
-    name: "Oblivion Esports",
-    logo: "/oblivion png.png",
-    color: "#8A00C4",
+  { 
+    id: "PRS",
+    name: "PRS GAMING",
+    logo: "/prs cover photo.png",
+    color: "#89CFF0",
     items: [
-      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" , image: "/oblivion keychain mock up.png" },
-   ] 
-  }, 
+      { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
+     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
+      { name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN" },
+    ] 
+  }
 ]; 
   const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
@@ -185,12 +187,6 @@ export default function Teams() {
   const { addItem } = useCart();
   const selected = teams.find(t => t.id === activeTeam);
 
-  // The team detail view is just local state on the same /teams URL — no
-  // real navigation happens when opening one, so the browser back button
-  // has nothing to land on and skips straight past /teams to whatever page
-  // came before it. Fix: manually push a history entry when a team opens,
-  // and let the back button (popstate) close the detail view instead of
-  // leaving the page entirely.
   useEffect(() => {
     function handlePopState() {
       setActiveTeam(null);
@@ -367,15 +363,13 @@ export default function Teams() {
                     style={{background: `radial-gradient(circle at center, ${selected.color}08, #0a0a0a)`}}>
                     <div className="absolute inset-0 grid-bg opacity-20" />
                     <div className="absolute top-3 left-3 font-mono-custom text-[9px] text-white/30 tracking-widest z-20">INK-{String(i+1).padStart(3,'0')}</div>
-                    {item.image ? (
-                      <Image src={item.image} alt={item.name} fill className="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10" />
-                    ) : (
-                      <div className="relative z-10 text-center">
-                        <div className="text-[70px] font-black leading-none select-none transition-all duration-500 group-hover:scale-110"
-                          style={{WebkitTextStroke: `1px ${selected.color}33`, color: 'transparent'}}>3D</div>
-                        <div className="font-mono-custom text-[9px] text-white/15 tracking-[0.3em] mt-2">IMG_PLACEHOLDER</div>
-                      </div>
-                    )}
+                    <ProductImage
+                      image={item.image}
+                      images={item.images}
+                      alt={item.name}
+                      imgClassName="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10"
+                      placeholderColor={selected.color}
+                    />
                   </div>
                   <div className="p-5 border-t border-white/[0.05]">
                     <div className="flex justify-between items-start gap-4 mb-4">
@@ -394,7 +388,7 @@ export default function Teams() {
                         id: `${selected.id}-${item.name}`,
                         name: item.name,
                         price: item.price,
-                        image: item.image,
+                        image: item.image ?? item.images?.[0],
                         teamName: selected.name,
                       })}
                       className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
