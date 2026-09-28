@@ -173,8 +173,8 @@ const teams = [
   { 
     id: "Rejects",
     name: "Rejects Esports",
-    logo: "/prs cover photo.png",
-    color: "#89CFF0",
+    logo: "/Rejects Esports.jpg",
+    color: "#D41D30",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" },
     ] 
