@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import ProductImage from "../components/ProductImage";
 import { useCart } from "../context/CartContext";
 
 // Non-team, non-exclusive INK3D products — accessories and designs that
@@ -13,8 +13,11 @@ import { useCart } from "../context/CartContext";
 // 1. Drop the image file in /public
 // 2. Add an entry below, e.g.:
 //    { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", image: "/originals-controller-stand.png", credit: "NightStawker" },
+// For an item with a front and back photo, use `images` (an array)
+// instead of `image`:
+//    { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", images: ["/controller-stand-front.png", "/controller-stand-back.png"], credit: "NightStawker" },
 const items = [
-  { id: "controller-stand", name: "CONTROLLER STAND ( color can vary )", price: "$25.00", tag: "CONTROLLER STAND", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
+  // (empty until first items are finalized)
 ];
 
 const tagColors = {
@@ -25,7 +28,6 @@ const tagColors = {
   NECKLACE:  "text-pink-400 border-pink-400/50 bg-pink-400/10",
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
   FIDGET:    "text-orange-400 border-orange-400/50 bg-orange-400/10",
-  "CONTROLLER STAND": "text-lime-400 border-lime-400/50 bg-lime-400/10",
 };
 
 export default function Originals() {
@@ -59,15 +61,12 @@ export default function Originals() {
               <div key={item.id} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer">
                 <div className="aspect-square flex items-center justify-center relative overflow-hidden bg-[#0a0a0a]">
                   <div className="absolute inset-0 grid-bg opacity-20" />
-                  {item.image ? (
-                    <Image src={item.image} alt={item.name} fill className="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10" />
-                  ) : (
-                    <div className="relative z-10 text-center">
-                      <div className="text-[70px] font-black leading-none select-none transition-all duration-500 group-hover:scale-110"
-                        style={{WebkitTextStroke: '1px rgba(174,31,227,0.3)', color: 'transparent'}}>3D</div>
-                      <div className="font-mono-custom text-[9px] text-white/15 tracking-[0.3em] mt-2">IMG_PLACEHOLDER</div>
-                    </div>
-                  )}
+                  <ProductImage
+                    image={item.image}
+                    images={item.images}
+                    alt={item.name}
+                    imgClassName="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10"
+                  />
                 </div>
                 <div className="p-5 border-t border-white/[0.05]">
                   <div className="flex justify-between items-start gap-4 mb-4">
@@ -82,7 +81,7 @@ export default function Originals() {
                     </div>
                   </div>
                   <button
-                    onClick={() => addItem({ id: `orig-${item.id}`, name: item.name, price: item.price, image: item.image })}
+                    onClick={() => addItem({ id: `orig-${item.id}`, name: item.name, price: item.price, image: item.image ?? item.images?.[0] })}
                     className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
                     onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; e.currentTarget.style.background='#ae1fe308'; }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
