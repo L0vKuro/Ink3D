@@ -176,7 +176,7 @@ const teams = [
     logo: "/Rejects Esports.jpg",
     color: "#D41D30",
     items: [
-      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN",  images: [""/Rjects Keychain front.jpg", "/Rejcts Keychain side.jpg"] }, 
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN",  images: [""/Rjects Keychain front.jpg","/Rejcts Keychain side.jpg"] }, 
     ] 
   }
 ]; 
