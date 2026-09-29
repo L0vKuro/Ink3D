@@ -17,7 +17,7 @@ import { useCart } from "../context/CartContext";
 // instead of `image`:
 //    { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", images: ["/controller-stand-front.png", "/controller-stand-back.png"], credit: "NightStawker" },
 const items = [
-  // (empty until first items are finalized)
+  { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
 ];
 
 const tagColors = {
