@@ -17,7 +17,7 @@ import { useCart } from "../context/CartContext";
 // instead of `image`:
 //    { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", images: ["/controller-stand-front.png", "/controller-stand-back.png"], credit: "NightStawker" },
 const items = [
-  { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
+  { id: "controller-stand", name: "CONTROLLER STAND ( COLOR CAN VARY )", price: "$25.00", tag: "ACCESSORY", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
 ];
 
 const tagColors = {
