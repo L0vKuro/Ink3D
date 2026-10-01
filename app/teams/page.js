@@ -155,7 +155,7 @@ const teams = [
     color: "#39FF14",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" }, 
-      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" }
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/7vencosterfront.png", "/7vencoasterside.png"] },
     ] 
   }, 
