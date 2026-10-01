@@ -167,7 +167,7 @@ const teams = [
     items: [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
-     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/100T coaster set.jpg", "/7ven coaster side.png, "/7ven coaster right.png"] },
+     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/100T coaster set.jpg", "/7ven coaster side.png , "/7ven coaster right.png"] },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" },
     ] 
    }, 
