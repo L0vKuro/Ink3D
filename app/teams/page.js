@@ -92,9 +92,9 @@ const teams = [
     logo: "/team-SGC (shintogamingclub).jpg",
     color: "#e63946",
     items: [
-     { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
+      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
       { name: "FIDGET TOY", price: "$8.00", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
-       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/Shinto_Gaming_Club-lightbox.png" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/Shinto_Gaming_Club-lightbox.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/Shinto_Gaming_Club-_coaster_set.png" },
     ],
   },
@@ -114,7 +114,7 @@ const teams = [
     color: "#7b2d8b",
     items: [
       { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/vaultix-wallart.png" },
-       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/vaultix-coaster.png" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/vaultix-keychain.png" },
     ],
@@ -154,9 +154,9 @@ const teams = [
     logo: "/7ven.jpg",
     color: "#39FF14",
     items: [
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" }, 
-       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" }
-      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" }, 
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" }
+      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/7vencoasterside.png", "/7vencoaster.png"] },
     ] 
   }, 
   { 
@@ -167,7 +167,6 @@ const teams = [
     items: [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
-     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/7ven coster.png", "/7ven coaster right.png "] },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" },
     ] 
    }, 
