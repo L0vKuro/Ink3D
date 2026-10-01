@@ -26,6 +26,10 @@ export default function Admin() {
   const [resetPassword, setResetPassword] = useState("");
   const [editTierId, setEditTierId] = useState(null);
   const [editTierValue, setEditTierValue] = useState("");
+  const [manualSaleId, setManualSaleId] = useState(null);
+  const [manualSaleAmount, setManualSaleAmount] = useState("");
+  const [manualSaleNote, setManualSaleNote] = useState("");
+  const [manualSaleLoading, setManualSaleLoading] = useState(false);
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [showFulfilled, setShowFulfilled] = useState(false);
@@ -196,6 +200,31 @@ export default function Admin() {
       setAffiliateMsg(`// ${name.toUpperCase()} MOVED TO ${editTierValue.toUpperCase()}`);
     } else {
       setAffiliateMsg("// FAILED TO UPDATE TIER");
+    }
+  }
+  async function handleLogManualSale(id) {
+    const amount = parseFloat(manualSaleAmount);
+    if (!manualSaleAmount || isNaN(amount) || amount <= 0) {
+      setAffiliateMsg("// ENTER A VALID SALE AMOUNT");
+      return;
+    }
+    setManualSaleLoading(true);
+    const res = await fetch("/api/admin/manual-sale", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ affiliateId: id, saleAmount: amount, note: manualSaleNote }),
+    });
+    if (res.status === 401) { router.push("/admin/login"); return; }
+    const data = await res.json();
+    setManualSaleLoading(false);
+    if (res.ok) {
+      await loadAffiliates();
+      setManualSaleId(null);
+      setManualSaleAmount("");
+      setManualSaleNote("");
+      setAffiliateMsg(`// LOGGED $${amount.toFixed(2)} SALE — +$${(amount * data.affiliate.commission / 100).toFixed(2)} CREDITED`);
+    } else {
+      setAffiliateMsg(`// ${data.error?.toUpperCase() ?? 'ERROR'}`);
     }
   }
   function generatePassword() {
@@ -538,11 +567,15 @@ export default function Admin() {
                         <div className="font-mono-custom text-[10px] text-white/30 break-all">{a.email}</div>
                       </div>
                       <div className="flex gap-3 flex-wrap sm:shrink-0">
-                        <button onClick={() => { setEditTierId(a.id); setEditTierValue(a.tier); setResetPasswordId(null); }}
+                        <button onClick={() => { setManualSaleId(a.id); setManualSaleAmount(""); setManualSaleNote(""); setEditTierId(null); setResetPasswordId(null); }}
+                          className="font-mono-custom text-[9px] text-white/20 hover:text-green-400 transition-colors tracking-widest">
+                          [ LOG SALE ]
+                        </button>
+                        <button onClick={() => { setEditTierId(a.id); setEditTierValue(a.tier); setResetPasswordId(null); setManualSaleId(null); }}
                           className="font-mono-custom text-[9px] text-white/20 hover:text-[#ae1fe3] transition-colors tracking-widest">
                           [ EDIT TIER ]
                         </button>
-                        <button onClick={() => { setResetPasswordId(a.id); setResetPassword(""); setEditTierId(null); }}
+                        <button onClick={() => { setResetPasswordId(a.id); setResetPassword(""); setEditTierId(null); setManualSaleId(null); }}
                           className="font-mono-custom text-[9px] text-white/20 hover:text-yellow-400 transition-colors tracking-widest">
                           [ RESET PW ]
                         </button>
@@ -552,6 +585,37 @@ export default function Admin() {
                         </button>
                       </div>
                     </div>
+                    {manualSaleId === a.id && (
+                      <div className="flex flex-col gap-3 mb-4 border p-4 bg-[#050505]" style={{borderColor: 'rgba(34,197,94,0.25)'}}>
+                        <div className="font-mono-custom text-[8px] tracking-[0.3em] text-green-400/70">// LOG A DIRECT SALE — CREDITS THIS AFFILIATE AS IF THEIR CODE WAS USED</div>
+                        <div className="grid sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className={labelClass}>SALE AMOUNT ($)</label>
+                            <input type="number" min="0.01" step="0.01" value={manualSaleAmount} onChange={e => setManualSaleAmount(e.target.value)} placeholder="150.00" className={inputClass} />
+                          </div>
+                          <div>
+                            <label className={labelClass}>NOTE (OPTIONAL)</label>
+                            <input value={manualSaleNote} onChange={e => setManualSaleNote(e.target.value)} placeholder="10 keychains — direct order" className={inputClass} />
+                          </div>
+                        </div>
+                        {manualSaleAmount && !isNaN(parseFloat(manualSaleAmount)) && (
+                          <div className="font-mono-custom text-[9px] text-white/40">
+                            WILL CREDIT: <span className="text-green-400">+${(parseFloat(manualSaleAmount) * a.commission / 100).toFixed(2)}</span> earnings ({a.commission}% of ${parseFloat(manualSaleAmount).toFixed(2)})
+                          </div>
+                        )}
+                        <div className="flex gap-3">
+                          <button onClick={() => handleLogManualSale(a.id)} disabled={manualSaleLoading}
+                            className="px-4 py-2 font-mono-custom text-[9px] tracking-widest font-black transition-all duration-200"
+                            style={{background: manualSaleLoading ? '#22c55e80' : '#22c55e', color: '#000'}}>
+                            {manualSaleLoading ? 'SAVING...' : 'CONFIRM & CREDIT'}
+                          </button>
+                          <button onClick={() => { setManualSaleId(null); setManualSaleAmount(""); setManualSaleNote(""); }}
+                            className="px-4 py-2 font-mono-custom text-[9px] tracking-widest text-white/30 hover:text-white transition-colors">
+                            CANCEL
+                          </button>
+                        </div>
+                      </div>
+                    )}
                     {editTierId === a.id && (
                       <div className="flex flex-col sm:flex-row gap-3 mb-4">
                         <select value={editTierValue} onChange={e => setEditTierValue(e.target.value)} className={`${inputClass} flex-1 cursor-pointer`}>
