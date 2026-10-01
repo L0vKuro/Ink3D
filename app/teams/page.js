@@ -144,7 +144,7 @@ const teams = [
     logo: "/team-Ninefly.jpg",
     color: "#ffffff",
     items: [
-      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/ninefly-keychain.png" },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nine fly keychain.jpg" },
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/ninefly-cubanhypechain.png" }, 
     ] 
   }, 
