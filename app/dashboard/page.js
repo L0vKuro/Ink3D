@@ -49,17 +49,17 @@ export default function Dashboard() {
     setEmail("");
     setPassword("");
   }
-  const stats = affiliate ? {
-    orders: statsView === "lifetime" ? (affiliate.stats?.lifetimeOrders ?? 0) : (affiliate.stats?.monthlyOrders ?? 0),
-    sales: statsView === "lifetime" ? (affiliate.stats?.lifetimeSales ?? 0) : (affiliate.stats?.monthlySales ?? 0),
-    earnings: statsView === "lifetime" ? (affiliate.stats?.lifetimeEarnings ?? 0) : (affiliate.stats?.monthlyEarnings ?? 0),
-  } : null;
   const orders = affiliate?.stats?.orders ?? [];
   const now = new Date();
   const thisMonthOrders = orders.filter(o => {
     const d = new Date(o.date);
     return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
   });
+  const stats = affiliate ? {
+    orders: statsView === "lifetime" ? (affiliate.stats?.lifetimeOrders ?? 0) : thisMonthOrders.length,
+    sales: statsView === "lifetime" ? (affiliate.stats?.lifetimeSales ?? 0) : thisMonthOrders.reduce((s, o) => s + (o.saleAmount ?? 0), 0),
+    earnings: statsView === "lifetime" ? (affiliate.stats?.lifetimeEarnings ?? 0) : thisMonthOrders.reduce((s, o) => s + (o.earnings ?? 0), 0),
+  } : null;
   const displayOrders = statsView === "lifetime" ? orders : thisMonthOrders;
   if (!affiliate) {
     return (
