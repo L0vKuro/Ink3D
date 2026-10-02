@@ -556,7 +556,16 @@ export default function Admin() {
                   <div className="font-mono-custom text-[9px] text-white/20 tracking-widest">// NO AFFILIATES YET</div>
                 </div>
               ) : (
-                affiliates.map(a => (
+                affiliates.map(a => {
+                  const now = new Date();
+                  const thisMonthOrders = (a.stats?.orders ?? []).filter(o => {
+                    const d = new Date(o.date);
+                    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                  });
+                  const monthlyOrders = thisMonthOrders.length;
+                  const monthlySales = thisMonthOrders.reduce((sum, o) => sum + (o.saleAmount ?? 0), 0);
+                  const monthlyEarnings = thisMonthOrders.reduce((sum, o) => sum + (o.earnings ?? 0), 0);
+                  return (
                   <div key={a.id} className="border border-white/[0.06] p-6 bg-[#0a0a0a]">
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-4">
                       <div className="min-w-0">
@@ -675,15 +684,15 @@ export default function Admin() {
                     <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
                       <div className="bg-[#050505] p-3 border border-white/[0.04]">
                         <div className="font-mono-custom text-[8px] text-white/30 tracking-widest mb-1">ORDERS</div>
-                        <div className="font-black text-lg text-white/70">{a.stats?.monthlyOrders ?? 0}</div>
+                        <div className="font-black text-lg text-white/70">{monthlyOrders}</div>
                       </div>
                       <div className="bg-[#050505] p-3 border border-white/[0.04]">
                         <div className="font-mono-custom text-[8px] text-white/30 tracking-widest mb-1">SALES</div>
-                        <div className="font-black text-lg text-white/70">${(a.stats?.monthlySales ?? 0).toFixed(2)}</div>
+                        <div className="font-black text-lg text-white/70">${monthlySales.toFixed(2)}</div>
                       </div>
                       <div className="bg-[#050505] p-3 border border-white/[0.04]">
                         <div className="font-mono-custom text-[8px] text-white/30 tracking-widest mb-1">EARNINGS</div>
-                        <div className="font-black text-lg text-green-400/80">${(a.stats?.monthlyEarnings ?? 0).toFixed(2)}</div>
+                        <div className="font-black text-lg text-green-400/80">${monthlyEarnings.toFixed(2)}</div>
                       </div>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:gap-6 gap-1 font-mono-custom text-[9px] text-white/30">
@@ -691,7 +700,8 @@ export default function Admin() {
                       <span>DISCOUNT: <span style={{color: '#ae1fe3'}}>{a.discountCode}</span> ({a.discountPercent}% off)</span>
                     </div>
                   </div>
-                ))
+                  );
+                })
               )}
             </div>
           </div>
