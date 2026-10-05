@@ -185,7 +185,7 @@ const teams = [
     logo: "/Rejects Esports.jpg",
     color: "#D41D30",
     items: [
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/oblivion keychain mock up.png" },
+     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/Rejects Keychain.jpg", "/rejects2.jpg"] },
       ] 
    }, 
   { 
@@ -194,7 +194,7 @@ const teams = [
     logo: "/oblivion png.png",
     color: "#7F00FF",
     items: [
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/Rejects Keychain.jpg", "/rejects2.jpg"] },
+       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/oblivion keychain mock up.png" },
    ]  
   } 
 ]; 
