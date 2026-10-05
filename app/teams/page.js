@@ -157,6 +157,15 @@ const teams = [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" }, 
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/7vencosterfront.png", "/7vencoasterside.png", "/7vencoasterright.png"] }, 
+      {
+    id: "outkastz",
+    name: "Outkastz",
+    logo: "/team-Outkastz.png",
+    color: "#2d6a4f",
+    items: [
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/outkastz-key_chain.png" },
+    ],
+  },
     ] 
   }, 
   { 
@@ -177,6 +186,15 @@ const teams = [
     color: "#D41D30",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/Rejects Keychain.jpg", "/rejects2.jpg"] },
+      {
+    id: "OBV",
+    name: "Oblivion",
+    logo: "/oblivion png.png",
+    color: "##9D00FF",
+    items: [
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/oblivion keychain mock up.png" },
+    ],
+  },
     ] 
   }
 ]; 
