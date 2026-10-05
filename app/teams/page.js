@@ -193,10 +193,9 @@ const teams = [
     color: "##9D00FF",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/oblivion keychain mock up.png" },
-    ],
-  },
     ] 
-  }
+   }, 
+  { 
 ]; 
   const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
