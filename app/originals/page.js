@@ -28,7 +28,7 @@ const tagColors = {
   NECKLACE:  "text-pink-400 border-pink-400/50 bg-pink-400/10",
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
   FIDGET:    "text-orange-400 border-orange-400/50 bg-orange-400/10",
-"CONTROLLER STAND": "text-deep-purple-400 border-red-400/50 bg-red-400/10",
+"CONTROLLER STAND": "text-deep-purple-400 border-deep-purple-400/50 bg-deep-purple-400/10",
 };
 
 export default function Originals() {
