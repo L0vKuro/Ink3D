@@ -186,8 +186,8 @@ const teams = [
     color: "#D41D30",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/Rejects Keychain.jpg", "/rejects2.jpg"] },
-   }, 
-  { 
+   ] 
+  } 
 ]; 
   const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
