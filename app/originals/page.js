@@ -17,7 +17,7 @@ import { useCart } from "../context/CartContext";
 // instead of `image`:
 //    { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", images: ["/controller-stand-front.png", "/controller-stand-back.png"], credit: "NightStawker" },
 const items = [
-  { id: "controller-stand", name: "CONTROLLER STAND ( COLOR CAN VARY )", price: "$25.00", tag: "ACCESSORY", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
+  { id: "controller-stand", name: "CONTROLLER STAND ( COLOR CAN VARY )", price: "$25.00", tag: "CONTROLLER STAND", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
 ];
 
 const tagColors = {
@@ -28,6 +28,7 @@ const tagColors = {
   NECKLACE:  "text-pink-400 border-pink-400/50 bg-pink-400/10",
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
   FIDGET:    "text-orange-400 border-orange-400/50 bg-orange-400/10",
+"CONTROLLER STAND": "text-deep-purple-400 border-red-400/50 bg-red-400/10",
 };
 
 export default function Originals() {
