@@ -194,7 +194,7 @@ const teams = [
     logo: "/oblivion png.png",
     color: "#7F00FF",
     items: [
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/oblivion keychain mock up.png" },
+     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/" },
    ]  
   } 
 ]; 
