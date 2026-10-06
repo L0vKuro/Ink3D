@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import ProductImage from "../components/ProductImage";
@@ -16,8 +17,21 @@ import { useCart } from "../context/CartContext";
 // For an item with a front and back photo, use `images` (an array)
 // instead of `image`:
 //    { id: "controller-stand", name: "CONTROLLER STAND", price: "$25.00", tag: "ACCESSORY", images: ["/controller-stand-front.png", "/controller-stand-back.png"], credit: "NightStawker" },
+// For an item the buyer must choose a version of (console, color, etc.),
+// add an `options` array — they'll have to pick one before adding to cart:
+//    options: ["PLAYSTATION", "XBOX"],
+// and optionally customize the label above the buttons with `optionLabel`.
 const items = [
-  { id: "controller-stand", name: "CONTROLLER STAND ( COLOR CAN VARY )", price: "$25.00", tag: "CONTROLLER STAND", image: "/Fire-Semblance Controller Holder.jpg", credit: "NightStawker" },
+  {
+    id: "controller-stand",
+    name: "CONTROLLER STAND ( COLOR CAN VARY )",
+    price: "$25.00",
+    tag: "CONTROLLER STAND",
+    image: "/Fire-Semblance Controller Holder.jpg",
+    credit: "NightStawker",
+    options: ["PLAYSTATION", "XBOX"],
+    optionLabel: "SELECT CONSOLE",
+  },
 ];
 
 const tagColors = {
@@ -28,12 +42,91 @@ const tagColors = {
   NECKLACE:  "text-pink-400 border-pink-400/50 bg-pink-400/10",
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
   FIDGET:    "text-orange-400 border-orange-400/50 bg-orange-400/10",
-"CONTROLLER STAND": "text-purple-400 border-purple-400/50 bg-purple-400/10",
+  "CONTROLLER STAND": "text-purple-400 border-purple-400/50 bg-purple-400/10",
 };
 
-export default function Originals() {
+function OriginalCard({ item }) {
   const { addItem } = useCart();
+  const [selectedOption, setSelectedOption] = useState("");
+  const [optionError, setOptionError] = useState(false);
+  const hasOptions = Array.isArray(item.options) && item.options.length > 0;
 
+  function handleAdd() {
+    if (hasOptions && !selectedOption) {
+      setOptionError(true);
+      return;
+    }
+    setOptionError(false);
+    addItem({
+      id: `orig-${item.id}${hasOptions ? `-${selectedOption}` : ""}`,
+      name: item.name,
+      price: item.price,
+      image: item.image ?? item.images?.[0],
+      size: hasOptions ? selectedOption : null,
+    });
+  }
+
+  return (
+    <div className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer">
+      <div className="aspect-square flex items-center justify-center relative overflow-hidden bg-[#0a0a0a]">
+        <div className="absolute inset-0 grid-bg opacity-20" />
+        <ProductImage
+          image={item.image}
+          images={item.images}
+          alt={item.name}
+          imgClassName="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10"
+        />
+      </div>
+      <div className="p-5 border-t border-white/[0.05]">
+        <div className="flex justify-between items-start gap-4 mb-4">
+          <div>
+            <span className={`font-mono-custom text-[9px] font-black tracking-[0.2em] border px-2 py-0.5 ${tagColors[item.tag] || 'text-white/40 border-white/20 bg-white/5'}`}>{item.tag}</span>
+            <h3 className="font-black tracking-wider text-sm mt-2">{item.name}</h3>
+            {item.credit && <p className="font-mono-custom text-[10px] text-white/20 mt-1">Designed by {item.credit}</p>}
+          </div>
+          <div className="text-right shrink-0">
+            <div className="font-black text-white text-lg">{item.price}</div>
+            <div className="font-mono-custom text-[9px] text-white/20">USD</div>
+          </div>
+        </div>
+
+        {hasOptions && (
+          <div className="mb-4" onClick={(e) => e.stopPropagation()}>
+            <div className="font-mono-custom text-[9px] tracking-[0.3em] mb-2" style={{color: optionError ? '#ff4444' : '#ae1fe366'}}>
+              {optionError ? `${item.optionLabel ?? "SELECT AN OPTION"} *` : (item.optionLabel ?? "SELECT AN OPTION")}
+            </div>
+            <div className="grid gap-1" style={{gridTemplateColumns: `repeat(${item.options.length}, minmax(0, 1fr))`}}>
+              {item.options.map(opt => (
+                <button
+                  key={opt}
+                  onClick={() => { setSelectedOption(opt); setOptionError(false); }}
+                  className="py-2 font-mono-custom text-[9px] font-black tracking-wider transition-all duration-200 border"
+                  style={{
+                    background: selectedOption === opt ? '#ae1fe3' : 'transparent',
+                    color: selectedOption === opt ? '#fff' : 'rgba(255,255,255,0.3)',
+                    borderColor: selectedOption === opt ? '#ae1fe3' : optionError ? '#ff444440' : 'rgba(255,255,255,0.08)',
+                  }}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <button
+          onClick={handleAdd}
+          className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
+          onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; e.currentTarget.style.background='#ae1fe308'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
+          [ ADD_TO_CART ]
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function Originals() {
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
       <Nav active="ORIGINALS" />
@@ -59,37 +152,7 @@ export default function Originals() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04]">
             {items.map((item) => (
-              <div key={item.id} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer">
-                <div className="aspect-square flex items-center justify-center relative overflow-hidden bg-[#0a0a0a]">
-                  <div className="absolute inset-0 grid-bg opacity-20" />
-                  <ProductImage
-                    image={item.image}
-                    images={item.images}
-                    alt={item.name}
-                    imgClassName="object-contain p-6 transition-transform duration-700 group-hover:scale-105 z-10"
-                  />
-                </div>
-                <div className="p-5 border-t border-white/[0.05]">
-                  <div className="flex justify-between items-start gap-4 mb-4">
-                    <div>
-                      <span className={`font-mono-custom text-[9px] font-black tracking-[0.2em] border px-2 py-0.5 ${tagColors[item.tag] || 'text-white/40 border-white/20 bg-white/5'}`}>{item.tag}</span>
-                      <h3 className="font-black tracking-wider text-sm mt-2">{item.name}</h3>
-                      {item.credit && <p className="font-mono-custom text-[10px] text-white/20 mt-1">Designed by {item.credit}</p>}
-                    </div>
-                    <div className="text-right shrink-0">
-                      <div className="font-black text-white text-lg">{item.price}</div>
-                      <div className="font-mono-custom text-[9px] text-white/20">USD</div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => addItem({ id: `orig-${item.id}`, name: item.name, price: item.price, image: item.image ?? item.images?.[0] })}
-                    className="w-full border border-white/[0.08] text-white/40 font-mono-custom text-[10px] tracking-[0.2em] py-3 transition-all duration-200"
-                    onMouseEnter={e => { e.currentTarget.style.borderColor='#ae1fe3'; e.currentTarget.style.color='#ae1fe3'; e.currentTarget.style.background='#ae1fe308'; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(255,255,255,0.08)'; e.currentTarget.style.color='rgba(255,255,255,0.4)'; e.currentTarget.style.background='transparent'; }}>
-                    [ ADD_TO_CART ]
-                  </button>
-                </div>
-              </div>
+              <OriginalCard key={item.id} item={item} />
             ))}
           </div>
         )}
