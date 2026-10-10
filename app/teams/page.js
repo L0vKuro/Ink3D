@@ -193,7 +193,7 @@ const teams = [
     id: "NXT",
     name: "NXT GENERATION",
     logo: "/nxt logo.png",
-    color: "#ff5c00",
+    color: "#ff991c",
     items: [
       { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/coming soon.jpg" },
       { name: "LIGHTBOX", price: "$45.00", tag: "LIGHTBOX", images: ["/nxt lightbox front.png", "/nxt lightbox back.png"] },
