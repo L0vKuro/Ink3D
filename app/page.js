@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Nav from "./components/Nav";
+import TiltLogo from "./components/TiltLogo";
 import { useCart } from "./context/CartContext";
 const products = [
   { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K", image: "/reignabove-keychain.png", contain: true },
@@ -29,40 +30,34 @@ export default function Home() {
   const { addItem } = useCart();
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
+      <div className="home-grain" aria-hidden="true" />
       <Nav active="HOME" />
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 grid-bg clip-diagonal overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-[150px] pointer-events-none" style={{background: '#ae1fe308'}} />
         <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/[0.05] blur-[120px] pointer-events-none" />
         <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full blur-[80px] pointer-events-none" style={{background: '#ae1fe310'}} />
-        <div className="font-mono-custom text-[10px] text-white/20 tracking-[0.3em] mb-8 flex items-center gap-4">
+        <div className="hero-vignette absolute inset-0 pointer-events-none" />
+        <div className="relative font-mono-custom text-[10px] text-white/20 tracking-[0.3em] mb-8 flex items-center gap-4">
           <span>INK3D_STUDIO</span>
           <span style={{color: '#ae1fe344'}}>——</span>
           <span>COLLECTION_2026</span>
           <span style={{color: '#ae1fe344'}}>——</span>
           <span>MILFORD_NH</span>
         </div>
-        <div className="mb-6">
-          <Image src="/ink3d_v4_transparent_1.png" alt="INK3D Logo" width={300} height={120} className="object-contain mx-auto flicker" />
+        <div className="relative mt-2 mb-12">
+          <TiltLogo />
         </div>
-        <div className="relative mb-2">
-          <div className="text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none glitch-wrapper" data-text="INK3D">
-            INK3D
-          </div>
-          <div className="absolute inset-0 text-[clamp(4.5rem,17vw,13rem)] font-black tracking-[-0.05em] leading-[0.85] select-none" style={{WebkitTextStroke: '1px #ae1fe322', color: 'transparent', transform: 'translate(3px, 3px)'}}>
-            INK3D
-          </div>
-        </div>
-        <div className="text-[clamp(1.2rem,4vw,3rem)] font-black tracking-[0.25em] text-white/10 mb-8 select-none">
+        <div className="relative text-[clamp(1.2rem,4vw,3rem)] font-black tracking-[0.25em] text-white/10 mb-8 select-none">
           STUDIO
         </div>
-        <p className="text-white/40 text-sm md:text-base max-w-lg tracking-wider leading-relaxed mb-3 font-mono-custom">
+        <p className="relative text-white/40 text-sm md:text-base max-w-lg tracking-wider leading-relaxed mb-3 font-mono-custom">
           // engineered for those who refuse to blend in
         </p>
-        <p className="text-white/20 text-xs tracking-[0.3em] mb-12 font-mono-custom">
+        <p className="relative text-white/20 text-xs tracking-[0.3em] mb-12 font-mono-custom">
           ACCESSORIES — EST. 2024 — MILFORD, NH
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 mb-16">
+        <div className="relative flex flex-col sm:flex-row gap-4 mb-16">
           <Link href="/teams">
             <button className="glow-btn font-black px-12 py-4 text-xs tracking-[0.25em] transition-colors duration-200 relative overflow-hidden group" style={{background: '#ae1fe3', color: '#fff'}}>
               <span className="relative z-10">SHOP NOW</span>
@@ -75,7 +70,7 @@ export default function Home() {
             </button>
           </Link>
         </div>
-        <div className="flex gap-8 md:gap-16 font-mono-custom text-[10px]">
+        <div className="relative flex gap-8 md:gap-16 font-mono-custom text-[10px]">
           <div className="text-center">
             <div className="font-bold" style={{color: '#ae1fe3'}}>500+</div>
             <div className="text-white/20 tracking-widest">SHIPPED</div>
