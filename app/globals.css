@@ -141,3 +141,30 @@ body::after {
   transition: width 0.3s ease;
 }
 .hover-line:hover::after { width: 100%; }
+/* ---------- HOMEPAGE GRAIN + VIGNETTE ---------- */
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-2%, 1.5%); }
+  40%  { transform: translate(1.5%, -2%); }
+  60%  { transform: translate(-1%, -1.5%); }
+  80%  { transform: translate(2%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+.home-grain {
+  position: fixed;
+  inset: -10%;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.17;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  animation: grain-shift 1s steps(6) infinite;
+}
+.hero-vignette {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(174, 31, 227, 0.16), transparent 55%),
+    radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.78) 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-grain { animation: none; }
+}
