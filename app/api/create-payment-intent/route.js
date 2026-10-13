@@ -2,10 +2,21 @@ import Stripe from "stripe";
 import { redis } from "../../lib/ratelimit";
 
 // TEST-mode key only. The mobile app can never charge a real card.
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_TEST);
+// Created lazily (inside the request) so the site builds even when the
+// test key hasn't been added to Vercel yet.
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY_TEST;
+  if (!key) return null;
+  return new Stripe(key);
+}
 
 export async function POST(req) {
   try {
+    const stripe = getStripe();
+    if (!stripe) {
+      return Response.json({ error: "Mobile payments are not configured yet." }, { status: 503 });
+    }
+
     const { items, checkoutData, referralCode } = await req.json();
 
     if (!items || items.length === 0) {
