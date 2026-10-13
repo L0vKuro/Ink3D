@@ -30,7 +30,6 @@ export default function Home() {
   const { addItem } = useCart();
   return (
     <main className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
-      <div className="home-grain" aria-hidden="true" />
       <Nav active="HOME" />
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 grid-bg clip-diagonal overflow-hidden">
