@@ -48,9 +48,6 @@ export default function Home() {
         <div className="relative mt-2 mb-12">
           <TiltLogo />
         </div>
-        <div className="relative text-[clamp(1.2rem,4vw,3rem)] font-black tracking-[0.25em] text-white/10 mb-8 select-none">
-          STUDIO
-        </div>
                <p className="relative text-white/40 text-sm md:text-base max-w-lg tracking-wider leading-relaxed mb-3 font-mono-custom">
           // engineered for those who refuse to blend in
         </p>
