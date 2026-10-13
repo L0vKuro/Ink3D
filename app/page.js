@@ -51,7 +51,7 @@ export default function Home() {
         <div className="relative text-[clamp(1.2rem,4vw,3rem)] font-black tracking-[0.25em] text-white/10 mb-8 select-none">
           STUDIO
         </div>
-        <p className="relative text-white/40 text-sm md:text-base max-w-lg tracking-wider leading-relaxed mb-3 font-mono-custom">
+               <p className="relative text-white/40 text-sm md:text-base max-w-lg tracking-wider leading-relaxed mb-3 font-mono-custom">
           // engineered for those who refuse to blend in
         </p>
         <p className="relative text-white/20 text-xs tracking-[0.3em] mb-12 font-mono-custom">
@@ -70,20 +70,20 @@ export default function Home() {
             </button>
           </Link>
         </div>
-        <div className="relative flex gap-8 md:gap-16 font-mono-custom text-[10px]">
+        <div className="relative flex items-center gap-6 md:gap-20 font-mono-custom mb-24">
           <div className="text-center">
-            <div className="font-bold" style={{color: '#ae1fe3'}}>500+</div>
-            <div className="text-white/20 tracking-widest">SHIPPED</div>
+            <div className="font-black text-3xl md:text-5xl" style={{color: '#ae1fe3'}}>500+</div>
+            <div className="text-white/40 text-[11px] md:text-sm tracking-[0.2em] mt-1">SHIPPED</div>
           </div>
-          <div className="text-white/10">|</div>
+          <div className="text-white/10 text-3xl md:text-5xl font-light">|</div>
           <div className="text-center">
-            <div className="text-white/60 font-bold">100%</div>
-            <div className="text-white/20 tracking-widest">SATISFACTION</div>
+            <div className="text-white/80 font-black text-3xl md:text-5xl">100%</div>
+            <div className="text-white/40 text-[11px] md:text-sm tracking-[0.2em] mt-1">SATISFACTION</div>
           </div>
-          <div className="text-white/10">|</div>
+          <div className="text-white/10 text-3xl md:text-5xl font-light">|</div>
           <div className="text-center">
-            <div className="text-blue-400 font-bold">3-7D</div>
-            <div className="text-white/20 tracking-widest">DELIVERY</div>
+            <div className="text-blue-400 font-black text-3xl md:text-5xl">3-7D</div>
+            <div className="text-white/40 text-[11px] md:text-sm tracking-[0.2em] mt-1">DELIVERY</div>
           </div>
         </div>
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
