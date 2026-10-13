@@ -12,9 +12,10 @@ const RANGE = { x: 20, y: 30 };          // how far it tilts toward the cursor
 const FOLLOW = 7;                        // higher = snappier follow
 const SMOOTH = 12;                       // higher = less glide (second smoothing stage)
 const IDLE_AFTER_MS = 2500;              // start gentle drifting after the mouse is still this long
+const GLOW_RIM = 1.0;                    // thin neon edge hugging the logo (0-1)
 const GLOW_TIGHT = 0.95;                 // inner glow strength (0-1)
 const GLOW_WIDE = 0.55;                  // outer glow strength (0-1)
-const GLOW_SPEED = 45;                   // color cycle speed (degrees per second)
+const GLOW_SPEED = 60;                   // color flow speed around the logo (degrees per second)
 
 const maskStyle = {
   WebkitMaskImage: `url("${LOGO}")`,
@@ -52,7 +53,9 @@ export default function TiltLogo() {
     if (!wrap || !card || !gloss || !shadow) return;
     const spinners = Array.from(card.querySelectorAll("[data-spin]"));
 
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Only the autonomous idle drift respects reduced-motion.
+    // Cursor tilt + RGB flow always run.
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const clamp = (v) => Math.max(-1, Math.min(1, v));
     const target = { x: 0, y: 0 }; // raw cursor, -1..1
     const cur = { x: 0, y: 0 };    // stage 1 smoothing
@@ -63,11 +66,11 @@ export default function TiltLogo() {
     let visible = true;
 
     function render(t, idleW) {
-      const wobX = reduce ? 0 : Math.cos(t * 0.7) * 0.32 * idleW;
-      const wobY = reduce ? 0 : Math.sin(t * 0.9) * 0.22 * idleW;
+      const wobX = calm ? 0 : Math.cos(t * 0.7) * 0.32 * idleW;
+      const wobY = calm ? 0 : Math.sin(t * 0.9) * 0.22 * idleW;
       const nx = clamp(disp.x + wobX);
       const ny = clamp(disp.y + wobY);
-      const lift = reduce ? 0 : Math.sin(t * 1.2) * 7;
+      const lift = calm ? 0 : Math.sin(t * 1.2) * 7;
       const rx = REST.x - ny * RANGE.x;
       const ry = REST.y + nx * RANGE.y;
       card.style.transform = `translate3d(0, ${lift}px, 0) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${REST.z}deg)`;
@@ -80,18 +83,13 @@ export default function TiltLogo() {
         `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.22) 16%, rgba(255,255,255,0) 38%), ` +
         `linear-gradient(112deg, rgba(255,255,255,0) ${band - 16}%, rgba(255,255,255,0.38) ${band}%, rgba(255,255,255,0) ${band + 16}%)`;
 
-      // rgb color cycle
-      const deg = reduce ? 0 : (t * GLOW_SPEED) % 360;
+      // rgb color flow around the logo
+      const deg = (t * GLOW_SPEED) % 360;
       for (const el of spinners) {
         el.style.transform = `translate(-50%, -50%) rotate(${deg}deg)`;
       }
       shadow.style.background = `radial-gradient(ellipse at center, hsla(${(deg + 280) % 360}, 100%, 60%, 0.5), transparent 70%)`;
       shadow.style.transform = `translateX(${-nx * 40}px) scaleX(${1 - Math.abs(nx) * 0.1})`;
-    }
-
-    if (reduce) {
-      render(0, 0);
-      return;
     }
 
     const start = performance.now();
@@ -114,6 +112,7 @@ export default function TiltLogo() {
 
     function onPoint(e) {
       const p = e.touches && e.touches[0] ? e.touches[0] : e;
+      if (typeof p.clientX !== "number") return;
       target.x = clamp(((p.clientX / window.innerWidth) * 2 - 1) * 1.15);
       target.y = clamp(((p.clientY / window.innerHeight) * 2 - 1) * 1.15);
       lastMove = performance.now();
@@ -122,8 +121,10 @@ export default function TiltLogo() {
       target.x = 0;
       target.y = 0;
     }
-    window.addEventListener("pointermove", onPoint, { passive: true });
-    window.addEventListener("touchmove", onPoint, { passive: true });
+    const opts = { passive: true, capture: true };
+    window.addEventListener("pointermove", onPoint, opts);
+    window.addEventListener("mousemove", onPoint, opts);
+    window.addEventListener("touchmove", onPoint, opts);
     document.addEventListener("mouseleave", onLeave);
 
     const io = new IntersectionObserver(
@@ -134,8 +135,9 @@ export default function TiltLogo() {
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", onPoint);
-      window.removeEventListener("touchmove", onPoint);
+      window.removeEventListener("pointermove", onPoint, opts);
+      window.removeEventListener("mousemove", onPoint, opts);
+      window.removeEventListener("touchmove", onPoint, opts);
       document.removeEventListener("mouseleave", onLeave);
       io.disconnect();
     };
@@ -173,12 +175,12 @@ export default function TiltLogo() {
           transform: `rotateX(${REST.x}deg) rotateY(${REST.y}deg) rotateZ(${REST.z}deg)`,
         }}
       >
-        {/* RGB glow, wide + soft (blur wraps the masked layer so it spills outside the logo) */}
+        {/* RGB glow: wide + soft */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
           style={{
-            transform: `translateZ(${backZ - 6}px) scale(1.05)`,
+            transform: `translateZ(${backZ - 8}px) scale(1.06)`,
             filter: "blur(30px)",
             opacity: GLOW_WIDE,
           }}
@@ -187,14 +189,28 @@ export default function TiltLogo() {
             <div data-spin style={spinStyle} />
           </div>
         </div>
-        {/* RGB glow, tight + bright */}
+        {/* RGB glow: tight + bright */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
           style={{
-            transform: `translateZ(${backZ - 3}px) scale(1.015)`,
+            transform: `translateZ(${backZ - 5}px) scale(1.025)`,
             filter: "blur(9px)",
             opacity: GLOW_TIGHT,
+          }}
+        >
+          <div className="absolute inset-0 overflow-hidden" style={maskStyle}>
+            <div data-spin style={spinStyle} />
+          </div>
+        </div>
+        {/* RGB neon rim: thin crisp edge hugging the logo */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            transform: `translateZ(${backZ - 2}px) scale(1.012)`,
+            filter: "blur(2.5px)",
+            opacity: GLOW_RIM,
           }}
         >
           <div className="absolute inset-0 overflow-hidden" style={maskStyle}>
