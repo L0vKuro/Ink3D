@@ -9,6 +9,7 @@ const DEPTH = 22;                        // extrusion layers (more = smoother si
 const STEP = 1.5;                        // px between layers (thickness = DEPTH * STEP)
 const REST = { x: 6, y: -8, z: -2 };     // resting angle (degrees)
 const RANGE = { x: 20, y: 30 };          // how far it tilts toward the cursor
+const glow = compact ? C_GLOW : { wide: GLOW_WIDE, tight: GLOW_TIGHT, rim: GLOW_RIM };
 const FOLLOW = 7;                        // higher = snappier follow
 const SMOOTH = 12;                       // higher = less glide (second smoothing stage)
 const IDLE_AFTER_MS = 2500;              // start gentle drifting after the mouse is still this long
@@ -18,10 +19,11 @@ const GLOW_WIDE = 0.55;                  // outer glow strength (0-1)
 const GLOW_SPEED = 60;                   // color flow speed around the logo (degrees per second)
 
 // ---- tuning (compact nav logo) ----
-const C_DEPTH = 9;
-const C_STEP = 0.7;
-const C_RANGE = { x: 14, y: 24 };
-const C_SCALE = 0.3;                     // scales blur radii / offsets down for small size
+const C_DEPTH = 6;
+const C_STEP = 0.6;
+const C_RANGE = { x: 10, y: 16 };
+const C_SCALE = 0.22;                    // scales blur radii / offsets down for small size
+const C_GLOW = { wide: 0.25, tight: 0.7, rim: 0.9 };
 
 const maskStyle = {
   WebkitMaskImage: `url("${LOGO}")`,
