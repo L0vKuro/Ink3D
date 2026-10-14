@@ -9,7 +9,6 @@ const DEPTH = 22;                        // extrusion layers (more = smoother si
 const STEP = 1.5;                        // px between layers (thickness = DEPTH * STEP)
 const REST = { x: 6, y: -8, z: -2 };     // resting angle (degrees)
 const RANGE = { x: 20, y: 30 };          // how far it tilts toward the cursor
-const glow = compact ? C_GLOW : { wide: GLOW_WIDE, tight: GLOW_TIGHT, rim: GLOW_RIM };
 const FOLLOW = 7;                        // higher = snappier follow
 const SMOOTH = 12;                       // higher = less glide (second smoothing stage)
 const IDLE_AFTER_MS = 2500;              // start gentle drifting after the mouse is still this long
@@ -57,6 +56,7 @@ export default function TiltLogo({ compact = false, width = "88px" }) {
   const depth = compact ? C_DEPTH : DEPTH;
   const step = compact ? C_STEP : STEP;
   const range = compact ? C_RANGE : RANGE;
+  const glow = compact ? C_GLOW : { wide: GLOW_WIDE, tight: GLOW_TIGHT, rim: GLOW_RIM };
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -203,7 +203,7 @@ export default function TiltLogo({ compact = false, width = "88px" }) {
           style={{
             transform: `translateZ(${backZ - 8 * S}px) scale(1.06)`,
             filter: `blur(${Math.max(2, 30 * S)}px)`,
-            opacity: GLOW_WIDE,
+            opacity: glow.wide,
           }}
         >
           <div className="absolute inset-0 overflow-hidden" style={maskStyle}>
@@ -217,7 +217,7 @@ export default function TiltLogo({ compact = false, width = "88px" }) {
           style={{
             transform: `translateZ(${backZ - 5 * S}px) scale(1.025)`,
             filter: `blur(${Math.max(1, 9 * S)}px)`,
-            opacity: GLOW_TIGHT,
+            opacity: glow.tight,
           }}
         >
           <div className="absolute inset-0 overflow-hidden" style={maskStyle}>
@@ -231,7 +231,7 @@ export default function TiltLogo({ compact = false, width = "88px" }) {
           style={{
             transform: `translateZ(${backZ - 2 * S}px) scale(1.012)`,
             filter: `blur(${Math.max(0.6, 2.5 * S)}px)`,
-            opacity: GLOW_RIM,
+            opacity: glow.rim,
           }}
         >
           <div className="absolute inset-0 overflow-hidden" style={maskStyle}>
