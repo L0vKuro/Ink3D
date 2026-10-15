@@ -8,7 +8,8 @@ export default function Shipping() {
       <LegalSection heading="1. PROCESSING TIME">
         <p>
           Most items are 3D-printed and packed to order. Orders are processed and handed off to our
-          shipping carrier within 3–5 business days of purchase. You&apos;ll receive a tracking link by
+          shipping carrier within 3–5 business days of purchase, then 2–5
+days in transit. You&apos;ll receive a tracking link by
           email as soon as your order ships.
         </p>
       </LegalSection>
