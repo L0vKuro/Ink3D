@@ -28,7 +28,6 @@ const items = [
     price: "$25.00",
     tag: "CONTROLLER STAND",
     image: "/Fire-Semblance Controller Holder.jpg",
-    description: "Fire Emblem Inspired PS5 & Xbox Controller Stand — Precision 3D-printed in premium Silk PLA with a high-shine metallic finish, giving your PS5 or Xbox controller a heroic throne on any desk or display setup.",
     credit: "NightStawker",
     options: ["PLAYSTATION", "XBOX"],
     optionLabel: "SELECT CONSOLE",
