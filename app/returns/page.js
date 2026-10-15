@@ -32,7 +32,7 @@ export default function Returns() {
       </LegalSection>
       <LegalSection heading="5. REFUNDS">
         <p>
-          Approved refunds are issued to your original PayPal payment method. Please allow 5–10 business
+          Approved refunds are issued to your original payment method. Please allow 5–10 business
           days for the refund to appear, depending on PayPal processing times.
         </p>
       </LegalSection>
