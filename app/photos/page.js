@@ -7,7 +7,6 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
 const photos = [
-  { file: "/ROKKR Keychain Front_.jpg", label: "ROKKR KEYCHAIN — FRONT" },
   { file: "/Shinto Gaming Keychain.jpg", label: "SHINTO GAMING KEYCHAIN" },
   { file: "/IMG_5708.jpg", label: "WLG Lightbox" },
   { file: "/tpc hype chain v3.jpg", label: "TPC HYPE CHAIN " },
