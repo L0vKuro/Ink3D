@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import ProductImage from "../components/ProductImage";
+import TeamCard from "../components/TeamCard";
 import { useCart } from "../context/CartContext";
 const teams = [
   {
@@ -129,7 +130,7 @@ const teams = [
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/veriphy-lightbox1.avif" },
     ],
   },
-{
+  {
     id: "wlg",
     name: "White Leopard Gaming",
     logo: "/team-White Leopard.png",
@@ -138,28 +139,28 @@ const teams = [
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/whiteleopard-lightbox.png" },
     ],
   },
-  { 
+  {
     id: "ninefly",
     name: "Ninefly",
     logo: "/team-Ninefly.jpg",
     color: "#ffffff",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nine fly keychain.jpg" },
-      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/ninefly-cubanhypechain.png" }, 
-    ] 
-  }, 
-    { 
+      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/ninefly-cubanhypechain.png" },
+    ],
+  },
+  {
     id: "7ven-club",
     name: "7ven Club",
     logo: "/7ven.jpg",
     color: "#39FF14",
     items: [
-      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" }, 
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
-      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/7vencosterfront.png", "/7vencoasterside.png", "/7vencoasterright.png"] }, 
-    ] 
-  }, 
-  { 
+      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/7vencosterfront.png", "/7vencoasterside.png", "/7vencoasterright.png"] },
+    ],
+  },
+  {
     id: "PRS",
     name: "PRS GAMING",
     logo: "/prs cover photo.png",
@@ -168,28 +169,28 @@ const teams = [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN" },
-    ] 
-   }, 
-  { 
+    ],
+  },
+  {
     id: "Rejects",
     name: "Rejects Esports",
     logo: "/Rejects Esports.jpg",
     color: "#D41D30",
     items: [
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/Rejects Keychain.jpg", "/rejects2.jpg"] },
-     { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/rejects light.png", "/rejects light side.png"] },
-      ] 
-   }, 
-  { 
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/Rejects Keychain.jpg", "/rejects2.jpg"] },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/rejects light.png", "/rejects light side.png"] },
+    ],
+  },
+  {
     id: "OBV",
     name: "Oblivion Esports",
     logo: "/oblivion png.png",
     color: "#7F00FF",
     items: [
-       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/oblivion keychain mock up.png" },
-     ] 
-   }, 
-  { 
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/oblivion keychain mock up.png" },
+    ],
+  },
+  {
     id: "NXT",
     name: "NXT GENERATION",
     logo: "/nxt logo.png",
@@ -199,18 +200,18 @@ const teams = [
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/nxt lightbox front.png", "/nxt lightbox back.png"] },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/nxt coaster front.png", "/nxt coaster side.png"] },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nxt keychain front.png" },
-      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/nxt hype chain.png" }, 
-    ]  
-  } 
-]; 
-  const tagColors = {
+      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/nxt hype chain.png" },
+    ],
+  },
+];
+const tagColors = {
   KEYCHAIN:   "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
   LIGHTBOX:   "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
   COASTER:    "text-green-400 border-green-400/50 bg-green-400/10",
   NECKLACE:   "text-pink-400 border-pink-400/50 bg-pink-400/10",
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
   FIDGET:     "text-orange-400 border-orange-400/50 bg-orange-400/10",
- "CONTROLLER STAND": "text-deep-purple-400 border-red-400/50 bg-red-400/10",
+  "CONTROLLER STAND": "text-deep-purple-400 border-red-400/50 bg-red-400/10",
 };
 const featuredTeams = teams.filter(t => t.featured);
 const regularTeams = teams.filter(t => !t.featured);
@@ -263,7 +264,7 @@ export default function Teams() {
                 <div
                   key={team.id}
                   onClick={() => openTeam(team.id)}
-                  className="relative overflow-hidden cursor-pointer group border transition-all duration-300"
+                  className="tc-featured relative overflow-hidden cursor-pointer group border transition-all duration-300"
                   style={{ borderColor: team.color + '40', background: `linear-gradient(120deg, ${team.color}14, #0a0a0a 65%)` }}
                 >
                   <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
@@ -317,36 +318,14 @@ export default function Teams() {
               <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-6" style={{color: '#ae1fe366'}}>// ALL PARTNER STORES</div>
             )}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {regularTeams.map((team) => (
-              <div
+            {regularTeams.map((team, i) => (
+              <TeamCard
                 key={team.id}
-                onClick={() => openTeam(team.id)}
-                onMouseEnter={() => setHoveredTeam(team.id)}
-                onMouseLeave={() => setHoveredTeam(null)}
-                className="relative bg-[#0a0a0a] cursor-pointer transition-all duration-300 border border-transparent"
-                style={{
-                  borderColor: hoveredTeam === team.id ? team.color + '60' : 'transparent',
-                  boxShadow: hoveredTeam === team.id ? `0 0 20px ${team.color}33, 0 0 40px ${team.color}15, inset 0 0 20px ${team.color}08` : 'none',
-                }}
-              >
-                <div className="h-48 relative overflow-hidden flex items-center justify-center p-6"
-                  style={{background: hoveredTeam === team.id ? `radial-gradient(circle at center, ${team.color}12, transparent 70%)` : `radial-gradient(circle at center, ${team.color}05, transparent 70%)`}}>
-                  <div className="absolute inset-0 grid-bg opacity-20" />
-                  <div className="relative z-10 w-24 h-24 flex items-center justify-center">
-                    <Image src={team.logo} alt={team.name} fill
-                      className="object-contain transition-transform duration-500"
-                      style={{transform: hoveredTeam === team.id ? 'scale(1.1)' : 'scale(1)'}} />
-                  </div>
-                </div>
-                <div className="p-4 border-t" style={{borderColor: hoveredTeam === team.id ? team.color + '30' : 'rgba(255,255,255,0.05)'}}>
-                  <div className="font-mono-custom text-[9px] tracking-widest mb-1" style={{color: team.color + '99'}}>{team.items.length} ITEMS</div>
-                  <h3 className="font-black text-sm tracking-wide transition-colors" style={{color: hoveredTeam === team.id ? team.color : 'rgba(255,255,255,0.8)'}}>{team.name}</h3>
-                  <div className="mt-3 text-[10px] font-mono-custom tracking-widest border-t pt-2 flex justify-between items-center" style={{borderColor: 'rgba(255,255,255,0.05)'}}>
-                    <span className="text-white/20">VIEW STORE</span>
-                    <span style={{color: team.color + '80'}}>→</span>
-                  </div>
-                </div>
-              </div>
+                team={team}
+                index={i}
+                total={regularTeams.length}
+                onOpen={() => openTeam(team.id)}
+              />
             ))}
           </div>
           </>
