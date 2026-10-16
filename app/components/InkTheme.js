@@ -19,6 +19,14 @@ const FULL = 150; // orb size at rest
 const DOCK = 44; // orb size next to the logo
 const LABEL_RX = /SYS:\/\/[A-Z0-9_]+_LOADED/;
 
+// true if the element sits inside a fixed-position panel (cart drawer, nav, etc.)
+function insideFixed(el) {
+  for (let n = el; n && n !== document.body; n = n.parentElement) {
+    if (getComputedStyle(n).position === "fixed") return true;
+  }
+  return false;
+}
+
 export default function InkTheme() {
   const path = usePathname() || "/";
   const orb = useRef(null);
@@ -54,7 +62,14 @@ export default function InkTheme() {
       let target = null;
       for (const n of document.querySelectorAll("main div")) {
         const txt = n.textContent || "";
-        if (txt.length < 80 && LABEL_RX.test(txt) && !n.querySelector("div") && !n.closest(".ink-hud-inline")) {
+        if (
+          txt.length < 80 &&
+          LABEL_RX.test(txt) &&
+          !/CART_/.test(txt) &&
+          !n.querySelector("div") &&
+          !n.closest(".ink-hud-inline, nav, aside") &&
+          !insideFixed(n)
+        ) {
           target = n;
           break;
         }
