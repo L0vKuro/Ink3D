@@ -230,8 +230,17 @@ main h1 span, main h2 span { -webkit-text-fill-color: currentColor; }
 
 /* glossy black pearl with white rings (mouse + scroll reactive) */
 .ink-orb-wrap {
-  position: fixed; right: 28px; bottom: 44px; z-index: 30;
-  width: 150px; height: 150px; pointer-events: none; perspective: 700px;
+  position: fixed; top: 0; left: 0; z-index: 30;
+  width: 150px; height: 150px; pointer-events: none;
+  transform-origin: 0 0;
+  transition: transform .9s cubic-bezier(.22, 1, .36, 1);
+  will-change: transform;
+  opacity: 0;
+}
+.ink-orb-wrap.ready { opacity: 1; }
+.ink-orb-wrap.docked { z-index: 60; }
+.ink-orb-bob {
+  position: absolute; inset: 0; perspective: 700px;
   animation: ink-bob 6s ease-in-out infinite;
 }
 @keyframes ink-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
@@ -255,8 +264,10 @@ main h1 span, main h2 span { -webkit-text-fill-color: currentColor; }
   position: absolute; left: 0; right: 0; bottom: -22px; text-align: center;
   font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
   letter-spacing: .3em; color: rgba(255,255,255,.4);
+  transition: opacity .3s ease;
 }
+.ink-orb-wrap.docked .ink-orb-label { opacity: 0; }
 @media (max-width: 767px) {
-  .ink-orb-wrap { display: none; }
+  .ink-orb-wrap:not(.docked) { display: none; }
   .ink-hud { left: 12px; bottom: 12px; }
 }
