@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 
 const TABS = [
@@ -16,11 +17,14 @@ const TABS = [
 
 const FULL = 150; // orb size at rest
 const DOCK = 44; // orb size next to the logo
+const LABEL_RX = /SYS:\/\/[A-Z0-9_]+_LOADED/;
 
 export default function InkTheme() {
   const path = usePathname() || "/";
   const orb = useRef(null);
   const wrap = useRef(null);
+  const [slot, setSlot] = useState(undefined); // undefined = searching, null = fallback, element = inline slot
+  const [extra, setExtra] = useState("");
 
   const idx = TABS.findIndex(([p]) => (p === "/" ? path === "/" : path.startsWith(p)));
   const tab = idx >= 0 ? TABS[idx] : null;
@@ -34,6 +38,50 @@ export default function InkTheme() {
     l.href = "https://fonts.googleapis.com/css2?family=Anton&display=swap";
     document.head.appendChild(l);
   }, []);
+
+  // replace the page's "SYS://..._LOADED" label with the tab HUD
+  useEffect(() => {
+    setExtra("");
+    if (!tab) {
+      setSlot(null);
+      return;
+    }
+    setSlot(undefined);
+    let cancelled = false, tries = 0, timer = 0, hidden = null, box = null;
+
+    const find = () => {
+      if (cancelled) return;
+      let target = null;
+      for (const n of document.querySelectorAll("main div")) {
+        const txt = n.textContent || "";
+        if (txt.length < 80 && LABEL_RX.test(txt) && !n.querySelector("div") && !n.closest(".ink-hud-inline")) {
+          target = n;
+          break;
+        }
+      }
+      if (target) {
+        const m = (target.textContent || "").match(/_LOADED\s*[—–-]*\s*(.*)$/);
+        setExtra(m ? m[1].trim() : "");
+        box = document.createElement("div");
+        box.className = "ink-hud-inline";
+        target.parentNode.insertBefore(box, target);
+        target.style.display = "none";
+        hidden = target;
+        setSlot(box);
+        return;
+      }
+      if (++tries < 30) timer = setTimeout(find, 60);
+      else setSlot(null);
+    };
+    find();
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+      if (hidden) hidden.style.display = "";
+      if (box && box.parentNode) box.parentNode.removeChild(box);
+    };
+  }, [path]);
 
   // mouse + scroll reactive 3D orb
   useEffect(() => {
@@ -114,17 +162,26 @@ export default function InkTheme() {
   const num = String(idx + 1).padStart(2, "0");
   const total = String(TABS.length).padStart(2, "0");
 
+  const hud = (
+    <>
+      <div className="ink-crumb">INK3D / <b>{tab[1]}</b></div>
+      <div className="ink-chips">
+        <div className="ink-chip"><b>TAB {num}</b><span>OF {total} · 3D PRINTING THE GAME</span></div>
+        {extra && <div className="ink-chip"><span>{extra}</span></div>}
+        <div className="ink-chip ink-chip-live"><i />ONLINE</div>
+      </div>
+    </>
+  );
+
   return (
     <>
       <div className="ink-aurora" aria-hidden="true" />
 
-      <div className="ink-hud" aria-hidden="true">
-        <div className="ink-crumb">INK3D / <b>{tab[1]}</b></div>
-        <div className="ink-chips">
-          <div className="ink-chip"><b>TAB {num}</b><span>OF {total} · 3D PRINTING THE GAME</span></div>
-          <div className="ink-chip ink-chip-live"><i />ONLINE</div>
-        </div>
-      </div>
+      {slot ? (
+        createPortal(hud, slot)
+      ) : slot === null ? (
+        <div className="ink-hud" aria-hidden="true">{hud}</div>
+      ) : null}
 
       <div className="ink-orb-wrap" ref={wrap} aria-hidden="true">
         <div className="ink-orb-bob">
