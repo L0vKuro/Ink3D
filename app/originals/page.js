@@ -21,6 +21,7 @@ import { useCart } from "../context/CartContext";
 // add an `options` array — they'll have to pick one before adding to cart:
 //    options: ["PLAYSTATION", "XBOX"],
 // and optionally customize the label above the buttons with `optionLabel`.
+// To add a blurb under the name, add a `description` string.
 const items = [
   {
     id: "controller-stand",
@@ -29,6 +30,7 @@ const items = [
     tag: "CONTROLLER STAND",
     image: "/Fire-Semblance Controller Holder.jpg",
     credit: "NightStawker",
+    description: "Level up your gaming setup with our custom Controller Stand, 3D-printed from premium Silk PLA for a vibrant, silky-smooth finish and unique color gradient on every piece!",
     options: ["PLAYSTATION", "XBOX"],
     optionLabel: "SELECT CONSOLE",
   },
@@ -89,6 +91,10 @@ function OriginalCard({ item }) {
             <div className="font-mono-custom text-[9px] text-white/20">USD</div>
           </div>
         </div>
+
+        {item.description && (
+          <p className="font-mono-custom text-[11px] text-white/40 leading-relaxed mb-4">{item.description}</p>
+        )}
 
         {hasOptions && (
           <div className="mb-4" onClick={(e) => e.stopPropagation()}>
