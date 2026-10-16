@@ -218,7 +218,7 @@ function WarpOverlay({ origin, onDone }) {
           ◆ SYS://OPENING_PORTAL
         </div>
         <div style={{ fontSize: 28, fontWeight: 700, letterSpacing: "0.3em", textShadow: "0 0 24px #ae1fe3" }}>
-          ENTERING APPLY
+          ENTERING
         </div>
         <div style={{ width: 220, height: 2, background: "rgba(255,255,255,.15)", margin: "18px auto 8px" }}>
           <div ref={barRef} style={{ height: "100%", width: "0%", background: "#ae1fe3", boxShadow: "0 0 10px #ae1fe3" }} />
