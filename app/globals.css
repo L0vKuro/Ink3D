@@ -238,7 +238,7 @@ main h1 span, main h2 span { -webkit-text-fill-color: currentColor; }
   opacity: 0;
 }
 .ink-orb-wrap.ready { opacity: 1; }
-.ink-orb-wrap.docked { z-index: 60; }
+.ink-orb-wrap.docked { opacity: 0 !important; transition: transform .9s cubic-bezier(.22, 1, .36, 1), opacity .35s ease !important; }
 .ink-orb-bob {
   position: absolute; inset: 0; perspective: 700px;
   animation: ink-bob 6s ease-in-out infinite;
