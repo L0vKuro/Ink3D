@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import SphereLogo from "../components/SphereLogo";
 
 const stats = [
   { value: "12+", label: "PARTNER ORGS", sub: "AND GROWING" },
@@ -102,7 +103,7 @@ export default function About() {
               <div className="aspect-square bg-[#0a0a0a] border border-white/[0.06] flex items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 grid-bg opacity-30" />
                 <div className="absolute inset-0" style={{background: 'radial-gradient(circle at center, #ae1fe315, transparent 70%)'}} />
-                <Image src="/ink3d_v4_transparent_1.png" alt="INK3D" width={280} height={280} className="object-contain relative z-10 flicker" />
+                <SphereLogo />
               </div>
               {/* Corner decorations */}
               <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2" style={{borderColor: '#ae1fe3'}} />
