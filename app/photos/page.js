@@ -19,7 +19,8 @@ const photos = [
   { file: "/omit joy.jpg", label: "OMIT JOY 2026 TPC Womans Champs MVP " },
   { file: "/tpc womans hypechain.jpg", label: "FRONTDESKLADY 2025 TPC Womens CHAMPS MVP" },
   { file: "/eym lightbox 1.jpg", label: "EYM LIGHTBOX" },
-   { file: "/Rejects Keychain.jpg", label: "REJECTS ESPORTS KEYCHAIN" },
+  { file: "/Rejects Keychain.jpg", label: "REJECTS ESPORTS KEYCHAIN" },
+  { file: "/sterzix lightbox.jpg", label: "STERZIX LIGHTBOX" },
 ];
 
 export default function Photos() {
