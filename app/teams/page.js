@@ -49,6 +49,7 @@ const teams = [
     name: "Earn Your Medal",
     logo: "/team-EYM.jpg",
     color: "#e63946",
+    featured: true,
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/eym lightbox 1.jpg" },
