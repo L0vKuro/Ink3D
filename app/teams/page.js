@@ -30,6 +30,7 @@ description: "OvertakeSector is built on precision, discipline, and results. The
     name: "Atlantis Esports",
     logo: "/Atlantis 2026 logo.png",
     color: "#00b4d8",
+    social: { label: "X", href: "https://x.com/Atlsect" },
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/atlantis-keychain.png" },
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
@@ -40,6 +41,7 @@ description: "OvertakeSector is built on precision, discipline, and results. The
     name: "Buckshot Gaming",
     logo: "/team-Buckshot.png",
     color: "#ff4d6d",
+    social: { label: "X", href: "http://x.com/BuckshotGG" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/buckshot-keychain.png" },
     ],
