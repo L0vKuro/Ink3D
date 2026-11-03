@@ -14,7 +14,7 @@ const teams = [
     logo: "/cb LOGO.jpg",
     color: "#D41D30",
     featured: true,
-   social: { label: "X", href: "https://x.com/OvertakeSector" },
+    social: { label: "X", href: "https://x.com/OvertakeSector" },
 description: "OvertakeSector is built on precision, discipline, and results. The crosshair-and-star logo represents the team's mindset: lock on, take the lead, and never back down. This exclusive INK3D collection features OvertakeSector's signature Crimson Red, Onyx Grey, and Obsidian Fog colors. From keychains and lightboxes to coasters and more, every item reflects the same identity fans see on stream.",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/Overtake Keychain.png" },
@@ -63,6 +63,7 @@ description: "OvertakeSector is built on precision, discipline, and results. The
     name: "God Slayers",
     logo: "/team-GodSlayers.jpg",
     color: "#ffd60a",
+    social: { label: "X", href: "https://x.com/GodSlayersGG" },
     items: [
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
@@ -75,6 +76,7 @@ description: "OvertakeSector is built on precision, discipline, and results. The
     name: "Outkastz",
     logo: "/team-Outkastz.png",
     color: "#2d6a4f",
+    social: { label: "X", href: "https://x.com/oKzEsports" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/outkastz-key_chain.png" },
     ],
@@ -84,6 +86,7 @@ description: "OvertakeSector is built on precision, discipline, and results. The
     name: "Reign Above",
     logo: "/team-ReignAbove.png",
     color: "#c9a227",
+    social: { label: "X", href: "https://x.com/ReignAboveGG" },
     items: [
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/reignabove-cuban.png" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/reignabove_coasters.png" },
