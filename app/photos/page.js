@@ -22,8 +22,7 @@ const photos = [
   { file: "/Rejects Keychain.jpg", label: "REJECTS ESPORTS KEYCHAIN" },
   { file: "/sterzix lightbox.jpg", label: "STERZIX LIGHTBOX" },
   { file: "/tpc champ winner.jpg", label: "TPC CHAMPS" },
-
-export default function Photos() {
+  export default function Photos() {
   const [selected, setSelected] = useState(null);
 
   // Open the lightbox and push a history entry so the browser Back button
