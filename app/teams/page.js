@@ -14,10 +14,7 @@ const teams = [
     logo: "/cb LOGO.jpg",
     color: "#D41D30",
     featured: true,
-    social: { 
-  label: "Twitter", 
-  href: "https://x.com/OvertakeSector", 
-  icon: "fa-brands fa-x-twitter" 
+   social: { label: "X", href: "https://x.com/OvertakeSector" },
     description: "OvertakeSector is built on precision, discipline, and results. The crosshair-and-star logo represents the team's mindset: lock on, take the lead, and never back down. This exclusive INK3D collection features OvertakeSector's signature Crimson Red, Onyx Grey, and Obsidian Fog colors. From keychains and lightboxes to coasters and more, every item reflects the same identity fans see on stream.",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/Overtake Keychain.png" },
