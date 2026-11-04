@@ -14,7 +14,7 @@ const teams = [
     logo: "/cb LOGO.jpg",
     color: "#D41D30",
     featured: true,
-    social: { label: "X", href: "https://x.com/OvertakeSector" },
+    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/OvertakeSector" },
     description: "OvertakeSector is built on precision, discipline, and results. The crosshair-and-star logo represents the team's mindset: lock on, take the lead, and never back down. This exclusive INK3D collection features OvertakeSector's signature Crimson Red, Onyx Grey, and Obsidian Fog colors. From keychains and lightboxes to coasters and more, every item reflects the same identity fans see on stream.",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/Overtake Keychain.png" },
@@ -30,7 +30,7 @@ const teams = [
     name: "Atlantis Esports",
     logo: "/Atlantis 2026 logo.png",
     color: "#00b4d8",
-    social: { label: "X", href: "https://x.com/Atlsect" },
+    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/Atlsect" },
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/atlantis-keychain.png" },
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
@@ -41,7 +41,7 @@ const teams = [
     name: "Buckshot Gaming",
     logo: "/team-Buckshot.png",
     color: "#ff4d6d",
-    social: { label: "X", href: "http://x.com/BuckshotGG" },
+    social: { label: "X", icon: "/x-logo.png", href: "http://x.com/BuckshotGG" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/buckshot-keychain.png" },
     ],
@@ -51,7 +51,7 @@ const teams = [
     name: "Earn Your Medal",
     logo: "/team-EYM.jpg",
     color: "#e63946",
-    social: { label: "X", href: "https://x.com/EarnYourMedal" },
+    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/EarnYourMedal" },
     description:"Welcome to the official home of EYM, a competitive gaming brand built for the relentless. Rooted deep in the esports scene, EYM represents grit, tactical dominance, and a unified community of gamers who play to win. Explore our exclusive lineups, connect with the squad, and wear the iconic iron-shield skull logo with pride.",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
@@ -64,7 +64,7 @@ const teams = [
     name: "God Slayers",
     logo: "/team-GodSlayers.jpg",
     color: "#ffd60a",
-    social: { label: "X", href: "https://x.com/GodSlayersGG" },
+    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/GodSlayersGG" },
     items: [
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
@@ -77,7 +77,7 @@ const teams = [
     name: "Outkastz",
     logo: "/team-Outkastz.png",
     color: "#2d6a4f",
-    social: { label: "X", href: "https://x.com/oKzEsports" },
+    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/oKzEsports" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/outkastz-key_chain.png" },
     ],
@@ -87,7 +87,7 @@ const teams = [
     name: "Reign Above",
     logo: "/team-ReignAbove.png",
     color: "#c9a227",
-    social: { label: "X", href: "https://x.com/ReignAboveGG" },
+    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/ReignAboveGG" },
     items: [
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/reignabove-cuban.png" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/reignabove_coasters.png" },
@@ -303,7 +303,14 @@ export default function Teams() {
                             style={{ color: team.color + 'cc' }}
                             className="transition-colors"
                           >
-                            [ {team.social.label} ↗ ]
+                            {team.social.icon ? (
+                              <span className="inline-flex items-center gap-2">
+                                <Image src={team.social.icon} alt={team.social.label} width={18} height={18} className="object-contain" />
+                                <span>↗</span>
+                              </span>
+                            ) : (
+                              <>[ {team.social.label} ↗ ]</>
+                            )}
                           </Link>
                         )}
                       </div>
@@ -364,7 +371,14 @@ export default function Teams() {
                       className="font-mono-custom text-[10px] tracking-widest transition-colors"
                       style={{ color: selected.color + 'aa' }}
                     >
-                      [ {selected.social.label} ↗ ]
+                      {selected.social.icon ? (
+                        <span className="inline-flex items-center gap-2">
+                          <Image src={selected.social.icon} alt={selected.social.label} width={18} height={18} className="object-contain" />
+                          <span>↗</span>
+                        </span>
+                      ) : (
+                        <>[ {selected.social.label} ↗ ]</>
+                      )}
                     </Link>
                   )}
                 </div>
