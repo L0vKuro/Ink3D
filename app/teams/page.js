@@ -157,7 +157,7 @@ const teams = [
     name: "Ninefly",
     logo: "/team-Ninefly.jpg",
     color: "#ffffff",
-    social: { label: "X", icon: "/twitter logo.png", href: "" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/NineFlyeSports" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nine fly keychain.jpg" },
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/ninefly-cubanhypechain.png" },
@@ -168,7 +168,7 @@ const teams = [
     name: "7ven Club",
     logo: "/7ven.jpg",
     color: "#39FF14",
-    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/NineFlyeSports" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/7VENCLUB" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
