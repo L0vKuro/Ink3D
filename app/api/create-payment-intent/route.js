@@ -1,5 +1,6 @@
 import Stripe from "stripe";
-import { redis } from "../../lib/ratelimit";
+import { redis, ratelimit } from "../../lib/ratelimit";
+import { validateItems } from "../../lib/prices";
 
 // TEST-mode key only. The mobile app can never charge a real card.
 // Created lazily (inside the request) so the site builds even when the
@@ -12,6 +13,12 @@ function getStripe() {
 
 export async function POST(req) {
   try {
+    const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
+    const { success } = await ratelimit.limit(`paymentintent_${ip}`);
+    if (!success) {
+      return Response.json({ error: "Too many requests. Please wait a minute." }, { status: 429 });
+    }
+
     const stripe = getStripe();
     if (!stripe) {
       return Response.json({ error: "Mobile payments are not configured yet." }, { status: 503 });
@@ -19,16 +26,20 @@ export async function POST(req) {
 
     const { items, checkoutData, referralCode } = await req.json();
 
-    if (!items || items.length === 0) {
-      return Response.json({ error: "Cart is empty." }, { status: 400 });
+    const priceCheck = validateItems(items);
+    if (!priceCheck.ok) {
+      return Response.json({ error: priceCheck.error }, { status: 400 });
+    }
+    if (!checkoutData || !checkoutData.email || !checkoutData.fullName) {
+      return Response.json({ error: "Missing checkout details." }, { status: 400 });
     }
 
     const itemsTotal = items.reduce(
-      (sum, item) => sum + parseFloat(String(item.price).replace("$", "")) * item.qty,
+      (sum, item) => sum + parseFloat(String(item.price).replace("$", "")) * Number(item.qty),
       0
     );
-    const shippingFee = parseFloat(checkoutData.shippingFee) || 0;
-    const discountAmount = parseFloat(checkoutData.discountAmount) || 0;
+    const shippingFee = Math.max(0, parseFloat(checkoutData.shippingFee) || 0);
+    const discountAmount = Math.min(itemsTotal, Math.max(0, parseFloat(checkoutData.discountAmount) || 0));
     const amount = Math.round((itemsTotal + shippingFee - discountAmount) * 100);
 
     if (!Number.isFinite(amount) || amount < 50) {
@@ -54,7 +65,11 @@ export async function POST(req) {
       { ex: 60 * 60 * 24 }
     );
 
-    return Response.json({ clientSecret: paymentIntent.client_secret });
+    return Response.json({
+      clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
+      total: amount / 100,
+    });
   } catch (err) {
     console.error("PaymentIntent error:", err);
     return Response.json({ error: "Could not start payment." }, { status: 500 });
