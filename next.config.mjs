@@ -10,7 +10,7 @@ const securityHeaders = [
 
 const nextConfig = {
   images: {
-    unoptimized: true,
+    unoptimized: false,
   },
   poweredByHeader: false,
   compress: true,
