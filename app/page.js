@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Nav from "./components/Nav";
 import TiltLogo from "./components/TiltLogo";
+import HomeExtras from "./components/home/HomeExtras";
 import { useCart } from "./context/CartContext";
 const products = [
   { id: 1, name: "KEYCHAIN", price: "$12.99", tag: "KEYCHAIN", desc: "Carry the brand everywhere.", sku: "INK-001", rating: "4.9", reviews: "2.3K", image: "/reignabove-keychain.png", contain: true },
@@ -209,6 +210,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <HomeExtras />
       {/* AFFILIATE */}
       <section className="px-6 md:px-12 py-24 relative overflow-hidden">
         <div className="absolute inset-0 grid-bg opacity-30" />
