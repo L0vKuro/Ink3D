@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import { redis } from "../../lib/ratelimit";
+import { validateItems } from "../../lib/prices";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -10,6 +11,11 @@ export async function POST(req) {
     if (!items || items.length === 0) {
       return Response.json({ error: "Cart is empty." }, { status: 400 });
     }
+        const priceCheck = validateItems(items);
+    if (!priceCheck.ok) {
+      return Response.json({ error: priceCheck.error }, { status: 400 });
+    }
+    
 
     const shippingFee = parseFloat(checkoutData.shippingFee) || 0;
     const discountAmount = parseFloat(checkoutData.discountAmount) || 0;
