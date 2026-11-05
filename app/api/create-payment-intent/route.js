@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { redis, ratelimit } from "../../lib/ratelimit";
-import { validateItems } from "../../lib/prices";
+import { computeOrder } from "../../lib/pricing";
 
 // TEST-mode key only. The mobile app can never charge a real card.
 // Created lazily (inside the request) so the site builds even when the
@@ -26,22 +26,16 @@ export async function POST(req) {
 
     const { items, checkoutData, referralCode } = await req.json();
 
-    const priceCheck = validateItems(items);
-    if (!priceCheck.ok) {
-      return Response.json({ error: priceCheck.error }, { status: 400 });
-    }
     if (!checkoutData || !checkoutData.email || !checkoutData.fullName) {
       return Response.json({ error: "Missing checkout details." }, { status: 400 });
     }
 
-    const itemsTotal = items.reduce(
-      (sum, item) => sum + parseFloat(String(item.price).replace("$", "")) * Number(item.qty),
-      0
-    );
-    const shippingFee = Math.max(0, parseFloat(checkoutData.shippingFee) || 0);
-    const discountAmount = Math.min(itemsTotal, Math.max(0, parseFloat(checkoutData.discountAmount) || 0));
-    const amount = Math.round((itemsTotal + shippingFee - discountAmount) * 100);
+    const order = await computeOrder(items, checkoutData.discountCode);
+    if (!order.ok) {
+      return Response.json({ error: order.error }, { status: 400 });
+    }
 
+    const amount = order.totalC;
     if (!Number.isFinite(amount) || amount < 50) {
       return Response.json({ error: "Order total is too low." }, { status: 400 });
     }
@@ -54,14 +48,16 @@ export async function POST(req) {
       metadata: { source: "mobile" },
     });
 
-    // Saved so the webhook can finalize the order after payment succeeds.
+    const trusted = {
+      ...checkoutData,
+      discountCode: order.code,
+      discountAmount: (order.discountC / 100).toFixed(2),
+      shippingFee: (order.shippingC / 100).toFixed(2),
+      finalTotal: (amount / 100).toFixed(2),
+    };
     await redis.set(
       `ink3d_pending_${paymentIntent.id}`,
-      {
-        items,
-        checkoutData: { ...checkoutData, finalTotal: (amount / 100).toFixed(2) },
-        referralCode,
-      },
+      { items, checkoutData: trusted, referralCode },
       { ex: 60 * 60 * 24 }
     );
 
