@@ -540,3 +540,31 @@ main h1 span, main h2 span { -webkit-text-fill-color: currentColor; }
   from { opacity: 0; transform: translateX(-24px); filter: blur(6px); }
   to   { opacity: 1; transform: none; filter: none; }
 }
+/* ===== FX / HOME EXTRAS ===== */
+@property --fx-ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes fx-spin { to { --fx-ang: 360deg; } }
+.fx-border { position: relative; }
+.fx-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--fx-ang), transparent 0 60%, #ae1fe3 80%, #ffffff 90%, transparent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: fx-spin 5s linear infinite;
+  pointer-events: none;
+}
+@keyframes fx-marq { to { transform: translateX(-50%); } }
+.fx-marquee { display: flex; width: max-content; animation: fx-marq 45s linear infinite; }
+.fx-marquee:hover { animation-play-state: paused; }
+@keyframes fx-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(174,31,227,.6); }
+  50% { opacity: .6; box-shadow: 0 0 0 8px rgba(174,31,227,0); }
+}
+.fx-dot { width: 8px; height: 8px; border-radius: 50%; background: #ae1fe3; display: inline-block; animation: fx-pulse 2s infinite; }
+.fx-faq-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+.fx-faq-body.open { grid-template-rows: 1fr; }
+.fx-faq-body > div { overflow: hidden; }
