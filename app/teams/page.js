@@ -100,6 +100,7 @@ const teams = [
     name: "Shinto Gaming Club",
     logo: "/team-SGC (shintogamingclub).jpg",
     color: "#e63946",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
       { name: "FIDGET TOY", price: "$8.00", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
@@ -112,6 +113,7 @@ const teams = [
     name: "Team Up Nxt",
     logo: "/team-UpNxt.png",
     color: "#ff006e",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/upnext-lightbox.png" },
     ],
@@ -121,6 +123,7 @@ const teams = [
     name: "Vault IX",
     logo: "/team-Vault ix.jpg",
     color: "#7b2d8b",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/vaultix-wallart.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
@@ -133,6 +136,7 @@ const teams = [
     name: "Veriphy Gaming",
     logo: "/team-Veriphy.jpg",
     color: "#ffd60a",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/veriphy-keychain.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/veriphy-lightbox1.avif" },
@@ -143,6 +147,7 @@ const teams = [
     name: "White Leopard Gaming",
     logo: "/team-White Leopard.png",
     color: "#e63946",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
        { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/whiteleopard-lightbox.png" },
     ],
@@ -152,6 +157,7 @@ const teams = [
     name: "Ninefly",
     logo: "/team-Ninefly.jpg",
     color: "#ffffff",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nine fly keychain.jpg" },
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/ninefly-cubanhypechain.png" },
@@ -162,6 +168,7 @@ const teams = [
     name: "7ven Club",
     logo: "/7ven.jpg",
     color: "#39FF14",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/7ven keychain.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
@@ -173,6 +180,7 @@ const teams = [
     name: "PRS GAMING",
     logo: "/prs cover photo.png",
     color: "#89CFF0",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "WALL ART", price: "$39.99", tag: "WALL ART" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX" },
@@ -184,6 +192,7 @@ const teams = [
     name: "Rejects Esports",
     logo: "/Rejects Esports.jpg",
     color: "#D41D30",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", images: ["/Rejects Keychain.jpg", "/rejects2.jpg"] },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/rejects light.png", "/rejects light side.png"] },
@@ -194,6 +203,7 @@ const teams = [
     name: "Oblivion Esports",
     logo: "/oblivion png.png",
     color: "#7F00FF",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/oblivion keychain mock up.png" },
     ],
@@ -203,6 +213,7 @@ const teams = [
     name: "NXT GENERATION",
     logo: "/nxt logo.png",
     color: "#ff991c",
+    social: { label: "X", icon: "/twitter logo.png", href: "" },
     items: [
       { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/coming soon.jpg" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/nxt lightbox front.png", "/nxt lightbox back.png"] },
