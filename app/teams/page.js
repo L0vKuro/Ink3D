@@ -64,7 +64,7 @@ const teams = [
     name: "God Slayers",
     logo: "/team-GodSlayers.jpg",
     color: "#ffd60a",
-    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/GodSlayersGG" },
+     social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/GodSlayersGG" },
     items: [
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
@@ -77,7 +77,7 @@ const teams = [
     name: "Outkastz",
     logo: "/team-Outkastz.png",
     color: "#2d6a4f",
-    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/oKzEsports" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/oKzEsports" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/outkastz-key_chain.png" },
     ],
@@ -87,7 +87,7 @@ const teams = [
     name: "Reign Above",
     logo: "/team-ReignAbove.png",
     color: "#c9a227",
-    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/ReignAboveGG" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/ReignAboveGG" },
     items: [
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/reignabove-cuban.png" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/reignabove_coasters.png" },
