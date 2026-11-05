@@ -30,7 +30,7 @@ const teams = [
     name: "Atlantis Esports",
     logo: "/Atlantis 2026 logo.png",
     color: "#00b4d8",
-    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/Atlsect" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/Atlsect" },
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/atlantis-keychain.png" },
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/atlantis-lightbox.png" },
@@ -41,7 +41,7 @@ const teams = [
     name: "Buckshot Gaming",
     logo: "/team-Buckshot.png",
     color: "#ff4d6d",
-    social: { label: "X", icon: "/x-logo.png", href: "http://x.com/BuckshotGG" },
+    social: { label: "X", icon: "/twitter logo.png", href: "http://x.com/BuckshotGG" },
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/buckshot-keychain.png" },
     ],
@@ -51,7 +51,7 @@ const teams = [
     name: "Earn Your Medal",
     logo: "/team-EYM.jpg",
     color: "#e63946",
-    social: { label: "X", icon: "/x-logo.png", href: "https://x.com/EarnYourMedal" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/EarnYourMedal" },
     description:"Welcome to the official home of EYM, a competitive gaming brand built for the relentless. Rooted deep in the esports scene, EYM represents grit, tactical dominance, and a unified community of gamers who play to win. Explore our exclusive lineups, connect with the squad, and wear the iconic iron-shield skull logo with pride.",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
