@@ -100,7 +100,7 @@ const teams = [
     name: "Shinto Gaming Club",
     logo: "/team-SGC (shintogamingclub).jpg",
     color: "#e63946",
-    social: { label: "X", icon: "/twitter logo.png", href: "" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/ShintoGC" },
     items: [
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/Shinto_Gaming_Club-Cuban_Necklace.png" },
       { name: "FIDGET TOY", price: "$8.00", tag: "FIDGET", image: "/Shinto_Gaming_Club-Fidget_toy.png" },
@@ -113,7 +113,7 @@ const teams = [
     name: "Team Up Nxt",
     logo: "/team-UpNxt.png",
     color: "#ff006e",
-    social: { label: "X", icon: "/twitter logo.png", href: "" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/TeamUpNxt" },
     items: [
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/upnext-lightbox.png" },
     ],
@@ -123,7 +123,7 @@ const teams = [
     name: "Vault IX",
     logo: "/team-Vault ix.jpg",
     color: "#7b2d8b",
-    social: { label: "X", icon: "/twitter logo.png", href: "" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/_vaultix" },
     items: [
       { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/vaultix-wallart.png" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/vaultix-lightbox.png" },
