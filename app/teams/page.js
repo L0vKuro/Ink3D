@@ -51,28 +51,7 @@ const teams = [
     name: "Earn Your Medal",
     logo: "/team-EYM.jpg",
     color: "#e63946",
-    social:
-    { 
-    label: "X", 
-    icon: "/x-icon.png", 
-    href: "https://x.com/EarnYourMedal" 
-  },
-  { 
-    label: "Instagram", 
-    icon: "/insta logo.png", 
-    href: "https://www.instagram.com/earnyourmedal" 
-  },
-  { 
-    label: "Twitch", 
-    icon: "/twitch-icon.png", 
-    href: "https://twitch.tv" 
-  },
-  { 
-    label: "Linktree", 
-    icon: "/linktree-icon.png", 
-    href: "https://linktr.ee" 
-  }
-];
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/EarnYourMedal" },
     description:"Welcome to the official home of EYM, a competitive gaming brand built for the relentless. Rooted deep in the esports scene, EYM represents grit, tactical dominance, and a unified community of gamers who play to win. Explore our exclusive lineups, connect with the squad, and wear the iconic iron-shield skull logo with pride.",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
@@ -85,7 +64,7 @@ const teams = [
     name: "God Slayers",
     logo: "/team-GodSlayers.jpg",
     color: "#ffd60a",
-     social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/GodSlayersGG" },
+    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/GodSlayersGG" },
     items: [
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/godlayers-lightbox.png" },
      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/godlayers-coasterset_of_4.png" },
