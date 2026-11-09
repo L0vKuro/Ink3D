@@ -57,7 +57,7 @@ const teams = [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/eym lightbox 1.jpg" },
      { name: "CAN LID", price: "$4.00", tag: "CAN LID", images: ["/EYM Can Lid Fornt.png", "/EYM Can Lid Back.png"] },
-     { name: "Clock", price: "$40.00", tag: "Clock", images: ["/", "/"] },
+     { name: "Clock", price: "$40.00", tag: "Clock", images: ["/EYM Clock Front.png", "/EYM Clock Back.png"] },
     ],
   },
   {
