@@ -220,14 +220,14 @@ const teams = [
     icon: "/twitter logo.png",
     href: "https://x.com/NXTGenEsportss"
   },
-  items: [
-    { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/coming soon.jpg" },
-    { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/nxt lightbox front.png", "/nxt lightbox back.png"] },
-    { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/nxt coaster front.png", "/nxt coaster side.png"] },
-    { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nxt keychain front.png" },
-    { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/nxt hype chain.png" },
-  ],
-},
+ items: [
+      { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/coming soon.jpg" },
+      { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/nxt lightbox front.png", "/nxt lightbox back.png"] },
+      { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/nxt coaster front.png", "/nxt coaster side.png"] },
+      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nxt keychain front.png" },
+      { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/nxt hype chain.png" },
+    ],
+  },
 ];
 
 const tagColors = {
