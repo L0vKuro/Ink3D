@@ -222,8 +222,7 @@ const teams = [
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/nxt coaster front.png", "/nxt coaster side.png"] },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nxt keychain front.png" },
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/nxt hype chain.png" },
-    ],
-  },
+   },
 ];
 
 const tagColors = {
