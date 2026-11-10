@@ -232,13 +232,15 @@ const teams = [
 
 const tagColors = {
   ACCESSORY: "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
-  KEYCHAIN:  "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
-  LIGHTBOX:  "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
-  COASTER:   "text-green-400 border-green-400/50 bg-green-400/10",
-  NECKLACE:  "text-pink-400 border-pink-400/50 bg-pink-400/10",
+  KEYCHAIN: "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
+  LIGHTBOX: "text-cyan-400 border-cyan-400/50 bg-cyan-400/10",
+  COASTER: "text-green-400 border-green-400/50 bg-green-400/10",
+  NECKLACE: "text-pink-400 border-pink-400/50 bg-pink-400/10",
   "WALL ART": "text-red-400 border-red-400/50 bg-red-400/10",
-  FIDGET:    "text-orange-400 border-orange-400/50 bg-orange-400/10",
+  FIDGET: "text-orange-400 border-orange-400/50 bg-orange-400/10",
   "CONTROLLER STAND": "text-purple-400 border-purple-400/50 bg-purple-400/10",
+  "WALL CLOCK": "text-blue-400 border-blue-400/50 bg-blue-400/10",
+  "CAN LID": "text-fuchsia-400 border-fuchsia-400/50 bg-fuchsia-400/10",
 };
 
 const featuredTeams = teams.filter(t => t.featured);
