@@ -240,7 +240,7 @@ const tagColors = {
   FIDGET: "text-orange-400 border-orange-400/50 bg-orange-400/10",
   "CONTROLLER STAND": "text-purple-400 border-purple-400/50 bg-purple-400/10",
   "WALL CLOCK": "text-blue-400 border-blue-400/50 bg-blue-400/10",
-  "CAN LID": "text-fuchsia-400 border-fuchsia-400/50 bg-fuchsia-400/10",
+  "CAN LID": "text-lime-400 border-lime-400/50 bg-lime-400/10",
 };
 
 const featuredTeams = teams.filter(t => t.featured);
