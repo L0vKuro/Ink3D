@@ -236,6 +236,7 @@ const tagColors = {
   "WALL CLOCK": "text-blue-400 border-blue-400/50 bg-blue-400/10",
   "CAN LID": "text-blue-400 border-blue-400/50 bg-blue-400/10",
 };
+
 const featuredTeams = teams.filter(t => t.featured);
 const regularTeams = teams.filter(t => !t.featured);
 export default function Teams() {
