@@ -12,6 +12,7 @@ const ALLOWED = {
   "FIDGET TOY": ["8.00"],
   "CAN LID": ["4.00"],
   "CONTROLLER STAND ( COLOR CAN VARY )": ["25.00"],
+   "CLOCK": ["40.00"],
 };
 
 const cents = (s) => Math.round(parseFloat(String(s).replace("$", "")) * 100);
