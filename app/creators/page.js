@@ -12,6 +12,7 @@ const creators = [
     logo: "/impulse-logo.png",
     color: "#ae1fe3",
     desc: "Content creator and community builder partnered with INK3D.",
+    description:"Hey! I’m Itzimpulse, a passionate gamer, Twitch streamer, and content creator who loves bringing people together through gaming. Whether I’m playing Fortnite, Rocket League, Marvel Rivals, or trying something new, my goal is to create entertaining content, build an amazing community, and make every stream an enjoyable experience. I’m always looking for new ways to grow, connect with others, and give back through charity streams. Thanks for being part of the journey!"
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/impulse-keychain.png" },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/impulse-coaster.png" },
