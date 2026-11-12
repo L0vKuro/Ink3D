@@ -6,7 +6,11 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import ProductImage from "../components/ProductImage";
 import TeamCard from "../components/TeamCard";
+import SocialLinks from "../components/SocialLinks";
 import { useCart } from "../context/CartContext";
+// SOCIAL LINKS: use  social: { label: "X", href: "..." }   for one,
+//               or   socials: [ { label: "X", href: "..." }, { label: "Instagram", href: "..." } ]   for many.
+// X, Instagram, TikTok, YouTube and Twitch icons are drawn automatically from the label.
 const teams = [
   {
     id: "overtakesector",
@@ -51,10 +55,10 @@ const teams = [
     name: "Earn Your Medal",
     logo: "/team-EYM.jpg",
     color: "#e63946",
-    socials: [ 
-      { label: "Instagram", icon: "/insta.png", href: "https://www.instagram.com/earnyourmedal" }, 
-      { label: "X", icon: "/twitter icon.png", href: "https://x.com/EarnYourMedal" }, 
-      ],
+    socials: [
+      { label: "Instagram", icon: "/insta.png", href: "https://www.instagram.com/earnyourmedal" },
+      { label: "X", icon: "/twitter icon.png", href: "https://x.com/EarnYourMedal" },
+    ],
     description:"Welcome to the official home of EYM, a competitive gaming brand built for the relentless. Rooted deep in the esports scene, EYM represents grit, tactical dominance, and a unified community of gamers who play to win. Explore our exclusive lineups, connect with the squad, and wear the iconic iron-shield skull logo with pride.",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
@@ -317,27 +321,9 @@ export default function Teams() {
                           {team.description}
                         </p>
                       )}
-                      <div className="flex items-center justify-center md:justify-start gap-5 font-mono-custom text-[10px] tracking-widest text-white/30">
+                      <div className="flex items-center justify-center md:justify-start gap-5 flex-wrap font-mono-custom text-[10px] tracking-widest text-white/30">
                         <span>{team.items.length} EXCLUSIVE ITEMS</span>
-                        {team.social && (
-                          <Link
-                            href={team.social.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            style={{ color: team.color + 'cc' }}
-                            className="transition-colors"
-                          >
-                            {team.social.icon ? (
-                              <span className="inline-flex items-center gap-2">
-                                <Image src={team.social.icon} alt={team.social.label} width={18} height={18} className="object-contain" />
-                                <span>↗</span>
-                              </span>
-                            ) : (
-                              <>[ {team.social.label} ↗ ]</>
-                            )}
-                          </Link>
-                        )}
+                        <SocialLinks entity={team} color={team.color} />
                       </div>
                     </div>
                     <div
@@ -386,27 +372,8 @@ export default function Teams() {
                 <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none mb-2" style={{color: selected.color}}>
                   {selected.name.toUpperCase()}
                 </h2>
-                <div className="flex items-center gap-4 flex-wrap">
-                  <p className="font-mono-custom text-white/30 text-xs tracking-widest">{selected.items.length} EXCLUSIVE ITEMS — POWERED BY INK3D</p>
-                  {selected.social && (
-                    <Link
-                      href={selected.social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono-custom text-[10px] tracking-widest transition-colors"
-                      style={{ color: selected.color + 'aa' }}
-                    >
-                      {selected.social.icon ? (
-                        <span className="inline-flex items-center gap-2">
-                          <Image src={selected.social.icon} alt={selected.social.label} width={18} height={18} className="object-contain" />
-                          <span>↗</span>
-                        </span>
-                      ) : (
-                        <>[ {selected.social.label} ↗ ]</>
-                      )}
-                    </Link>
-                  )}
-                </div>
+                <p className="font-mono-custom text-white/30 text-xs tracking-widest mb-4">{selected.items.length} EXCLUSIVE ITEMS — POWERED BY INK3D</p>
+                <SocialLinks entity={selected} color={selected.color} />
               </div>
             </div>
             {selected.description && (
