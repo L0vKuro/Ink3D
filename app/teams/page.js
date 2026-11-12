@@ -266,6 +266,18 @@ export default function Teams() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
+    // clicking "TEAMS" in the top menu while inside a store goes back to the team list
+  useEffect(() => {
+    function onNavClick(e) {
+      const link = e.target.closest && e.target.closest('a[href="/teams"]');
+      if (link && activeTeam) {
+        setActiveTeam(null);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+    document.addEventListener("click", onNavClick);
+    return () => document.removeEventListener("click", onNavClick);
+  }, [activeTeam]);
   function openTeam(id) {
     window.history.pushState({ teamView: true }, "");
     setActiveTeam(id);
