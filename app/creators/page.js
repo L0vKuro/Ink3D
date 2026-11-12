@@ -4,14 +4,23 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import ProductImage from "../components/ProductImage";
+import SocialLinks, { getSocials } from "../components/SocialLinks";
 import { useCart } from "../context/CartContext";
+
+// HOW TO ADD SOCIAL LINKS (one or many):
+//   one:    social: { label: "X", icon: "/twitter logo.png", href: "https://x.com/name" },
+//   many:   socials: [
+//             { label: "X", icon: "/twitter logo.png", href: "https://x.com/name" },
+//             { label: "Twitch", icon: "/twitch.png", href: "https://twitch.tv/name" },
+//           ],
+// Use `desc` for the store description.
 const creators = [
   {
     id: "impulse",
     name: "Impulse",
     logo: "/impulse-logo.png",
     color: "#ae1fe3",
-     social: { label: "Insta", icon: "/insta logo.png", href: "https://www.tiktok.com/@itzimpulse?_r=1&_t=ZS-9BIWJ8PenoN" },
+    social: { label: "Insta", icon: "/insta logo.png", href: "https://www.tiktok.com/@itzimpulse?_r=1&_t=ZS-9BIWJ8PenoN" },
     desc: "Hey! I’m Itzimpulse, a passionate gamer, Twitch streamer, and content creator who loves bringing people together through gaming. Whether I’m playing Fortnite, Rocket League, Marvel Rivals, or trying something new, my goal is to create entertaining content, build an amazing community, and make every stream an enjoyable experience. I’m always looking for new ways to grow, connect with others, and give back through charity streams. Thanks for being part of the journey!.",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/impulse-keychain.png" },
@@ -31,6 +40,9 @@ const tagColors = {
   KEYCHAIN: "text-yellow-400 border-yellow-400/50 bg-yellow-400/10",
   COASTER:  "text-green-400 border-green-400/50 bg-green-400/10",
 };
+// a creator page opens if they have items, a description, or social links
+const hasPage = (c) => c.items.length > 0 || !!c.desc || getSocials(c).length > 0;
+
 export default function Creators() {
   const [activeCreator, setActiveCreator] = useState(null);
   const [hoveredCreator, setHoveredCreator] = useState(null);
@@ -78,12 +90,12 @@ export default function Creators() {
               {creators.map((creator) => (
                 <div
                   key={creator.id}
-                  onClick={() => creator.items.length > 0 && openCreator(creator.id)}
+                  onClick={() => hasPage(creator) && openCreator(creator.id)}
                   onMouseEnter={() => setHoveredCreator(creator.id)}
                   onMouseLeave={() => setHoveredCreator(null)}
                   className="bg-[#0a0a0a] transition-all duration-300 border border-transparent"
                   style={{
-                    cursor: creator.items.length > 0 ? 'pointer' : 'default',
+                    cursor: hasPage(creator) ? 'pointer' : 'default',
                     borderColor: hoveredCreator === creator.id ? creator.color + '60' : 'transparent',
                     boxShadow: hoveredCreator === creator.id ? `0 0 20px ${creator.color}33, 0 0 40px ${creator.color}15, inset 0 0 20px ${creator.color}08` : 'none',
                   }}
@@ -98,12 +110,12 @@ export default function Creators() {
                   </div>
                   <div className="p-4 border-t" style={{borderColor: hoveredCreator === creator.id ? creator.color + '30' : 'rgba(255,255,255,0.05)'}}>
                     <div className="font-mono-custom text-[9px] tracking-widest mb-1" style={{color: creator.color + '99'}}>
-                      {creator.items.length > 0 ? `${creator.items.length} ITEMS` : 'COMING SOON'}
+                      {creator.items.length > 0 ? `${creator.items.length} ITEMS` : hasPage(creator) ? 'STORE OPENING SOON' : 'COMING SOON'}
                     </div>
                     <h3 className="font-black text-sm tracking-wide transition-colors" style={{color: hoveredCreator === creator.id ? creator.color : 'rgba(255,255,255,0.8)'}}>{creator.name}</h3>
                     <div className="mt-3 text-[10px] font-mono-custom tracking-widest border-t pt-2 flex justify-between items-center" style={{borderColor: 'rgba(255,255,255,0.05)'}}>
-                      <span className="text-white/20">{creator.items.length > 0 ? 'VIEW STORE' : 'STAY TUNED'}</span>
-                      {creator.items.length > 0 && <span style={{color: creator.color + '80'}}>→</span>}
+                      <span className="text-white/20">{hasPage(creator) ? 'VIEW STORE' : 'STAY TUNED'}</span>
+                      {hasPage(creator) && <span style={{color: creator.color + '80'}}>→</span>}
                     </div>
                   </div>
                 </div>
@@ -159,19 +171,31 @@ export default function Creators() {
             <button onClick={closeCreator} className="font-mono-custom text-[10px] tracking-widest text-white/30 hover:text-white transition-colors mb-10 flex items-center gap-2">
               ← BACK_TO_ALL_CREATORS
             </button>
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-16 pb-8 border-b border-white/[0.05]">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-10 pb-8 border-b border-white/[0.05]">
               <div className="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden flex-shrink-0 relative"
                 style={{background: `radial-gradient(circle, ${selected.color}15, transparent)`, border: `1px solid ${selected.color}30`, boxShadow: `0 0 20px ${selected.color}33`}}>
                 <Image src={selected.logo} alt={selected.name} fill className="object-contain p-2" />
               </div>
               <div>
                 <div className="font-mono-custom text-[10px] tracking-[0.4em] mb-2" style={{color: selected.color + '66'}}>SYS://STORE_LOADED</div>
-                <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none mb-2" style={{color: selected.color}}>
+                <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-none mb-3" style={{color: selected.color}}>
                   {selected.name.toUpperCase()}
                 </h2>
-                <p className="font-mono-custom text-white/30 text-xs tracking-widest">{selected.items.length} EXCLUSIVE ITEMS — POWERED BY INK3D</p>
+                <p className="font-mono-custom text-white/30 text-xs tracking-widest mb-4">{selected.items.length} EXCLUSIVE ITEMS — POWERED BY INK3D</p>
+                <SocialLinks entity={selected} color={selected.color} />
               </div>
             </div>
+            {selected.desc && (
+              <div className="mb-12 pb-8 border-b border-white/[0.05] max-w-3xl">
+                <div className="font-mono-custom text-[9px] tracking-[0.4em] mb-4" style={{ color: selected.color + '66' }}>// ABOUT {selected.name.toUpperCase()}</div>
+                <p className="font-mono-custom text-white/40 text-sm leading-relaxed">{selected.desc}</p>
+              </div>
+            )}
+            {selected.items.length === 0 && (
+              <div className="border border-white/[0.06] p-12 text-center">
+                <div className="font-mono-custom text-[10px] text-white/25 tracking-[0.3em]">// STORE ITEMS COMING SOON</div>
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04]">
               {selected.items.map((item, i) => (
                 <div key={i} className="bg-[#050505] border border-transparent hover:border-white/10 transition-all duration-300 group cursor-pointer">
