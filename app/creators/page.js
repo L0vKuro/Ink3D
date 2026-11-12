@@ -57,6 +57,18 @@ export default function Creators() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
+    // clicking "CREATORS" in the top menu while inside a store goes back to the creator list
+  useEffect(() => {
+    function onNavClick(e) {
+      const link = e.target.closest && e.target.closest('a[href="/creators"]');
+      if (link && activeCreator) {
+        setActiveCreator(null);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+    document.addEventListener("click", onNavClick);
+    return () => document.removeEventListener("click", onNavClick);
+  }, [activeCreator]);
   function openCreator(id) {
     window.history.pushState({ creatorView: true }, "");
     setActiveCreator(id);
