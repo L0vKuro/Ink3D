@@ -51,8 +51,10 @@ const teams = [
     name: "Earn Your Medal",
     logo: "/team-EYM.jpg",
     color: "#e63946",
-    social: { label: "Instagram", icon: "/insta.png", href: "https://www.instagram.com/earnyourmedal" }, 
-    
+    socials: [ 
+      { label: "Instagram", icon: "/insta.png", href: "https://www.instagram.com/earnyourmedal" }, 
+      { label: "X", icon: "/twitter icon.png", href: "https://x.com/EarnYourMedal" }, 
+      ],
     description:"Welcome to the official home of EYM, a competitive gaming brand built for the relentless. Rooted deep in the esports scene, EYM represents grit, tactical dominance, and a unified community of gamers who play to win. Explore our exclusive lineups, connect with the squad, and wear the iconic iron-shield skull logo with pride.",
     items: [
      { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
