@@ -59,6 +59,7 @@ const teams = [
       { label: "Instagram", icon: "/insta.png", href: "https://www.instagram.com/earnyourmedal" },
       { label: "X", icon: "/twitter icon.png", href: "https://x.com/EarnYourMedal" },
       { label: "TikTok", icon: "/", href: "https://www.tiktok.com/@earnyourmedal" },
+      { label: "Discord", icon: "/", href: "https://discord.gg/DfAPg8v4k" },
     ],
     description:"Welcome to the official home of EYM, a competitive gaming brand built for the relentless. Rooted deep in the esports scene, EYM represents grit, tactical dominance, and a unified community of gamers who play to win. Explore our exclusive lineups, connect with the squad, and wear the iconic iron-shield skull logo with pride.",
     items: [
