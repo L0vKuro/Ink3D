@@ -55,7 +55,7 @@ const teams = [
   },
   {
     id: "eym",
-    name: "Earn Your Medal",
+    name: "EarnYourMedal",
     logo: "/team-EYM.jpg",
     color: "#e63946",
     socials: [
