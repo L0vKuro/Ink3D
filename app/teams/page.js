@@ -246,7 +246,7 @@ const teams = [
   id: "Onsight",
   name: "Onsight Esports",
   logo: "/",
-  color: "#ff991c",
+  color: "#ff006e",
   socials: [
     {
       label: "X",
