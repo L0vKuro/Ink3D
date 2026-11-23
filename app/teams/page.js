@@ -256,7 +256,7 @@ const teams = [
   ],
   items: [
     { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/Onsight Lightbox Front.png", "/Onsight Lightbox back.png"] },
-    { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/"] },
+    { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/Onsight Coaster front.png", "/Onsight Coaster side.png"] },
     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/" },
   ],
 },
