@@ -240,6 +240,24 @@ const teams = [
     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/nxt coaster front.png", "/nxt coaster side.png"] },
     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nxt keychain front.png" },
     { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/nxt hype chain.png" },
+    {
+  id: "Onsight",
+  name: "Onsight Esports",
+  logo: "/",
+  color: "#ff991c",
+  socials: [
+    {
+      label: "X",
+      icon: "/twitter logo.png",
+      href: "https://x.com/onsightnation",
+    },
+  ],
+  items: [
+    { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/" },
+    { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/"] },
+    { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/"] },
+    { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/" },
+    { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/" },
   ],
 },
 ];
