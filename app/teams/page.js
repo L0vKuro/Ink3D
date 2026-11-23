@@ -233,28 +233,13 @@ const teams = [
     href: "https://x.com/NXTGenEsportss"
   },
  items: [
+       items: [
       { name: "WALL ART", price: "$20.00", tag: "WALL ART", image: "/coming soon.jpg" },
       { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", images: ["/nxt lightbox front.png", "/nxt lightbox back.png"] },
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/nxt coaster front.png", "/nxt coaster side.png"] },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nxt keychain front.png" },
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/nxt hype chain.png" },
-    },
-  {
-    id: "Onsight Esports",
-    name: "Onaight Esports",
-    logo: "/team-EYM.jpg",
-    color: "#e63946",
-    socials: [
-      { label: "Instagram", , href: "" },
-      { label: "X",  href: "" },
-      { label: "TikTok",  href: "" },
-      { label: "Discord",  href: "" },
     ],
-    description:": [
-     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
-     { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/eym lightbox 1.jpg" },
-     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/eym coaster.jpg" },
-   ],
   },
 ];
 
