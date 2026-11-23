@@ -238,7 +238,22 @@ const teams = [
       { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", images: ["/nxt coaster front.png", "/nxt coaster side.png"] },
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/nxt keychain front.png" },
       { name: "CUBAN NECKLACE", price: "$35.00", tag: "NECKLACE", image: "/nxt hype chain.png" },
+    },
+  {
+    id: "Onsight Esports",
+    name: "Onaight Esports",
+    logo: "/team-EYM.jpg",
+    color: "#e63946",
+    socials: [
+      { label: "Instagram", , href: "https://www.instagram.com/earnyourmedal" },
+      { label: "X",  href: "https://x.com/EarnYourMedal" },
+      { label: "TikTok",  href: "https://www.tiktok.com/@earnyourmedal" },
+      { label: "Discord",  href: "https://discord.gg/DfAPg8v4k" },
     ],
+    description:": [
+     { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/eym-keychain.png" },
+     { name: "LIGHTBOX", price: "$40.00", tag: "LIGHTBOX", image: "/eym lightbox 1.jpg" },
+     { name: "COASTER SET OF 4", price: "$15.00", tag: "COASTER", image: "/eym coaster.jpg" },
   },
 ];
 
