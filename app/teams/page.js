@@ -247,7 +247,7 @@ const teams = [
   color: "#ff991c",
   socials: [
     {
-      label: twitter: "https://x.com/onsightnation",
+     social: { label: "X", href: "https://x.com/onsightnation" },
     },
   ],
   items: [
