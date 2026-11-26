@@ -20,7 +20,10 @@ const creators = [
     name: "Impulse",
     logo: "/Impulse.png",
     color: "#ae1fe3",
-    social: { label: "Insta", icon: "/insta logo.png", href: "https://www.tiktok.com/@itzimpulse?_r=1&_t=ZS-9BIWJ8PenoN" },
+    social: 
+    { label: "TikTok", icon: "/", href: "https://www.tiktok.com/@itzimpulse?_r=1&_t=ZS-9BIWJ8PenoN" },
+    { label: "Youtube", icon: "/discord.png", href: "https://youtube.com/@itzimpulse6632?si=bT0Imy8Zv_merrRj" },
+    { label: "Twitch", icon: "/", href: "https://m.twitch.tv/itzimpulse_/home" },
     desc: "Hey! I’m Itzimpulse, a passionate gamer, Twitch streamer, and content creator who loves bringing people together through gaming. Whether I’m playing Fortnite, Rocket League, Marvel Rivals, or trying something new, my goal is to create entertaining content, build an amazing community, and make every stream an enjoyable experience. I’m always looking for new ways to grow, connect with others, and give back through charity streams. Thanks for being part of the journey!.",
     items: [
       { name: "KEYCHAIN", price: "$5.00", tag: "KEYCHAIN", image: "/impulse-keychain.png" },
