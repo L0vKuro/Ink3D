@@ -59,7 +59,7 @@ const teams = [
     logo: "/team-EYM.jpg",
     color: "#e63946",
     socials: [
-      { label: "Instagram", icon: "/insta.png","href: "https://www.instagram.com/earnyourmedal" },
+      { label: "Instagram", icon: "/insta.png", href: "https://www.instagram.com/earnyourmedal" },
       { label: "X", icon: "/twitter icon.png", href: "https://x.com/EarnYourMedal" },
       { label: "TikTok", icon: "/", href: "https://www.tiktok.com/@earnyourmedal" },
       { label: "Discord", icon: "/discord.png", href: "https://discord.gg/DfAPg8v4k" },
